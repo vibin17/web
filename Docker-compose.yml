@@ -1,0 +1,36 @@
+networks:
+  net:
+    driver: bridge
+services:
+  back:
+    container_name: back
+    restart: unless-stopped
+    build:
+      context: ./back/
+    image: back
+    volumes:
+      - ./back/src:/app/src
+    networks:
+      - net
+    ports:
+      - "7000"
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: unless-stopped
+    volumes:
+      - ./mongodb/database:/data/db
+    networks:
+      - net
+  proxy:
+    container_name: proxy
+    image: nginx
+    restart: unless-stopped
+    depends_on:
+      - back
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - net
+    ports:
+      - "3080:80"
