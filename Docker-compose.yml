@@ -2,18 +2,31 @@ networks:
   net:
     driver: bridge
 services:
-  back:
-    container_name: back
+  authservice:
+    container_name: authservice
     restart: unless-stopped
     build:
-      context: ./back/
-    image: back
+      context: ./auth/
+    image: authservice
     volumes:
-      - ./back/src:/app/src
+      - ./auth/src:/app/src
     networks:
       - net
     ports:
       - "7000"
+  front:
+    container_name: front
+    restart: unless-stopped
+    build:
+      context: ./front/
+    image: front
+    volumes:
+      - ./front/src:/app/src
+      - ./front/public:/app/public
+    networks:
+      - net
+    ports:
+      - "3000"
   mongo:
     container_name: mongo
     image: mongo
@@ -22,12 +35,15 @@ services:
       - ./mongodb/database:/data/db
     networks:
       - net
+    ports:
+      - "27017:27017"
   proxy:
     container_name: proxy
     image: nginx
     restart: unless-stopped
     depends_on:
-      - back
+      - authservice
+      - front
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     networks:
