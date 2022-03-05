@@ -6,12 +6,7 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 
 @Module({
-  imports: [forwardRef(() => UsersModule), ConfigModule.forRoot({envFilePath: './.env'}), JwtModule.register( {
-    secret: process.env.PRIVATE_KEY,
-    signOptions: {
-      expiresIn: '24h'
-    }
-  })],
+  imports: [forwardRef(() => UsersModule), ConfigModule.forRoot({envFilePath: './.env'}), JwtModule.register({})],
   controllers: [AuthController],
   providers: [AuthService],
   exports: [

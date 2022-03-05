@@ -3,6 +3,7 @@ import { AuthUserDto } from 'src/users/dto/auth-user.dto';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { ValidationPipe } from 'src/validation/validation';
 import { AuthService } from './auth.service';
+import { TokensDto } from './dto/tokens.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -18,5 +19,11 @@ export class AuthController {
     @UsePipes(ValidationPipe)
     registration(@Body() userDto: CreateUserDto) {
         return this.authService.registration(userDto)
+    }
+
+
+    @Post('/refresh')
+    refresh(@Body() tokensDto: TokensDto) {
+        return this.authService.refresh(tokensDto.refresh)
     }
 }
