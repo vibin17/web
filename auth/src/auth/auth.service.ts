@@ -6,11 +6,12 @@ import * as bcrypt from 'bcryptjs'
 import { User } from 'src/users/schemas/user.schema';
 import { SignInUserDto } from 'src/users/dto/signin-user.dto';
 import { AuthResponseDto, UserTokenData} from 'src/users/dto/auth-response.dto';
+import { TokenService } from './token.service';
 
 @Injectable()
 export class AuthService {
     constructor(private userService: UsersService, 
-                private jwtService: JwtService) {}
+                private tokenService: TokenService) {}
 
     async signIn(userDto: SignInUserDto): Promise<AuthResponseDto> {
         console.log(userDto)
@@ -19,8 +20,8 @@ export class AuthService {
         console.log(user)
         return { 
             userData: user, 
-            access: await this.generateAccessToken(user), 
-            refresh: await this.generateRefreshToken(user)
+            access: await this.tokenService.generateAccessToken(user), 
+            refresh: await this.tokenService.generateRefreshToken(user)
         }
     }
 
@@ -35,13 +36,13 @@ export class AuthService {
         const user: UserTokenData = { userName, phoneNumber, roles }
         return { 
             userData: user, 
-            access: await this.generateAccessToken(user), 
-            refresh: await this.generateRefreshToken(user)
+            access: await this.tokenService.generateAccessToken(user), 
+            refresh: await this.tokenService.generateRefreshToken(user)
         }
     }
     
     async refresh(refresh: string): Promise<AuthResponseDto> {
-        const userData: UserTokenData  = await this.validateRefreshToken(refresh)
+        const userData: UserTokenData  = await this.tokenService.validateRefreshToken(refresh)
         const { userName, phoneNumber, roles } = await this.userService.getByName(userData.userName)
         if (!userName) {
             throw new HttpException('Пользователь из токена не найден', HttpStatus.BAD_REQUEST)
@@ -49,8 +50,8 @@ export class AuthService {
         const user: UserTokenData = { userName, phoneNumber, roles }
         return { 
             userData: user, 
-            access: await this.generateAccessToken(user), 
-            refresh: await this.generateRefreshToken(user)
+            access: await this.tokenService.generateAccessToken(user), 
+            refresh: await this.tokenService.generateRefreshToken(user)
         }
     }
 
@@ -64,37 +65,5 @@ export class AuthService {
             throw new BadRequestException({ message: 'Неверный пароль' })
         }
         return user
-    }
-
-    private async generateAccessToken(payload: UserTokenData): Promise<string> {
-        return this.jwtService.sign(payload, {
-            secret: process.env.ACCESS_KEY,
-            expiresIn: '20m'
-        })
-    }
-
-    private async generateRefreshToken(payload: UserTokenData): Promise<string> {
-        return this.jwtService.sign(payload, {
-            secret: process.env.REFRESH_KEY,
-            expiresIn: '30d'
-          })
-    }
-
-    async validateAccessToken(access: string): Promise<UserTokenData> {
-        try {
-            return this.jwtService.verify(access, { secret: process.env.ACCESS_KEY })
-        }
-        catch {
-            throw new UnauthorizedException({message: "Access токен недействителен"})
-        }
-    }
-
-    async validateRefreshToken(refresh: string): Promise<UserTokenData> {
-        try {
-            return this.jwtService.verify(refresh, { secret: process.env.REFRESH_KEY })
-        }
-        catch {
-            throw new UnauthorizedException({message: "Refresh токен недействителен"})
-        }
     }
 }
