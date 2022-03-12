@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { AuthUserDto } from './dto/auth-user.dto';
+import { SignUpUserDto } from './dto/signup-user.dto';
+import { SignInUserDto } from './dto/signin-user.dto';
 import { User, UserDocument } from './schemas/user.schema';
 import { Model } from "mongoose";
 import { InjectModel } from '@nestjs/mongoose';
@@ -11,7 +11,7 @@ export class UsersService {
   
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
   
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: SignUpUserDto) {
     const newUser = new this.userModel(createUserDto);
     return newUser.save()
   }
@@ -22,31 +22,27 @@ export class UsersService {
   }
 
   async getByName(userName: string) {
-    const user = await this.userModel.findOne({name: userName})
+    const user = await this.userModel.findOne({userName})
     return user
   }
 
-  async getByPhoneNumber(userPhoneNumber: string) {
-    const user = await this.userModel.findOne({phoneNumber: userPhoneNumber})
+  async getByPhoneNumber(phoneNumber: string) {
+    const user = await this.userModel.findOne({phoneNumber})
     return user
   }
 
-  async updateByPhoneNumber(userPhoneNumber: string, updateUserDto: AuthUserDto) {
-    const updatedUser = this.userModel.findOneAndUpdate({phoneNumber: userPhoneNumber}, updateUserDto, { new: true });
+  async updateByName(userName: string, updateUserDto: SignInUserDto) {
+    const updatedUser = this.userModel.findOneAndUpdate({userName}, updateUserDto, { new: true });
     return updateUserDto
   }
 
   async setAdmin(userName: string) {
-    const user = this.userModel.findOneAndUpdate({name: userName}, {roles: [RolesEnum.Admin, RolesEnum.User]}, {new: true})
+    const user = this.userModel.findOneAndUpdate({userName}, {roles: [RolesEnum.Admin, RolesEnum.User]}, { new: true })
     return user
   }
 
   async deleteByName(userName: string) {
-    const deletedUser = await this.userModel.deleteOne({Name: userName})
+    const deletedUser = await this.userModel.deleteOne({ userName })
     return deletedUser
-  }
-
-  async validateUserName(userName: string) {
-    let pattern1 = new RegExp('^[\W\d]?')
   }
 }

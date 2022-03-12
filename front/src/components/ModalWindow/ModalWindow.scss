@@ -1,0 +1,73 @@
+@import '../global';
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.modal-back {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    z-index: 1;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.2s;
+    &.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+}
+.modal-container {
+    width: $container-width;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal-window {
+    padding: 15px;
+    border-radius: 12px;
+    background: white;
+    width: 250px;
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        position: relative;
+        &__close-button {
+            width: 24px;
+            height: 24px;
+            display: block;
+            opacity: 0.3;
+            position: relative;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: 0;
+            &:hover {
+                opacity: 1;
+                border: 0;
+                outline: 0;
+                background: white;
+            }
+            &:before, &:after {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                content: ' ';
+                height: 24px;
+                width: 2px;
+                background-color: #333;
+            }
+            &::before {
+                transform: rotate(45deg);
+            }
+            &:after {
+                transform: rotate(-45deg);
+            }      
+        }    
+    }
+    &__main {
+        padding: 10px 0 10px 0;
+    }
+}

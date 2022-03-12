@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import '../global';
 
 .header {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
+    font-size: 16px;
     background-color: rgb(67, 142, 255);
     display: flex;
     justify-content: center;
@@ -10,9 +12,10 @@
     height: 65px;
     top: 0;
     left: 0;
+    box-shadow: rgba(0, 0, 0, 0.9) 0px 1px 10px;
     &__container {
         padding: 11px 0;
-        width: 1400px;
+        width: $container-width;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -20,16 +23,16 @@
             flex: 0 0 50%;
             display: flex;
             align-items: center;
-            gap: 4%
-        }
-        .shop-info, .user-info {
-            align-items: center;
-        }
-        .shop-info {
-            justify-content: flex-start;
-        }
-        .user-info {
-            justify-content: flex-end;
+            gap: 4%;
+            &.shop-info, &.user-info {
+                align-items: center;
+            }
+            &.shop-info {
+                justify-content: flex-start;
+            }
+            &.user-info {
+                justify-content: flex-end;
+            }
         }
     }
     .menu {
@@ -45,26 +48,25 @@
         }
     }
     .burger-menu {
-        $indent: 16px;
+        $vertical-shift: 16px;
         height: 44px;
         display: flex;
+        cursor: pointer;
         align-items: center;
-        menu-lines {
+        &__line {
             background: black;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
             width: 42px;
             height: 3px;
-        }
-        &__line {
-            @extend menu-lines;
             position: relative;          
             &::after, &::before {
                 content: "";
-                @extend menu-lines;
+                @extend .burger-menu__line;
                 position: absolute;
-                top: $indent;
+                top: $vertical-shift;
             }
             &::before {
-                top: -$indent;
+                top: -$vertical-shift;
             }
         }
     }

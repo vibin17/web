@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.block-button {
+    border: 0;
+    border-radius: 10px;
+    font-family: 'Roboto';
+    font-size: 16px;
+    padding: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    height: 44px;
+    box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.8);
+    background: rgb(255, 255, 255);
+    min-width: 104px;
+    transition: 0.3s;
+    &_color {
+        &_orange {
+            background: rgb(255, 144, 53);
+        }
+    }
+    &:hover {
+        filter: invert(8%);
+    }
+    &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        border-radius: 10px;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: 0.5s;
+        box-shadow: 0 0 10px 10px rgb(141, 141, 141);
+      }
+    &:active:after {
+        box-shadow: 0 0 0 0 rgb(126, 126, 126);
+        position: absolute;
+        border-radius: 10px;
+        opacity: 1;
+        transition: 0s;
+    }    
+}

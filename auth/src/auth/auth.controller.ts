@@ -1,6 +1,6 @@
 import { Body, Controller, Post, UsePipes } from '@nestjs/common';
-import { AuthUserDto } from 'src/users/dto/auth-user.dto';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { SignInUserDto } from 'src/users/dto/signin-user.dto';
+import { SignUpUserDto } from 'src/users/dto/signup-user.dto';
 import { ValidationPipe } from 'src/validation/validation';
 import { AuthService } from './auth.service';
 import { TokensDto } from './dto/tokens.dto';
@@ -10,20 +10,23 @@ export class AuthController {
 
     constructor(private authService: AuthService) {}
 
-    @Post('/login')
-    login(@Body() userDto: AuthUserDto) {
-        return this.authService.login(userDto)
+    @Post('/signin')
+    async signIn(@Body() userDto: SignInUserDto) {
+        const response = await this.authService.signIn(userDto)
+        return response
     }
 
-    @Post('/registration')
+    @Post('/signup')
     @UsePipes(ValidationPipe)
-    registration(@Body() userDto: CreateUserDto) {
-        return this.authService.registration(userDto)
+    async signUp(@Body() userDto: SignUpUserDto) {
+        const response = await this.authService.signUp(userDto)
+        return response
     }
 
 
     @Post('/refresh')
-    refresh(@Body() tokensDto: TokensDto) {
-        return this.authService.refresh(tokensDto.refresh)
+    async refresh(@Body() tokensDto: TokensDto) {
+        const response = this.authService.refresh(tokensDto.refresh)
+        return response
     }
 }

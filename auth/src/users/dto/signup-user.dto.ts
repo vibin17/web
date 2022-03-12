@@ -1,10 +1,10 @@
 import {IsEmail, IsMobilePhone, IsString, Length, MaxLength, MinLength} from "class-validator";
 
-export class CreateUserDto {
+export class SignUpUserDto {
     @MinLength(3)
     @MaxLength(20)
     @IsString({message: 'Должно быть строкой'})
-    readonly name: string;
+    readonly userName: string;
     @IsMobilePhone('ru-RU')
     readonly phoneNumber: string;
     @IsString({message: 'Должно быть строкой'})

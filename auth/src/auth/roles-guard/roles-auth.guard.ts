@@ -2,11 +2,13 @@ import { CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable, U
 import { Reflector } from "@nestjs/core";
 import { JwtService } from "@nestjs/jwt";
 import { Observable } from "rxjs";
+import { AuthService } from "../auth.service";
 import { ROLES_KEY } from "./roles-auth.decorator";
 
 @Injectable()
-export class RolesGuard implements CanActivate {
-    constructor(private jwtService: JwtService, 
+export class RolesAuthGuard implements CanActivate {
+    constructor(private jwtService: JwtService,
+                private authService: AuthService, 
                 private reflector: Reflector) {}
 
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
@@ -26,7 +28,8 @@ export class RolesGuard implements CanActivate {
             if (bearer !== 'Bearer' || !token) {
                 new UnauthorizedException({message: 'Пользователь не авторизован'})
             }
-            const user = this.jwtService.verify(token, {secret: process.env.ACCESS_KEY})
+            const user = this.jwtService.verify(token, { secret: process.env.ACCESS_KEY })
+            this.authService.validateAccessToken(token).then()
             return user.roles.some(role => requiredRoles.includes(role))
         }
         catch (e) {
