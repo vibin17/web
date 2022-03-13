@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import './Header.scss'
-import HeaderButton from './HeaderButton/HeaderButton'
+import { useState } from 'react';
+import HeaderIconButton from './HeaderButton/HeaderIconButton'
 import ModalWindow from '../ModalWindow/ModalWindow';
 import LoginForm from '../Forms/LoginForm';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { RiUserLine } from 'react-icons/ri'
+import { BsCart2 } from 'react-icons/bs'
+import './Header.scss'
 
 const Header = () => {
   let [isMenuActive, setMenuState] = useState(false)
   let [isLoginFormActive, setLoginFormActive] = useState(false)
   let { userData, signedIn } = useTypedSelector(state => state.auth)
-  useEffect(() => {
-    
-  })
   return (
     <header className="header">
       <div className='header__container'>
@@ -31,9 +30,15 @@ const Header = () => {
         </div>
 
         <div className='header__container__part user-info'>
-          {userData.userName}
-          <HeaderButton title='Войти' color='orange' onClickEvent={() => setLoginFormActive(true)}/>
-          <HeaderButton title='Зарегистрироваться'/>
+          <HeaderIconButton icon={BsCart2} onClickEvent={() => setLoginFormActive(true)}/>
+          <HeaderIconButton icon={RiUserLine} onClickEvent={() => setLoginFormActive(true)}/>
+
+          {/* {signedIn? userData.userName :
+            <>
+              <HeaderIconButton title='Войти' color='orange' onClickEvent={() => setLoginFormActive(true)}/>
+              <HeaderIconButton title='Зарегистрироваться'/>
+            </>
+          } */}
         </div>
 
       </div>

@@ -30,16 +30,9 @@ export const authReducer = (state = initialState, action: AuthAction): AuthState
                 error: action.payload
             }
         
-        case AuthActionTypes.READ_LOCAL:
+        case AuthActionTypes.SIGN_OUT:
             return {
-                userData: {
-                    userName: action.payload.userData.userName,
-                    phoneNumber: action.payload.userData.phoneNumber,
-                    roles: action.payload.userData.roles
-                },
-                signedIn: false,
-                access: action.payload.access,
-                refresh: action.payload.refresh
+                ...initialState
             }
 
         default:

@@ -20,6 +20,7 @@
         font-family: 'Roboto';
         gap: 14px;
         &__input {
+            width: 80%;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -53,7 +54,7 @@
         }
         &__message {
             background: rgba(247, 164, 71, 0.5);
-            width: 100%;
+            width: 80%;
             padding: 7px 16px;
             border-radius: 10px;
             box-shadow: 0 4px 4px -4px rgba(0, 0, 0, 0.8);

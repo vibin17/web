@@ -13,7 +13,7 @@ export type AuthState = {
 export enum AuthActionTypes {
     SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS',
     SIGN_IN_FAILED = 'SIGN_IN_FAILED',
-    READ_LOCAL = 'READ_LOCAL'
+    SIGN_OUT = 'SIGN_OUT'
 }
 
 type SignInSuccessAction = {
@@ -26,9 +26,8 @@ type SignInFailedAction = {
     payload: string
 }
 
-type ReadLocalAction = {
-    type: AuthActionTypes.READ_LOCAL
-    payload: AuthState
+type SignOutAction = {
+    type: AuthActionTypes.SIGN_OUT
 }
 
-export type AuthAction = SignInSuccessAction | SignInFailedAction | ReadLocalAction
+export type AuthAction = SignInSuccessAction | SignInFailedAction | SignOutAction

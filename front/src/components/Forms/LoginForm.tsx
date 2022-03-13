@@ -1,12 +1,11 @@
 import {Field, Form, Formik} from 'formik'
-import { useEffect, useState } from 'react';
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import './Form.scss'
 
 const LoginForm = () => {
   let { signIn } = useActions()
-  let {error} = useTypedSelector(state => state.auth)
+  let { error } = useTypedSelector(state => state.auth)
   return (
   <div className='form'>
     <div className='form__header'>
@@ -18,7 +17,7 @@ const LoginForm = () => {
         userPassword: ''
       }}
       onSubmit={async (values) => {
-        alert(values.userPassword)
+        console.log(values.userName, values.userPassword)
         signIn(values.userName, values.userPassword)
       }}
     >
@@ -30,7 +29,9 @@ const LoginForm = () => {
 
         <div className='form__main__input'>
           <label className='form__main__input__field-label' htmlFor="userPassword">Пароль</label>
-          <Field className='form__main__input__field' type='password' id="userPassword" name="userPassword" placeholder="Ваш пароль"/>
+          <div className='form__main__input__field-container'>
+            <Field className='form__main__input__field' type='password' id="userPassword" name="userPassword" placeholder="Ваш пароль"/>
+          </div>
         </div>
 
         {error && <div className='form__main__message'>

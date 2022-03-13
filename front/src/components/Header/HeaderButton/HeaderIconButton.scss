@@ -1,0 +1,20 @@
+@import '../../global';
+
+.icon-button {
+    border: 0;
+    position: relative;
+    display: flex;
+    background: inherit;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    height: $header-height;
+    width: $header-height;
+    transition: 0.3s;
+    &__icon {
+        font-size: 28px;
+    }
+    &:hover {
+        filter: invert(20%);
+    }   
+}

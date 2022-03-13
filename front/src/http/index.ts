@@ -1,7 +1,7 @@
 import axios from "axios";
 import { AuthResponse } from "../models/response/authModels";
 
-const AUTH_URL = 'http://localhost:7000'
+export const AUTH_URL = 'http://localhost:7000'
 
 export const authAPI = axios.create({
     baseURL: AUTH_URL,
@@ -19,11 +19,17 @@ authAPI.interceptors.request.use((config) => {
 authAPI.interceptors.response.use((config) => {
     return config
 }, async (error) => {
-    if (error.response.status == 401) {
+    const originalRequest = error.config;
+    if (error.response.status === 401 && error.config && !error.config._isRetry) {
         try {
-            const response = await axios.get<AuthResponse>(`${AUTH_URL}/auth/refresh`)
+            const response = await axios.post<AuthResponse>(`${AUTH_URL}/auth/refresh`, {refresh: localStorage.getItem('refresh')})
             localStorage.setItem('access', response.data.access)
+            return authAPI.request(originalRequest)
+        }
+        catch (error) {
+            console.log('Пользователь не авторизован')
         }
     }
+    throw error
 })
 
