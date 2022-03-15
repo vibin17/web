@@ -49,7 +49,7 @@ export const checkAuth = () => {
         catch (error) {
             dispatch({
                 type: AuthActionTypes.SIGN_IN_FAILED,
-                payload: 'Токен не прошел прооверку'
+                payload: ''
             })
         }
     }
@@ -59,6 +59,7 @@ export const signOut = () => {
     return async (dispatch: Dispatch<AuthAction>) => {
         localStorage.removeItem('access')
         localStorage.removeItem('refresh')
+        window.location.reload()
         dispatch({
             type: AuthActionTypes.SIGN_OUT
         })

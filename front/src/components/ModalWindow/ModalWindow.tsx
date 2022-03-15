@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react"
-import './ModalWindow.scss'
+import styles from './ModalWindow.module.scss'
 
 type props = {
     isWindowActive: boolean
@@ -10,13 +10,13 @@ type props = {
 const ModalWindow = ({ isWindowActive, setWindowActive, children }: props) => {
     const closeWindow = () => setWindowActive(false)
     return (
-        <div className={isWindowActive? 'modal-back active' : 'modal-back'} onClick={closeWindow}>
-            <div className='modal-container'>
-                <div className='modal-window' onClick={(event) => event.stopPropagation()}>
-                    <div className='modal-window__header'>
-                        <button className='modal-window__header__close-button' onClick={closeWindow}/>    
+        <div className={`${styles['modal-window']} ${isWindowActive && styles['modal-window--active']}`} onClick={closeWindow}>
+            <div className={styles['modal-window__container']}>
+                <div className={styles['modal-window__main']} onClick={(event) => event.stopPropagation()}>
+                    <div className={styles['modal-window__header']}>
+                        <button className={styles['modal-window__close-button']} onClick={closeWindow}/>    
                     </div>
-                    <div className='modal-window__main'>
+                    <div className={styles['modal-window__content']}>
                         {children}
                     </div>
                 </div>
