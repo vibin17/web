@@ -6,14 +6,18 @@ export type AuthState = {
     }
     access: string | null
     refresh: string | null
-    signedIn: Boolean
+    isSignedIn: Boolean
     error?: string
+    isLoading?: boolean
 }
 
 export enum AuthActionTypes {
     SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS',
     SIGN_IN_FAILED = 'SIGN_IN_FAILED',
-    SIGN_OUT = 'SIGN_OUT'
+    SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS',
+    SIGN_UP_FAILES = 'SIGN_UP_FAILED',
+    SIGN_OUT = 'SIGN_OUT',
+    LOADING = 'LOADING'
 }
 
 type SignInSuccessAction = {
@@ -30,4 +34,9 @@ type SignOutAction = {
     type: AuthActionTypes.SIGN_OUT
 }
 
-export type AuthAction = SignInSuccessAction | SignInFailedAction | SignOutAction
+type AuthLoadingAction = {
+    type: AuthActionTypes.LOADING
+
+}
+
+export type AuthAction = SignInSuccessAction | SignInFailedAction | SignOutAction | AuthLoadingAction

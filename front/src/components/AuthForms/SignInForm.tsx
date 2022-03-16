@@ -1,6 +1,8 @@
 import {Field, Form, Formik} from 'formik'
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import ModalWindow from '../ModalWindow/ModalWindow';
 import styles from './Form.module.scss'
 
 const SignInForm = () => {
@@ -19,6 +21,7 @@ const SignInForm = () => {
       onSubmit={async (values) => {
         console.log(values.userName, values.userPassword)
         signIn(values.userName, values.userPassword)
+
       }}
     >
       <Form className={styles['form__main']}>
@@ -33,13 +36,9 @@ const SignInForm = () => {
         </div>
 
         {error && <div className={styles['form-message']}>
-          <ul className={styles['errors-list']}> {
-              <li className={styles['errors-list-item']}>
-                  <span className={styles['errors-list-item__text']}>
-                    {error}
-                  </span>
-                </li>
-          } </ul>
+          <span className={styles['errors-list-item__text']}>
+            {error}
+          </span>
         </div>
         }
 

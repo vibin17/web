@@ -5,10 +5,11 @@ import styles from './UserMenu.module.scss'
 
 type props = {
     setSignInFormActive: (active: boolean) => void
+    setSignUpFormActive: (active: boolean) => void
 }
 
-const UserMenu = ({ setSignInFormActive }: props) => {
-    let { userData, signedIn } = useTypedSelector(state => state.auth)
+const UserMenu = ({ setSignInFormActive, setSignUpFormActive }: props) => {
+    let { userData, isSignedIn: signedIn } = useTypedSelector(state => state.auth)
     let { signOut } = useActions()
     return (
     <div className={styles['user-menu']}>
@@ -18,7 +19,7 @@ const UserMenu = ({ setSignInFormActive }: props) => {
                     <button className={styles['user-menu__button']} onClick={() => setSignInFormActive(true)}>
                         Войти в аккаунт
                     </button>
-                    <button className={styles['user-menu__button']}>
+                    <button className={styles['user-menu__button']} onClick={() => setSignUpFormActive(true)}>
                         Регистрация
                     </button>
                 </> : <>

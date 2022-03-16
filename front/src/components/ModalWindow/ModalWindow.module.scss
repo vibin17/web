@@ -25,10 +25,11 @@
         align-items: center;
     }
     &__main {
+        position: relative;
         padding: 15px;
         border-radius: 12px;
         background: white;
-        width: 250px;
+        width: 330px;
     }
     &__header {
         display: flex;

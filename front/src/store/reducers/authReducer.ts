@@ -6,7 +6,7 @@ const initialState: AuthState = {
         phoneNumber: null,
         roles: null
     },
-    signedIn: false,
+    isSignedIn: false,
     access: null,
     refresh: null,
 }
@@ -19,7 +19,7 @@ export const authReducer = (state = initialState, action: AuthAction): AuthState
                 phoneNumber: action.payload.userData.phoneNumber,
                 roles: action.payload.userData.roles
             },
-            signedIn: true,
+            isSignedIn: true,
             access: action.payload.access,
             refresh: action.payload.refresh
         }
@@ -33,6 +33,12 @@ export const authReducer = (state = initialState, action: AuthAction): AuthState
         case AuthActionTypes.SIGN_OUT:
             return {
                 ...initialState
+            }
+        
+        case AuthActionTypes.LOADING:
+            return {
+                ...initialState,
+                isLoading: true
             }
 
         default:

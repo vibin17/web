@@ -1,17 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
-import HeaderIconButton from './HeaderButton/HeaderIconButton'
 import ModalWindow from '../ModalWindow/ModalWindow';
-import SignInForm from '../Forms/SignInForm';
+import SignInForm from '../AuthForms/SignInForm';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { RiUserLine } from 'react-icons/ri'
 import { BsCart2 } from 'react-icons/bs'
 import styles from './Header.module.scss'
 import UserMenu from '../UserMenu/UserMenu';
+import SignUpForm from '../AuthForms/SignUpForm';
 
 const Header = () => {
   let [isMenuActive, setMenuState] = useState(false)
   let [isSignInFormActive, setSignInFormActive] = useState(false)
-  let { userData, signedIn } = useTypedSelector(state => state.auth)
+  let [isSignUpFormActive, setSignUpFormActive] = useState(false)
+  let { userData, isSignedIn: signedIn } = useTypedSelector(state => state.auth)
   useEffect(() => {
     setSignInFormActive(false)
   }, [signedIn])
@@ -24,8 +25,11 @@ const Header = () => {
 
         {!signedIn && <ModalWindow isWindowActive={isSignInFormActive} setWindowActive={setSignInFormActive}>
           <SignInForm/>  
-        </ModalWindow>
-        }
+        </ModalWindow>}
+
+        {!signedIn && <ModalWindow isWindowActive={isSignUpFormActive} setWindowActive={setSignUpFormActive}>
+          <SignUpForm/>  
+        </ModalWindow>}
 
         <div className={`${styles['header__section']} ${styles['shop-section']}`}>
           <div className={styles['burger-menu']} onClick={() => setMenuState(!isMenuActive)}>
@@ -48,7 +52,7 @@ const Header = () => {
               <RiUserLine className={styles['user-section__item-icon']}/>
             </div>
             <div className={styles['user-section__item-details']}>
-              <UserMenu setSignInFormActive={setSignInFormActive}/>
+              <UserMenu setSignInFormActive={setSignInFormActive} setSignUpFormActive={setSignUpFormActive}/>
             </div>
           </div>
 
