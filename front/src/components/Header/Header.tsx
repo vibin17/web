@@ -7,6 +7,7 @@ import { BsCart2 } from 'react-icons/bs'
 import styles from './Header.module.scss'
 import UserMenu from '../UserMenu/UserMenu';
 import SignUpForm from '../AuthForms/SignUpForm';
+import logo from '../../images/logo.png'
 
 const Header = () => {
   let [isMenuActive, setMenuState] = useState(false)
@@ -36,7 +37,7 @@ const Header = () => {
             <div className={styles['burger-menu__line']}/>
           </div>
           <div className={styles['header-logo']}>
-            logo-placeholder
+            <div className={styles['header-logo__image']}/>
           </div>
         </div>
 
