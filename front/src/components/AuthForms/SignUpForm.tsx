@@ -1,23 +1,23 @@
-import {Field, Form, Formik} from 'formik'
+import {Field, Form, Formik, FormikContext} from 'formik'
 import { FormEvent, useState } from 'react';
 import validator from 'validator';
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { signUp } from '../../store/action-creators/authAction';
 import styles from './Form.module.scss'
 
+
 const SignUpForm = () => {
-    let { signIn } = useActions()
-    let { error } = useTypedSelector(state => state.auth)
+    let { signUp } = useActions()
+    let error = useTypedSelector(state => state.auth.error)
     let [isNameValidated, setNameValidated] = useState(true)
     let [isPasswordValidated, setPasswordValidated] = useState(true)
+    let [isPasswordConfirmValidated, setPasswordConfirmValidated] = useState(true)
     let [isPhoneNumberValidated, setPhoneNumberValidated] = useState(true)
+    let [password, setPassword] = useState('')
 
     let validateName = (event: FormEvent) => {
         let name = (event.target as HTMLInputElement).value
         let validated = name.length >= 3 && name.length <= 20 || !name
-        console.log(name)
-        console.log(!name)
         if (validated)
             return setNameValidated(true)
         setNameValidated(false)
@@ -26,9 +26,18 @@ const SignUpForm = () => {
     let validatePassword = (event: FormEvent) => {
         let password = (event.target as HTMLInputElement).value
         let validated = password.length >= 4 && password.length <= 16 || !password
-        if (validated)
+        setPassword(password)
+        if (validated) 
             return setPasswordValidated(true)
         setPasswordValidated(false)
+    }
+
+    let validatePasswordConfirm = (event: FormEvent) => {
+        let confirmPassword = (event.target as HTMLInputElement).value
+        let validated = confirmPassword === password
+        if (validated)
+            return setPasswordConfirmValidated(true)
+        setPasswordConfirmValidated(false)
     }
 
     let validatePhoneNumber = (event: FormEvent) => {
@@ -39,7 +48,6 @@ const SignUpForm = () => {
         setPhoneNumberValidated(false)
     }
 
-
     return (
         <div className={styles['form']}>
             <div className={styles['form__header']}>
@@ -47,65 +55,108 @@ const SignUpForm = () => {
             </div>
             <Formik
                 initialValues={{
-                userName: '',
-                userPassword: '',
-                userConfirmPassword: '',
-                userPhoneNumber: ''
+                    upUserName: '',
+                    upUserPassword: '',
+                    upUserConfirmPassword: '',
+                    upUserPhoneNumber: ''
                 }}
-                onSubmit={async (values) => {
-                console.log(values.userName, values.userPhoneNumber, values.userPassword)
-                signUp(values.userName, values.userPhoneNumber, values.userPassword)
-
+                onSubmit={ async (values) => {
+                    if (!values.upUserName) {
+                        setNameValidated(false)
+                    }
+                    if (!values.upUserPassword) {
+                        setPasswordValidated(false)
+                    }
+                    if (!values.upUserConfirmPassword) {
+                        setPasswordConfirmValidated(false)
+                    }
+                    if (!values.upUserPhoneNumber) {
+                        setPhoneNumberValidated(false)
+                    }
+                    if (isNameValidated && isPasswordValidated && isPasswordConfirmValidated && isPhoneNumberValidated) {
+                            signUp(values.upUserName, values.upUserPhoneNumber, values.upUserPassword)
+                        }
                 }}
             >
                 <Form className={styles['form__main']}>
-                <div className={styles['form-field']}>
-                    <label className={styles['form-field__label']} htmlFor="userName">Имя пользователя</label>
-                    <Field className={styles['form-field__input']} id="userName" 
-                    name="userName" placeholder="Ваш логин" onBlur={validateName}/>
-                </div>
-
-                <div className={styles['form-field']}>
-                    <label className={styles['form-field__label']} htmlFor="userPassword">Пароль</label>
-                    <Field className={styles['form-field__input']} type='password' 
-                    id="userPassword" name="userPassword" placeholder="Ваш пароль" onBlur={validatePassword}/>
-                </div>
-
-                
-                <div className={styles['form-field']}>
-                    <label className={styles['form-field__label']} htmlFor="userConfirmPassword">Подтвердите пароль</label>
-                    <Field className={styles['form-field__input']} type='password' 
-                    id="userConfirmPassword" name="userConfirmPassword" placeholder="Ваш пароль" onBlur={validatePassword}/>
-                </div>
-
-                
-                <div className={styles['form-field']}>
-                    <label className={styles['form-field__label']} htmlFor="userPhoneNumber">Номер телефона</label>
-                    <Field className={styles['form-field__input']} type='tel' 
-                    id="userPhoneNumber" name="userPhoneNumber" placeholder="Ваш номер телефона" onBlur={validatePhoneNumber}/>
-                </div>
-
-                {(!isNameValidated || !isPasswordValidated || !isPhoneNumberValidated) && <div className={styles['form-message']}>
-                    <ul className={styles['errors-list']}>
-                        {!isNameValidated && <li className={styles['errors-list-item']}>
-                            <span className={styles['errors-list-item__text']}>
+                    <div className={styles['form-field']}>
+                        <label className={styles['form-field__label']} htmlFor="upUserName">Имя пользователя</label>
+                        <Field 
+                            className={`${styles['form-field__input']} 
+                                ${!isNameValidated && styles['form-field__input--incorrect']}`} 
+                            type='text' 
+                            id="upUserName" 
+                            name="upUserName" 
+                            placeholder="Ваш логин" 
+                            onBlur={validateName}
+                        />
+                        {!isNameValidated &&
+                            <div className={`${styles['form-field__error']}`}>
                                 Некоректное имя пользователя
-                            </span> 
-                        </li>}
-                        {!isPasswordValidated && <li className={styles['errors-list-item']}>
-                            <span className={styles['errors-list-item__text']}>
-                                Некоректный пароль 
-                            </span>
-                        </li>}
-                        {!isPhoneNumberValidated && <li className={styles['errors-list-item']}>
-                            <span className={styles['errors-list-item__text']}>
-                                Некоректный номер телефона
-                            </span>
-                        </li>}
-                    </ul>
-                </div>}
+                            </div>
+                        }
+                    </div>
 
-                <button className={`${styles['form-button']} ${error && styles['form-button--message-shown']}`} type="submit">Зарегистрироваться</button>
+                    <div className={styles['form-field']}>
+                        <label className={styles['form-field__label']} htmlFor="upUserPassword">Пароль</label>
+                        <Field 
+                            className={`${styles['form-field__input']} 
+                                ${!isPasswordValidated && styles['form-field__input--incorrect']}`} 
+                            type='password' 
+                            id="upUserPassword" 
+                            name="upUserPassword" 
+                            placeholder="Ваш пароль"
+                            onBlur={validatePassword}
+                        />
+                        {!isPasswordValidated && 
+                            <div className={`${styles['form-field__error']}`}>
+                                Некоректный пароль
+                            </div>
+                        }
+                    </div>
+                    
+                    <div className={styles['form-field']}>
+                        <label className={styles['form-field__label']} htmlFor="upUserConfirmPassword">Подтвердите пароль</label>
+                        <Field 
+                            className={`${styles['form-field__input']} 
+                                ${!isPasswordConfirmValidated && styles['form-field__input--incorrect']}`} 
+                            type='password' 
+                            id="upUserConfirmPassword" 
+                            name="upUserConfirmPassword" 
+                            placeholder="Ваш пароль" 
+                            onBlur={validatePasswordConfirm}
+                        />
+                        {!isPasswordConfirmValidated &&
+                            <div className={`${styles['form-field__error']}`}>
+                                Пароли не совпадают
+                            </div>
+                        }
+                    </div>
+
+                    
+                    <div className={styles['form-field']}>
+                        <label className={styles['form-field__label']} htmlFor="upUserPhoneNumber">Номер телефона</label>
+                        <Field 
+                            className={`${styles['form-field__input']} 
+                                ${!isPhoneNumberValidated && styles['form-field__input--incorrect']}`} 
+                            type='tel'
+                            maxLength='12'
+                            id="upUserPhoneNumber" 
+                            name="upUserPhoneNumber" 
+                            placeholder="Ваш номер телефона" 
+                            onBlur={validatePhoneNumber}
+                        />
+                        {!isPhoneNumberValidated && 
+                            <div className={`${styles['form-field__error']}`}>
+                                Некоректный номер телефона
+                            </div>}
+                    </div>
+
+                    {error && <div className={styles['form-message']}>
+                        {error}
+                    </div>}
+
+                    <button className={`${styles['form-button']} ${error && styles['form-button--message-shown']}`} type="submit">Зарегистрироваться</button>
                 </Form>
             </Formik>
         </div>

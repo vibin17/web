@@ -21,7 +21,6 @@ const SignInForm = () => {
       onSubmit={async (values) => {
         console.log(values.userName, values.userPassword)
         signIn(values.userName, values.userPassword)
-
       }}
     >
       <Form className={styles['form__main']}>
@@ -36,9 +35,7 @@ const SignInForm = () => {
         </div>
 
         {error && <div className={styles['form-message']}>
-          <span className={styles['errors-list-item__text']}>
-            {error}
-          </span>
+          {error}
         </div>
         }
 

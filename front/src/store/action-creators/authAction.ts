@@ -18,10 +18,19 @@ export const signIn = (name: string, password: string) => {
                 type: AuthActionTypes.SIGN_IN_SUCCESS,
                 payload: {
                     ...response.data, 
-                    isSignedIn: true
+                    isSignedIn: false
                 }
             })
-            window.location.reload()
+            setTimeout(() => {
+                dispatch({
+                    type: AuthActionTypes.SIGN_IN_SUCCESS,
+                    payload: {
+                        ...response.data, 
+                        isSignedIn: true
+                    }
+                })
+                window.location.reload()
+            }, 500)
         }
         catch (error) {
             dispatch({
@@ -39,21 +48,27 @@ export const signUp = (name: string, phoneNumber: string, password: string) => {
                 type: AuthActionTypes.LOADING
             })
             const response = await AuthService.signUp({ userName: name, phoneNumber, password })
+            dispatch({
+                type: AuthActionTypes.SIGN_UP_SUCCESS
+            })
             localStorage.setItem('access', response.data.access)
             localStorage.setItem('refresh', response.data.refresh)
-            dispatch({
-                type: AuthActionTypes.SIGN_IN_SUCCESS,
-                payload: {
-                    ...response.data, 
-                    isSignedIn: true
-                }
-            })
-            window.location.reload()
+
+            setTimeout(() => {
+                dispatch({
+                    type: AuthActionTypes.SIGN_IN_SUCCESS,
+                    payload: {
+                        ...response.data, 
+                        isSignedIn: true
+                    }
+                })
+                window.location.reload()
+            }, 500)
         }
         catch (error) {
             dispatch({
-                type: AuthActionTypes.SIGN_IN_FAILED,
-                payload: 'Неправильный логин или пароль'
+                type: AuthActionTypes.SIGN_UP_FAILED,
+                payload: 'Пользователь с таким именем или номером телефона уже существует'
             })
         }
     }

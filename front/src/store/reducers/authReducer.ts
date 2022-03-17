@@ -19,12 +19,23 @@ export const authReducer = (state = initialState, action: AuthAction): AuthState
                 phoneNumber: action.payload.userData.phoneNumber,
                 roles: action.payload.userData.roles
             },
-            isSignedIn: true,
+            isSignedIn: action.payload.isSignedIn,
             access: action.payload.access,
             refresh: action.payload.refresh
         }
 
         case AuthActionTypes.SIGN_IN_FAILED:
+            return {
+                ...initialState,
+                error: action.payload
+            }
+
+        case AuthActionTypes.SIGN_UP_SUCCESS:
+            return {
+                ...initialState
+            }
+            
+        case AuthActionTypes.SIGN_UP_FAILED:
             return {
                 ...initialState,
                 error: action.payload

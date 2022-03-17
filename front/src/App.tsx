@@ -2,6 +2,8 @@ import './App.scss'
 import Header from './components/Header/Header';
 import { useActions } from './hooks/useActions';
 import { useEffect } from 'react';
+import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
+import AdminPanelPage from './pages/AdminPanel/AdminPanelPage';
 
 function App() {
   let { checkAuth } = useActions()
@@ -12,9 +14,14 @@ function App() {
   }, [])
 
   return (
-    <div className='app'>
+    <BrowserRouter>
+      <div className='app'>
       <Header/>
-    </div>
+        <Routes>
+          <Route path='/admin' element={<AdminPanelPage/>}/>
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 

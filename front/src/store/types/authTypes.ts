@@ -15,7 +15,7 @@ export enum AuthActionTypes {
     SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS',
     SIGN_IN_FAILED = 'SIGN_IN_FAILED',
     SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS',
-    SIGN_UP_FAILES = 'SIGN_UP_FAILED',
+    SIGN_UP_FAILED = 'SIGN_UP_FAILED',
     SIGN_OUT = 'SIGN_OUT',
     LOADING = 'LOADING'
 }
@@ -30,6 +30,15 @@ type SignInFailedAction = {
     payload: string
 }
 
+type SignUpSuccessAction = {
+    type: AuthActionTypes.SIGN_UP_SUCCESS
+}
+
+type SignUpFailedAction = {
+    type: AuthActionTypes.SIGN_UP_FAILED
+    payload: string
+}
+
 type SignOutAction = {
     type: AuthActionTypes.SIGN_OUT
 }
@@ -39,4 +48,4 @@ type AuthLoadingAction = {
 
 }
 
-export type AuthAction = SignInSuccessAction | SignInFailedAction | SignOutAction | AuthLoadingAction
+export type AuthAction = SignInSuccessAction | SignInFailedAction | SignUpSuccessAction | SignUpFailedAction | SignOutAction | AuthLoadingAction
