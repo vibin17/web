@@ -33,26 +33,28 @@ const Header = () => {
         </ModalWindow>}
 
         <div className={`${styles['header__section']} ${styles['shop-section']}`}>
-          <div className={styles['burger-menu']} onClick={() => setMenuState(!isMenuActive)}>
-            <div className={styles['burger-menu__line']}/>
+          <div className={styles['header-item']}>
+            <div className={styles['header-item__summary']}>
+              <div className={styles['burger-menu']} onClick={() => setMenuState(!isMenuActive)}>
+                <div className={styles['burger-menu__line']}/>
+              </div>
+            </div>
           </div>
-          <div className={styles['header-logo']}>
-            <div className={styles['header-logo__image']}/>
-          </div>
+          <div className={styles['header-logo']}/>
         </div>
 
         <div className={`${styles['header__section']} ${styles['user-section']}`}>
-          <div className={styles['user-section__item']}>
-            <div className={styles['user-section__item-summary']}>
-              <BsCart2 className={styles['user-section__item-icon']}/>
+          <div className={styles['header-item']}>
+            <div className={styles['header-item__summary']}>
+              <BsCart2 className={styles['header-item__icon']}/>
             </div>
           </div>
 
-          <div className={styles['user-section__item']}>
-            <div className={styles['user-section__item-summary']}>
-              <RiUserLine className={styles['user-section__item-icon']}/>
+          <div className={styles['header-item']}>
+            <div className={styles['header-item__summary']}>
+              <RiUserLine className={styles['header-item__icon']}/>
             </div>
-            <div className={styles['user-section__item-details']}>
+            <div className={styles['header-item__details']}>
               <UserMenu setSignInFormActive={setSignInFormActive} setSignUpFormActive={setSignUpFormActive}/>
             </div>
           </div>
