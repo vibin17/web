@@ -1,13 +1,12 @@
-import {IsEmail, IsMobilePhone, IsString, Length, MaxLength, MinLength} from "class-validator";
+import { IsMobilePhone, IsString, Length } from "class-validator";
 
 export class SignUpUserDto {
-    @MinLength(3)
-    @MaxLength(20)
-    @IsString({message: 'Должно быть строкой'})
+    @Length(3, 20, { message: 'Не меньше 4 и не больше 16' })
+    @IsString({ message: 'Должно быть строкой' })
     readonly userName: string;
-    @IsMobilePhone('ru-RU')
+    @IsMobilePhone('ru-RU', { message: 'Должно быть номером телефона российского формата' })
     readonly phoneNumber: string;
-    @IsString({message: 'Должно быть строкой'})
-    @Length(4, 16, {message: 'Не меньше 4 и не больше 16'})
+    @IsString({ message: 'Должно быть строкой' })
+    @Length(6, 16, { message: 'Не меньше 4 и не больше 16' })
     readonly password: string;
 }

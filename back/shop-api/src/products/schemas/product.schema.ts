@@ -1,5 +1,6 @@
 import { MongooseModule, Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
+import { Document } from 'mongoose';
 import { Category, Rating } from "../types/types";
 
 export type ProductDocument = Product & Document
@@ -7,9 +8,14 @@ export type ProductDocument = Product & Document
 export class Product {
     @Prop({ required: true, unique: true })
     productName: string
+
     @Prop({ required: true})
     releaseYear: string
-    @Prop({ type: {
+
+    @Prop({ required: true })
+    price: number
+
+    @Prop({ _id: false, type: {
         name: {
             type: mongoose.SchemaTypes.String
         },
@@ -17,13 +23,17 @@ export class Product {
             type: mongoose.SchemaTypes.Array
         }
     }, 
-    required: true})
+        required: true
+    })
     category: Category
+
     @Prop(  { default: 'Вставьте описание' })
     description: string
+
     @Prop()
-    fileNames: string[]
-    @Prop({ type: {
+    imagePaths: string[]
+
+    @Prop({ _id: false, type: {
         '5': {
             type: mongoose.SchemaTypes.Number
         },
@@ -47,8 +57,10 @@ export class Product {
         '1': 0
     }})
     rating: Rating
+
     @Prop({ default: 0})
     totalReviews: number
+
     @Prop()
     props: string[]
 }

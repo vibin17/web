@@ -1,13 +1,17 @@
 import { RolesEnum } from "../../users/schemas/roles.enum"
 
 export type AuthResponseDto = {
-    userData: UserTokenData
-    access: string
-    refresh: string
+    readonly userData: UserTokenData
+    readonly access: string
+    readonly refresh: string
 }
 
 export type UserTokenData = {
-    userName: string
-    phoneNumber: string
-    roles: RolesEnum[]
+    readonly userName: string
+    readonly phoneNumber: string
+    readonly roles: RolesEnum[]
+}
+
+export type AuthCheckDto = {
+    readonly userData: UserTokenData
 }

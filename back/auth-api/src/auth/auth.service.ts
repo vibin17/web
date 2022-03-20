@@ -5,7 +5,7 @@ import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcryptjs'
 import { User } from 'src/users/schemas/user.schema';
 import { SignInUserDto } from 'src/users/dto/signin-user.dto';
-import { AuthResponseDto, UserTokenData} from 'src/auth/dto/auth-response.dto';
+import { AuthCheckDto, AuthResponseDto, UserTokenData} from 'src/auth/dto/auth-response.dto';
 import { TokenService } from './token.service';
 
 @Injectable()
@@ -52,6 +52,18 @@ export class AuthService {
             userData: user, 
             access: await this.tokenService.generateAccessToken(user), 
             refresh: await this.tokenService.generateRefreshToken(user)
+        }
+    }
+
+    async checkIsSignedIn(access: string): Promise<AuthCheckDto> {
+        const userData: UserTokenData  = await this.tokenService.validateAccessToken(access)
+        const { userName, phoneNumber, roles } = await this.userService.getByName(userData.userName)
+        if (!userName) {
+            throw new HttpException('Пользователь из токена не найден', HttpStatus.UNAUTHORIZED)
+        }
+        const user: UserTokenData = { userName, phoneNumber, roles }
+        return { 
+            userData: user
         }
     }
 

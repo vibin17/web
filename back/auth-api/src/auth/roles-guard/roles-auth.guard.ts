@@ -12,15 +12,12 @@ export class RolesAuthGuard implements CanActivate {
     constructor(private tokenService: TokenService, 
                 private reflector: Reflector) {}
 
-    canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+    async canActivate(context: ExecutionContext): Promise<boolean>{
         const req = context.switchToHttp().getRequest()
         const requiredRoles = this.reflector.getAllAndOverride<string[]>(ROLES_KEY, [
             context.getHandler(),
             context.getClass()
         ])
-        if (!requiredRoles) {
-            return true
-        }
         try {
             const authHeader = req.headers.authorization
             const bearer = authHeader.split(' ')[0]
@@ -29,7 +26,10 @@ export class RolesAuthGuard implements CanActivate {
             if (bearer !== 'Bearer' || !token) {
                 throw new UnauthorizedException({message: 'Пользователь не авторизован'})
             }
-            const userData: UserTokenData = this.tokenService.syncValidateAccessToken(token)
+            const userData: UserTokenData = await this.tokenService.validateAccessToken(token)
+            if (!requiredRoles && userData) {
+                return true
+            }
             return userData.roles.some(role => requiredRoles.includes(role))
         }
         catch {

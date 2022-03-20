@@ -1,8 +1,11 @@
 import { Category } from "../types/types"
 
 export class ResponseProductDto {
-    productName: string
-    releaseYear: string
-    category: Category
-    fileNames: string[]
+    readonly _id?: string
+    readonly productName: string
+    readonly releaseYear: string
+    readonly price: number
+    readonly category: Category
+    readonly imagePaths: string[]
+    readonly props?: string[]
 }

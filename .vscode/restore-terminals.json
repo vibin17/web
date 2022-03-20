@@ -1,0 +1,22 @@
+{
+  "keepExistingTerminalsOpen": false,
+  "runOnStartup": true,
+  "terminals": [
+    {
+      "splitTerminals": [
+        {
+          "name": "front",
+          "commands": ["cd front"]
+        },
+        {
+          "name": "auth-api",
+          "commands": ["cd back", "cd auth-api"]
+        },
+        {
+          "name": "shop-api",
+          "commands": ["cd back", "cd shop-api"]
+        }
+      ]
+    }
+  ]
+}

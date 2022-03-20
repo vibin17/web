@@ -1,8 +1,14 @@
+import { IsNumber, IsNumberString, IsString } from "class-validator"
+
 export class CreateProductDto {
-    productName: string
-    releaseYear: string
-    categoryName: string
-    description?: string
-    images: any
-    props?: string[]
+    @IsString()
+    readonly productName: string
+    @IsNumberString()
+    readonly releaseYear: number
+    @IsNumberString()
+    readonly price: number
+    @IsString()
+    readonly categoryName: string
+    readonly description?: string
+    readonly props?: string[]
 }
