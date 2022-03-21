@@ -3,6 +3,7 @@
 .user-menu {
     background: white;
     border-radius: inherit;
+    overflow: hidden;
     &__container {
         width: 100%;
     }
@@ -12,6 +13,7 @@
         align-items: center;
         padding: 5px;
         font-size: 14px;
+        font-weight: bold;
     }
     &__button {
         text-decoration: none;

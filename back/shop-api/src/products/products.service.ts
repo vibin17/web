@@ -6,6 +6,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { categories } from './types/types';
 import { FilesService } from 'src/files/files.service';
 import { ResponseProductDto } from './dto/response-product.dto';
+import { GetProductDto } from './dto/get-product.dto';
 
 @Injectable()
 export class ProductsService {
@@ -40,8 +41,15 @@ export class ProductsService {
                     
         return product
     }
+    async getById(productId: string): Promise<ResponseProductDto> {
+        const product: ResponseProductDto = await this.productModel.findById(productId, '-__v')
+        if (!product) {
+            throw new HttpException('Товар с таким ID не найден', HttpStatus.BAD_REQUEST)
+        }
+        return product
+    }
     async getAll(): Promise<ResponseProductDto[]>  {
-        const products: ResponseProductDto[] = await this.productModel.find()
+        const products: ResponseProductDto[] = await this.productModel.find({}, '_id')
         return products
     }
 }

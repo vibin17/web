@@ -108,7 +108,6 @@ export const signOut = () => {
     return async (dispatch: Dispatch<AuthAction>) => {
         localStorage.removeItem('access')
         localStorage.removeItem('refresh')
-        window.location.reload()
         dispatch({
             type: AuthActionTypes.SIGN_OUT
         })

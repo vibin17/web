@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UploadedFiles, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UploadedFiles, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { ENV_PATH } from 'src/consts';
@@ -12,6 +12,11 @@ import { ValidationPipe } from './validation/validation';
 @Controller('products')
 export class ProductsController {
     constructor(private productsService: ProductsService) {}
+
+    @Get(':id')
+    async get(@Param('id') productId) {
+        return this.productsService.getById(productId)
+    }
 
     @Get()
     async getAll() {

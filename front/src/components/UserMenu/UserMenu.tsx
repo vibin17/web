@@ -32,9 +32,9 @@ const UserMenu = ({ setSignInFormActive, setSignUpFormActive }: props) => {
                             Панель админа
                         </Link>}
                     
-                    <button className={`${styles['user-menu__button']} ${styles['user-menu__button--red']}`} onClick={() => signOut()}>
+                    <Link to={'/'} className={`${styles['user-menu__button']} ${styles['user-menu__button--red']}`} onClick={() => { signOut() }}>
                         Выйти из аккаунта
-                    </button>
+                    </Link>
                 </>
             }
         </div>

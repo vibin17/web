@@ -22,22 +22,22 @@ export class UsersService {
   }
 
   async getByName(userName: string) {
-    const user = await this.userModel.findOne({userName})
+    const user = await this.userModel.findOne({ userName })
     return user
   }
 
   async getByPhoneNumber(phoneNumber: string) {
-    const user = await this.userModel.findOne({phoneNumber})
+    const user = await this.userModel.findOne({ phoneNumber })
     return user
   }
 
   async updateByName(userName: string, updateUserDto: SignInUserDto) {
-    const updatedUser = this.userModel.findOneAndUpdate({userName}, updateUserDto, { new: true });
+    const updatedUser = this.userModel.findOneAndUpdate({ userName }, updateUserDto, { new: true });
     return updateUserDto
   }
 
   async setAdmin(userName: string) {
-    const user = this.userModel.findOneAndUpdate({userName}, {roles: [RolesEnum.Admin, RolesEnum.User]}, { new: true })
+    const user = this.userModel.findOneAndUpdate({ userName }, { roles: [RolesEnum.Admin, RolesEnum.User] }, { new: true })
     if (!user) {
       throw new BadRequestException('Пользователь не найден')
     }

@@ -1,5 +1,4 @@
 import { BadRequestException, HttpException, HttpStatus, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { SignUpUserDto } from 'src/users/dto/signup-user.dto';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcryptjs'
@@ -14,10 +13,8 @@ export class AuthService {
                 private tokenService: TokenService) {}
 
     async signIn(userDto: SignInUserDto): Promise<AuthResponseDto> {
-        console.log(userDto)
         const { userName, phoneNumber, roles } = await this.validateUser(userDto)
         const user: UserTokenData = { userName, phoneNumber, roles }
-        console.log(user)
         return { 
             userData: user, 
             access: await this.tokenService.generateAccessToken(user), 

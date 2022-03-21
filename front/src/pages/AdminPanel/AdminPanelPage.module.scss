@@ -1,0 +1,21 @@
+.admin-panel {
+    padding: 30px 30px;
+    height: 100%;
+    width: 100%;
+}
+
+.list {
+    list-style-position: inside;
+}
+
+*.link {
+    font: normal 16px Arial;
+    color: rgb(52, 52, 212);
+    &:hover {
+        filter: invert(30%)
+    }
+    &:visited {
+        color: rgb(52, 52, 212);
+        color: inherit;
+    }
+}

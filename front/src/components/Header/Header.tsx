@@ -8,6 +8,7 @@ import styles from './Header.module.scss'
 import UserMenu from '../UserMenu/UserMenu';
 import SignUpForm from '../AuthForms/SignUpForm';
 import logo from '../../images/logo.png'
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   let [isMenuActive, setMenuState] = useState(false)
@@ -40,7 +41,9 @@ const Header = () => {
               </div>
             </div>
           </div>
-          <div className={styles['header-logo']}/>
+          <Link to='/' className={styles['header-logo']}> 
+              <div className={styles['header-logo__image']}/>
+          </Link>
         </div>
 
         <div className={`${styles['header__section']} ${styles['user-section']}`}>

@@ -1,0 +1,9 @@
+@import '../global';
+
+.footer {
+    width: 100%;
+    height: $footer-height;
+    background: white;
+    border-top: 1px solid rgba(124, 124, 124, 0.671);
+    flex: 0 0 100px;
+}

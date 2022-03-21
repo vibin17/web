@@ -12,10 +12,12 @@
     height: $header-height;
     top: 0;
     left: 0;
-    box-shadow: rgba(0, 0, 0, 0.9) 0px 1px 10px;
+    border-bottom: 1px solid rgba(124, 124, 124, 0.671);
+    //box-shadow: rgba(0, 0, 0, 0.9) 0px 1px 10px;
 
     &__container {
-        width: $container-width;
+        //width: $container-width;
+        width: 95%;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -32,22 +34,18 @@
 
     &-logo {
         height: 100%;
-        width: 290px;
-        margin-left: 15px;
+        width: 320px;
+        padding: 0 15px;
         display: flex;
         justify-content: center;
         align-items: center;
-        background-image: url('../../images/logo4.png');
-        background-position:center center;
-        background-size: contain;
-        background-repeat: no-repeat;
         &__image {
             background-image: url('../../images/logo4.png');
             background-position:center center;
             background-size: contain;
             background-repeat: no-repeat;
-            width: 110px;
             height: 100%;
+            width: 290px;
         }
     }
 
