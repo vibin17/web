@@ -5,20 +5,40 @@ import * as uuid from 'uuid';
 
 @Injectable()
 export class FilesService {
-
+    private validExtensions = ['.webp', '.png', '.jpg']
+    private validMimeTypes = ['image/webp', 'image/png', 'image/jpg']
     async createFile(file): Promise<string> {
+        const extension = path.extname(file.originalname)
+        const mimeType = file.mimetype
+        if (!(this.validExtensions.includes(extension) &&
+            this.validMimeTypes.includes(mimeType))) {
+                throw new HttpException('Некоректный формат файла', HttpStatus.BAD_REQUEST)
+        }
+
         try {
-            const fileName = uuid.v4() + '.jpg';
+            const fileName = uuid.v4() + extension
             const filePath = path.resolve(__dirname, '../..', 'productImages')
-            fs.access(filePath, fs.constants.F_OK, () => {
-                fs.mkdir(filePath, {recursive: true}, () => {
-                    fs.writeFile(path.join(filePath, fileName), file.buffer, () => {})
-                })
-            })
-            return fileName;
-            
-        } catch (e) {
+
+            await fs.promises.access(filePath)
+            await fs.promises.mkdir(filePath, { recursive: true })
+            await fs.promises.writeFile(path.join(filePath, fileName), file.buffer)
+
+            return fileName;  
+        } 
+        
+        catch (e) {
             throw new HttpException('Произошла ошибка при записи файла', HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+
+    async readFile(fileName: string) {
+        try {
+            const filePath = path.join(path.resolve(__dirname, '../..', 'productImages'), fileName)
+            let fileData = await fs.promises.readFile(filePath)
+            return fileData
+            
+        } catch {
+            throw new HttpException('Произошла ошибка при чтении файла', HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 

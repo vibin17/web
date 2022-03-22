@@ -5,8 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CreateProductDto } from './dto/create-product.dto';
 import { categories } from './types/types';
 import { FilesService } from 'src/files/files.service';
-import { ResponseProductDto } from './dto/response-product.dto';
-import { GetProductDto } from './dto/get-product.dto';
+import { ResponseProductDto, ResponseProductSummaryDto } from './dto/response-product.dto';
 
 @Injectable()
 export class ProductsService {
@@ -26,13 +25,9 @@ export class ProductsService {
         }
 
         let fileNames: string[] = []
-        try {
-            for (let image of imageFiles) {
-                let fileName = await this.filesService.createFile(image)
-                fileNames.push(fileName)
-            }
-        } catch {
-            throw new HttpException('Ошибка при обработке файлов', HttpStatus.INTERNAL_SERVER_ERROR)
+        for (let image of imageFiles) {
+            let fileName = await this.filesService.createFile(image)
+            fileNames.push(fileName)
         }
         
         const newProduct = new this.productModel({ ...createProductDto, category: productCategory, imagePaths: fileNames })
@@ -41,15 +36,23 @@ export class ProductsService {
                     
         return product
     }
-    async getById(productId: string): Promise<ResponseProductDto> {
-        const product: ResponseProductDto = await this.productModel.findById(productId, '-__v')
+    
+    async getSummaryById(productId: string): Promise<ResponseProductSummaryDto> {
+        const { productName, imagePaths, price, _id } = await this.productModel.findById(productId)
+        const image: any = await this.filesService.readFile(imagePaths[0])
+        console.log(image)
+        const product: ResponseProductSummaryDto = { productName, price, _id, image }
         if (!product) {
             throw new HttpException('Товар с таким ID не найден', HttpStatus.BAD_REQUEST)
         }
+
         return product
     }
+
     async getAll(): Promise<ResponseProductDto[]>  {
         const products: ResponseProductDto[] = await this.productModel.find({}, '_id')
+
         return products
     }
+
 }

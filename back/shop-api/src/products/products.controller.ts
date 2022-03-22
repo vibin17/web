@@ -13,14 +13,15 @@ import { ValidationPipe } from './validation/validation';
 export class ProductsController {
     constructor(private productsService: ProductsService) {}
 
-    @Get(':id')
-    async get(@Param('id') productId) {
-        return this.productsService.getById(productId)
+
+    @Get('id')
+    async getAllIds() {
+        return this.productsService.getAll()
     }
 
-    @Get()
-    async getAll() {
-        return this.productsService.getAll()
+    @Get('/summary/:id')
+    async getSummaryById(@Param('id') productId) {
+        return this.productsService.getSummaryById(productId)
     }
 
     @Post()

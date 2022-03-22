@@ -9,3 +9,10 @@ export class ResponseProductDto {
     readonly imagePaths: string[]
     readonly props?: string[]
 }
+
+export class ResponseProductSummaryDto {
+    readonly _id?: string
+    readonly productName: string
+    readonly price: number
+    readonly image: any
+}
