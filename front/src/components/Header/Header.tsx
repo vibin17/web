@@ -35,9 +35,10 @@ const Header = () => {
 
         <div className={`${styles['header__section']} ${styles['shop-section']}`}>
           <div className={styles['header-item']}>
-            <div className={styles['header-item__summary']}>
+            <div className={`${styles['header-item__summary']} ${styles['header-item__summary--cursor-pointer']}`}>
               <div className={styles['burger-menu']} onClick={() => setMenuState(!isMenuActive)}>
                 <div className={styles['burger-menu__line']}/>
+                Каталог
               </div>
             </div>
           </div>

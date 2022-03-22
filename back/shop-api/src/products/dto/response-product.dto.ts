@@ -1,18 +1,19 @@
-import { Category } from "../types/types"
+import { Category, Rating } from "../types/types"
 
 export class ResponseProductDto {
-    readonly _id?: string
+    readonly _id: string
     readonly productName: string
     readonly releaseYear: string
     readonly price: number
+    readonly rating: Rating
     readonly category: Category
     readonly imagePaths: string[]
-    readonly props?: string[]
+    readonly props: string[]
 }
 
 export class ResponseProductSummaryDto {
-    readonly _id?: string
+    readonly _id: string
     readonly productName: string
     readonly price: number
-    readonly image: any
+    readonly imagePath: string
 }

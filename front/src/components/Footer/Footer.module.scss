@@ -1,9 +1,21 @@
 @import '../global';
+@import url('https://fonts.googleapis.com/css?family=PT+Sans');
 
 .footer {
     width: 100%;
     height: $footer-height;
     background: white;
-    border-top: 1px solid rgba(124, 124, 124, 0.671);
+    border-top: 1px solid rgba(124, 124, 124, 0.35);
     flex: 0 0 100px;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    height: 100%;
+    width: $container-width;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font: 18px 'PT Sans', Arial;
 }

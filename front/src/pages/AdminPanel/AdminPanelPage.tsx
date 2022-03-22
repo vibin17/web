@@ -1,6 +1,7 @@
 import { Link, Route, Routes } from 'react-router-dom'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import styles from './AdminPanelPage.module.scss'
+import CreateProductPage from './CreateProduct/CreateProductPage'
 
 const AdminPanelPage = () => {
     let { userData, isSignedIn } = useTypedSelector(state => state.auth)
@@ -9,16 +10,16 @@ const AdminPanelPage = () => {
         <div className={styles['admin-panel']}>
             <Routes>
                 <Route path='/' element={                
-                    <ul className={styles.list}>
-                        <li>
+                    <ul className={styles['list']}>
+                        <li className={styles['list__item']}>
                             <Link to='create' className={styles['link']}>Добавить товар в каталог</Link>
+                        </li>
+                        <li className={styles['list__item']}>
                             <Link to='1' className={styles['link']}>Добавить товар в каталог</Link>
                         </li>
                     </ul>}
                 />
-                <Route path='create' element={
-                    <h2> 213</h2>
-                }/>
+                <Route path='create' element={<CreateProductPage/>}/>
                     
             </Routes>
         </div>

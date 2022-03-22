@@ -31,17 +31,16 @@ export class ProductsService {
         }
         
         const newProduct = new this.productModel({ ...createProductDto, category: productCategory, imagePaths: fileNames })
-        const { productName, releaseYear, price, category, imagePaths, _id } = await newProduct.save()
-        const product: ResponseProductDto = { _id, productName, releaseYear, price, category, imagePaths }
+        const { productName, releaseYear, price, category, rating, imagePaths, _id, props } = await newProduct.save()
+        const product: ResponseProductDto = { _id, productName, releaseYear, price, category, imagePaths, props, rating }
                     
         return product
     }
     
     async getSummaryById(productId: string): Promise<ResponseProductSummaryDto> {
         const { productName, imagePaths, price, _id } = await this.productModel.findById(productId)
-        const image: any = await this.filesService.readFile(imagePaths[0])
-        console.log(image)
-        const product: ResponseProductSummaryDto = { productName, price, _id, image }
+        const imagePath: string = imagePaths[0]
+        const product: ResponseProductSummaryDto = { _id, productName, price, imagePath }
         if (!product) {
             throw new HttpException('Товар с таким ID не найден', HttpStatus.BAD_REQUEST)
         }

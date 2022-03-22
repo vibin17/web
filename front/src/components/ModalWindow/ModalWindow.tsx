@@ -1,7 +1,7 @@
 import { KeyboardEventHandler, ReactElement, useEffect, useState } from "react"
 import { useActions } from "../../hooks/useActions"
 import { useTypedSelector } from "../../hooks/useTypedSelector"
-import LoadingSpinner from "../LoadingSpinner/LoadingSpinner"
+import LoadingSpinner from "./LoadingSpinner/LoadingSpinner"
 import styles from './ModalWindow.module.scss'
 
 type props = {

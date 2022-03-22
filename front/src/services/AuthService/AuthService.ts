@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { authAPI } from "../../http";
-import { AuthResponse, SignInData, SignUpData } from "../../models/response/authModels";
+import { AuthResponse, SignInData, SignUpData } from "../../models/response/auth-models";
 
 export default class AuthService {
     static async signIn(signInData: SignInData): Promise<AxiosResponse<AuthResponse>> {

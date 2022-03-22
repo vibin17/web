@@ -1,7 +1,7 @@
 import axios from "axios"
 import { Dispatch } from "react"
 import { AUTH_URL} from "../../http"
-import { AuthResponse } from "../../models/response/authModels"
+import { AuthResponse } from "../../models/response/auth-models"
 import AuthService from "../../services/AuthService/AuthService"
 import { AuthAction, AuthActionTypes } from "../types/authTypes"
 

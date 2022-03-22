@@ -17,7 +17,7 @@ export class FilesService {
 
         try {
             const fileName = uuid.v4() + extension
-            const filePath = path.resolve(__dirname, '../..', 'productImages')
+            const filePath = path.resolve(__dirname, '../..', 'product-images')
 
             await fs.promises.access(filePath)
             await fs.promises.mkdir(filePath, { recursive: true })
@@ -33,7 +33,7 @@ export class FilesService {
 
     async readFile(fileName: string) {
         try {
-            const filePath = path.join(path.resolve(__dirname, '../..', 'productImages'), fileName)
+            const filePath = path.join(path.resolve(__dirname, '../..', 'product-images'), fileName)
             let fileData = await fs.promises.readFile(filePath)
             return fileData
             

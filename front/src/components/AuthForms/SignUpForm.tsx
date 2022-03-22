@@ -14,6 +14,7 @@ const SignUpForm = () => {
     let [isPasswordConfirmValidated, setPasswordConfirmValidated] = useState(true)
     let [isPhoneNumberValidated, setPhoneNumberValidated] = useState(true)
     let [password, setPassword] = useState('')
+    let [passwordConfirm, setPasswordConfirm] = useState('')
 
     let validateName = (event: FormEvent) => {
         let name = (event.target as HTMLInputElement).value
@@ -26,6 +27,9 @@ const SignUpForm = () => {
     let validatePassword = (event: FormEvent) => {
         let password = (event.target as HTMLInputElement).value
         let validated = password.length >= 4 && password.length <= 16 || !password
+        if (passwordConfirm && password != passwordConfirm) {
+            setPasswordConfirmValidated(false)
+        }
         setPassword(password)
         if (validated) 
             return setPasswordValidated(true)
@@ -33,8 +37,9 @@ const SignUpForm = () => {
     }
 
     let validatePasswordConfirm = (event: FormEvent) => {
-        let confirmPassword = (event.target as HTMLInputElement).value
-        let validated = confirmPassword === password
+        let passwordConfirm = (event.target as HTMLInputElement).value
+        let validated = passwordConfirm === password
+        setPasswordConfirm(passwordConfirm)
         if (validated)
             return setPasswordConfirmValidated(true)
         setPasswordConfirmValidated(false)
@@ -61,18 +66,6 @@ const SignUpForm = () => {
                     upUserPhoneNumber: ''
                 }}
                 onSubmit={ async (values) => {
-                    if (!values.upUserName) {
-                        setNameValidated(false)
-                    }
-                    if (!values.upUserPassword) {
-                        setPasswordValidated(false)
-                    }
-                    if (!values.upUserConfirmPassword) {
-                        setPasswordConfirmValidated(false)
-                    }
-                    if (!values.upUserPhoneNumber) {
-                        setPhoneNumberValidated(false)
-                    }
                     if (isNameValidated && isPasswordValidated && isPasswordConfirmValidated && isPhoneNumberValidated) {
                             signUp(values.upUserName, values.upUserPhoneNumber, values.upUserPassword)
                         }
@@ -89,6 +82,7 @@ const SignUpForm = () => {
                             name="upUserName" 
                             placeholder="Ваш логин" 
                             onBlur={validateName}
+                            required
                         />
                         {!isNameValidated &&
                             <div className={`${styles['form-field__error']}`}>
@@ -107,8 +101,9 @@ const SignUpForm = () => {
                             name="upUserPassword" 
                             placeholder="Ваш пароль"
                             onBlur={validatePassword}
+                            required
                         />
-                        {!isPasswordValidated && 
+                        {!isPasswordValidated &&
                             <div className={`${styles['form-field__error']}`}>
                                 Некоректный пароль
                             </div>
@@ -125,6 +120,7 @@ const SignUpForm = () => {
                             name="upUserConfirmPassword" 
                             placeholder="Ваш пароль" 
                             onBlur={validatePasswordConfirm}
+                            required
                         />
                         {!isPasswordConfirmValidated &&
                             <div className={`${styles['form-field__error']}`}>
@@ -145,6 +141,7 @@ const SignUpForm = () => {
                             name="upUserPhoneNumber" 
                             placeholder="Ваш номер телефона" 
                             onBlur={validatePhoneNumber}
+                            required
                         />
                         {!isPhoneNumberValidated && 
                             <div className={`${styles['form-field__error']}`}>

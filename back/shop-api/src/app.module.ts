@@ -5,8 +5,10 @@ import { ENV_PATH } from './consts';
 import { ProductsModule } from './products/products.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({envFilePath: ENV_PATH, isGlobal: true}),
+  imports: [
+    ConfigModule.forRoot({envFilePath: ENV_PATH, isGlobal: true}),
     MongooseModule.forRoot(process.env.DB_URL),
-    ProductsModule],
+    ProductsModule
+  ]
 })
 export class AppModule {}
