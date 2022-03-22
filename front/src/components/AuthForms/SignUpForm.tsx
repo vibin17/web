@@ -8,7 +8,7 @@ import styles from './Form.module.scss'
 
 const SignUpForm = () => {
     let { signUp } = useActions()
-    let error = useTypedSelector(state => state.auth.error)
+    let { signUpError } = useTypedSelector(state => state.auth)
     let [isNameValidated, setNameValidated] = useState(true)
     let [isPasswordValidated, setPasswordValidated] = useState(true)
     let [isPasswordConfirmValidated, setPasswordConfirmValidated] = useState(true)
@@ -149,11 +149,11 @@ const SignUpForm = () => {
                             </div>}
                     </div>
 
-                    {error && <div className={styles['form-message']}>
-                        {error}
+                    {signUpError && <div className={styles['form-message']}>
+                        {signUpError}
                     </div>}
 
-                    <button className={`${styles['form-button']} ${error && styles['form-button--message-shown']}`} type="submit">Зарегистрироваться</button>
+                    <button className={`${styles['form-button']} ${signUpError && styles['form-button--message-shown']}`} type="submit">Зарегистрироваться</button>
                 </Form>
             </Formik>
         </div>

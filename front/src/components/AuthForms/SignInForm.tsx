@@ -7,7 +7,7 @@ import styles from './Form.module.scss'
 
 const SignInForm = () => {
   let { signIn } = useActions()
-  let { error } = useTypedSelector(state => state.auth)
+  let { signInError } = useTypedSelector(state => state.auth)
   return (
   <div className={styles['form']}>
     <div className={styles['form__header']}>
@@ -46,12 +46,12 @@ const SignInForm = () => {
           />
         </div>
 
-        {error && <div className={styles['form-message']}>
-          {error}
+        {signInError && <div className={styles['form-message']}>
+          {signInError}
         </div>
         }
 
-        <button className={`${styles['form-button']} ${error && styles['form-button--message-shown']}`} type="submit">Войти</button>
+        <button className={`${styles['form-button']} ${signInError && styles['form-button--message-shown']}`} type="submit">Войти</button>
       </Form>
     </Formik>
   </div>

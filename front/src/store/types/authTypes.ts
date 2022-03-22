@@ -7,7 +7,8 @@ export type AuthState = {
     access: string | null
     refresh: string | null
     isSignedIn: Boolean
-    error?: string
+    signInError?: string
+    signUpError?: string
     isLoading?: boolean
 }
 

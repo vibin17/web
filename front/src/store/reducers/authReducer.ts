@@ -8,7 +8,7 @@ const initialState: AuthState = {
     },
     isSignedIn: false,
     access: null,
-    refresh: null,
+    refresh: null
 }
 
 export const authReducer = (state = initialState, action: AuthAction): AuthState => {
@@ -27,7 +27,7 @@ export const authReducer = (state = initialState, action: AuthAction): AuthState
         case AuthActionTypes.SIGN_IN_FAILED:
             return {
                 ...initialState,
-                error: action.payload
+                signInError: action.payload
             }
 
         case AuthActionTypes.SIGN_UP_SUCCESS:
@@ -38,7 +38,7 @@ export const authReducer = (state = initialState, action: AuthAction): AuthState
         case AuthActionTypes.SIGN_UP_FAILED:
             return {
                 ...initialState,
-                error: action.payload
+                signUpError: action.payload
             }
         
         case AuthActionTypes.SIGN_OUT:

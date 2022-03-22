@@ -77,9 +77,6 @@ export const signUp = (name: string, phoneNumber: string, password: string) => {
 export const checkAuth = () => {
     return async (dispatch: Dispatch<AuthAction>) => {
         try {
-            dispatch({
-                type: AuthActionTypes.LOADING
-            })
             const response = await axios.post<AuthResponse>(`${AUTH_URL}/auth/refresh`, { 
                 refresh: localStorage.getItem('refresh')
             }, {
