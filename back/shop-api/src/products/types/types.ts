@@ -14,18 +14,23 @@ export interface Category {
 const Smartphones: Category = {
     name: 'Смартфоны',
     props: [
-        'antutu',
-        'screen-size'
+        'Баллы Antutu',
+        'Диагональ экрана',
+        'Тип матрицы',
+        'Разрешение экрана',
+        'Операционная система', 
+        'Процессор',
+        'Тактовая частота процессора',
+        'Оперативная память, гб',
+        'Встроенная память, гб',
+        'NFC',
+        'Емкость аккумулятора',
+        'Основная камера',
+        'Фронтальная камера'
     ]
 }
 
 export const categories: Category[] = [
-    {
-        name: 'Смартфоны',
-        props: [
-            'antutu',
-            'screen-size'
-        ]
-    }
+    Smartphones
 ]
 

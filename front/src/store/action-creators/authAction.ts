@@ -1,8 +1,8 @@
 import axios from "axios"
 import { Dispatch } from "react"
 import { AUTH_URL} from "../../http"
-import { AuthResponse } from "../../models/response/auth-models"
-import AuthService from "../../services/AuthService/AuthService"
+import { AuthResponse } from "../../services/response/auth-models"
+import AuthService from "../../services/AuthService/auth-service"
 import { AuthAction, AuthActionTypes } from "../types/authTypes"
 
 export const signIn = (name: string, password: string) => {

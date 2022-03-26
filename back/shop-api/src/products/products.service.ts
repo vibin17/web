@@ -3,7 +3,7 @@ import { Product, ProductDocument } from './schemas/product.schema';
 import { Model, Document } from "mongoose";
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateProductDto } from './dto/create-product.dto';
-import { categories } from './types/types';
+import { categories, Category } from './types/types';
 import { FilesService } from 'src/files/files.service';
 import { ResponseProductDto, ResponseProductSummaryDto } from './dto/response-product.dto';
 
@@ -35,6 +35,10 @@ export class ProductsService {
         const product: ResponseProductDto = { _id, productName, releaseYear, price, category, imagePaths, props, rating }
                     
         return product
+    }
+
+    async getCategories(): Promise<Category[]> {
+        return categories
     }
     
     async getSummaryById(productId: string): Promise<ResponseProductSummaryDto> {
