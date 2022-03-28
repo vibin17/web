@@ -47,8 +47,6 @@ export class ProductsController {
     @UseGuards(RolesAuthGuard)
     @Roles(RolesEnum.Admin)
     async createProduct(@Body() createProductDto: CreateProductDto, @UploadedFiles() images) {
-        console.log(createProductDto)
-        console.log(images)
         return this.productsService.create(createProductDto, images)
     }
     
