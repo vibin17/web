@@ -5,7 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CreateProductDto } from './dto/create-product.dto';
 import { categories, Category } from './types/types';
 import { FilesService } from 'src/files/files.service';
-import { ResponseProductDto, ResponseProductSummaryDto } from './dto/response-product.dto';
+import { ResponseProductDto, ResponseProductIdDto, ResponseProductSummaryDto } from './dto/response-product.dto';
 
 @Injectable()
 export class ProductsService {
@@ -29,10 +29,10 @@ export class ProductsService {
             let fileName = await this.filesService.createFile(image)
             fileNames.push(fileName)
         }
-        
+        console.log(createProductDto)
         const newProduct = new this.productModel({ ...createProductDto, category: productCategory, imagePaths: fileNames })
-        const { productName, releaseYear, price, category, rating, imagePaths, _id, props } = await newProduct.save()
-        const product: ResponseProductDto = { _id, productName, releaseYear, price, category, imagePaths, props, rating }
+        const { productName, manufacturer, releaseYear, price, category, rating, imagePaths, _id, props } = await newProduct.save()
+        const product: ResponseProductDto = { _id, productName, manufacturer, releaseYear, price, category, imagePaths, props, rating }
                     
         return product
     }
@@ -52,8 +52,35 @@ export class ProductsService {
         return product
     }
 
-    async getAll(): Promise<ResponseProductDto[]>  {
-        const products: ResponseProductDto[] = await this.productModel.find({}, '_id')
+    async getProductById(productId: string): Promise<ResponseProductDto> {
+        const { _id, productName, manufacturer, releaseYear, price, rating, category, props, imagePaths } = await this.productModel.findById(productId)
+        const imagePath: string = imagePaths[0]
+        const product: ResponseProductDto = { _id, productName, manufacturer, releaseYear, price, rating, category, props, imagePaths }
+        if (!product) {
+            throw new HttpException('Товар с таким ID не найден', HttpStatus.BAD_REQUEST)
+        }
+
+        return product
+    }
+
+    async deleteProduct(productId: string){
+        const deletedProduct = await this.productModel.deleteOne({ _id: productId})
+        console.log(deletedProduct)
+
+        return deletedProduct
+    }
+
+    async getAllOfCategory(categoryName: string): Promise<ResponseProductIdDto[]> {
+        const products: ResponseProductIdDto[] = await this.productModel.find({ 'category.name': categoryName }).select({ '_id': 1, 'productName': 1})
+        console.log(products)
+        return products
+
+    }
+
+
+
+    async getAll(): Promise<ResponseProductIdDto[]> {
+        const products: ResponseProductIdDto[] = await this.productModel.find().select({ '_id': 1, 'productName': 1})
 
         return products
     }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AuthResponse } from "../services/response/auth-models";
+import { AuthResponse } from "../services/models/auth-models";
 
 export const AUTH_URL = 'http://localhost:7000'
 export const SHOP_URL = 'http://localhost:8000'

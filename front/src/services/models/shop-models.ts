@@ -1,29 +1,36 @@
+export type CreateProductData = {
+    readonly productName: string
+    readonly manufacturer: string
+    readonly releaseYear: string
+    readonly price: string
+    readonly categoryName: string
+    readonly description: string
+    readonly props: string[]
+}
+
 export type CategoryResponseDto = {
     name: string,
     props: string[]
 }
 
-export type CreateProductData = {
+export type ProductIdResponse = {
+    readonly _id: string
     readonly productName: string
-    readonly releaseYear: number
-    readonly price: number
-    readonly categoryName: string
-    readonly description?: string
-    readonly props?: string[]
 }
 
 export type ProductSummaryResponse = {
     readonly _id: string
     readonly productName: string
-    readonly price: number
+    readonly price: string
     readonly imagePath: string
 }
 
 export type ProductResponse = {
     readonly _id: string
     readonly productName: string
+    readonly manufacturer: string
     readonly releaseYear: string
-    readonly price: number
+    readonly price: string
     readonly rating: {
         '5': number
         '4': number
@@ -37,4 +44,9 @@ export type ProductResponse = {
     }
     readonly imagePaths: string[]
     readonly props: string[]
+}
+
+export type DeletedResponse = {
+    acknowledged: boolean
+    deletedCount: number
 }

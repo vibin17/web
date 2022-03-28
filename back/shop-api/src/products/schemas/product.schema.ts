@@ -8,7 +8,8 @@ export type ProductDocument = Product & Document
 export class Product {
     @Prop({ required: true, unique: true })
     productName: string
-
+    @Prop({ required: true})
+    manufacturer: string
     @Prop({ required: true})
     releaseYear: string
 
@@ -27,7 +28,7 @@ export class Product {
     })
     category: Category
 
-    @Prop(  { default: 'Вставьте описание' })
+    @Prop({ default: 'Вставьте описание' })
     description: string
 
     @Prop()
@@ -57,9 +58,6 @@ export class Product {
         '1': 0
     }})
     rating: Rating
-
-    @Prop({ default: 0})
-    totalReviews: number
 
     @Prop()
     props: string[]

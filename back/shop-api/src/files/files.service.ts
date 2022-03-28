@@ -5,8 +5,8 @@ import * as uuid from 'uuid';
 
 @Injectable()
 export class FilesService {
-    private validExtensions = ['.webp', '.png', '.jpg']
-    private validMimeTypes = ['image/webp', 'image/png', 'image/jpg']
+    private validExtensions = ['.webp', '.png', '.jpg', 'jpeg']
+    private validMimeTypes = ['image/webp', 'image/png', 'image/jpg', 'image/jpeg']
     async createFile(file): Promise<string> {
         const extension = path.extname(file.originalname)
         const mimeType = file.mimetype

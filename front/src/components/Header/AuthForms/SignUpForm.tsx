@@ -1,8 +1,8 @@
 import {Field, Form, Formik, FormikContext} from 'formik'
 import { FormEvent, useState } from 'react';
 import validator from 'validator';
-import { useActions } from '../../hooks/useActions';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { useActions } from '../../../hooks/useActions';
+import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import styles from './Form.module.scss'
 
 

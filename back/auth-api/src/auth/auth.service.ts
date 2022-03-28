@@ -42,7 +42,7 @@ export class AuthService {
         const userData: UserTokenData  = await this.tokenService.validateRefreshToken(refresh)
         const { userName, phoneNumber, roles } = await this.userService.getByName(userData.userName)
         if (!userName) {
-            throw new HttpException('Пользователь из токена не найден', HttpStatus.BAD_REQUEST)
+            throw new HttpException('Пользователь из токена не найден', HttpStatus.UNAUTHORIZED)
         }
         const user: UserTokenData = { userName, phoneNumber, roles }
         return { 

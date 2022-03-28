@@ -16,28 +16,29 @@ export class RolesAuthGuard implements CanActivate {
             context.getHandler(),
             context.getClass()
         ])
-        const authHeader = req.headers.authorization
-            const bearer = authHeader.split(' ')[0]
-            const token = authHeader.split(' ')[1]
-            if (bearer !== 'Bearer' || !token) {
-                throw new HttpException('Access токен отсутствует или некоректен', HttpStatus.UNAUTHORIZED)
-            }
-            let response
-            try {
-                response = await (lastValueFrom(this.client.send({
-                    role: 'auth',
-                    cmd: 'check'
-                }, {
-                    access: token
-                }).pipe(timeout(2000))))
-            } catch {
-                throw new HttpException('Сервис авторизации недоступен', HttpStatus.INTERNAL_SERVER_ERROR)
-            }
-            const userData: UserTokenData = response.userData
+        const authHeader = <string> req.headers.authorization
+        if (!authHeader) {
+            throw new HttpException('Access токен отсутствует или некоректен', HttpStatus.UNAUTHORIZED)
+        }
+        const bearer = authHeader.split(' ')[0]
+        const token = authHeader.split(' ')[1]
+        if (bearer !== 'Bearer' || !token) {
+            throw new HttpException('Access токен отсутствует или некоректен', HttpStatus.UNAUTHORIZED)
+        }
+        let response
+        response = await (lastValueFrom(this.client.send({
+            role: 'auth',
+            cmd: 'check'
+        }, {
+            access: token
+        }).pipe(timeout(2000)))).catch(error => { 
+            throw new HttpException('Авторизация не пройдена', HttpStatus.UNAUTHORIZED)
+        })
+        const userData: UserTokenData = response.userData
 
-            if (requiredRoles.length == 0 && userData) {
-                return true
-            }
-            return userData.roles.some(role => requiredRoles.includes(role))
+        if (requiredRoles.length == 0 && userData) {
+            return true
+        }
+        return userData.roles.some(role => requiredRoles.includes(role))
     }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UploadedFiles, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query, UploadedFiles, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { ENV_PATH } from 'src/consts';
@@ -7,6 +7,7 @@ import { RolesAuthGuard } from 'src/guard/roles-auth.guard';
 import { RolesEnum } from 'src/guard/roles.enum';
 import { CreateProductDto } from './dto/create-product.dto';
 import { ProductsService } from './products.service';
+import { categories } from './types/types';
 import { ValidationPipe } from './validation/validation';
 
 @Controller('products')
@@ -18,22 +19,37 @@ export class ProductsController {
         return this.productsService.getCategories()
     }
 
-    @Get('/allid')
+    @Get('/all')
     async getAllIds() {
         return this.productsService.getAll()
     }
 
-    @Get('/summary/:id')
-    async getSummaryById(@Param('id') productId) {
+    @Get('/summary')
+    async getSummaryById(@Query('id') productId: string) {
         return this.productsService.getSummaryById(productId)
     }
+    @Get('/')
+    async getProductById(@Query('id') productId: string) {
+        return this.productsService.getProductById(productId)
+    }
+    @Delete('/')
+    async deleteProduct(@Query('id') productId: string) {
+        return this.productsService.deleteProduct(productId)
+    }
+    @Get('/category')
+    async getAllOfCategory(@Query('category') category: string) {
+        console.log(category)
+        return this.productsService.getAllOfCategory(category)
+    }
 
-    @Post()
+    @Post('/create')
     @UseInterceptors(FilesInterceptor('images'))
     @UsePipes(ValidationPipe)
-    // @UseGuards(RolesAuthGuard)
-    // @Roles()
+    @UseGuards(RolesAuthGuard)
+    @Roles(RolesEnum.Admin)
     async createProduct(@Body() createProductDto: CreateProductDto, @UploadedFiles() images) {
+        console.log(createProductDto)
+        console.log(images)
         return this.productsService.create(createProductDto, images)
     }
     

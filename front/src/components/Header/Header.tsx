@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import ModalWindow from '../ModalWindow/ModalWindow';
-import SignInForm from '../AuthForms/SignInForm';
+import SignInForm from './AuthForms/SignInForm';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { RiUserLine } from 'react-icons/ri'
 import { BsCart2 } from 'react-icons/bs'
 import styles from './Header.module.scss'
-import UserMenu from '../UserMenu/UserMenu';
-import SignUpForm from '../AuthForms/SignUpForm';
+import UserMenu from './UserMenu/UserMenu';
+import SignUpForm from './AuthForms/SignUpForm';
 import logo from '../../images/logo.png'
 import { Link } from 'react-router-dom';
 
