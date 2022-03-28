@@ -29,7 +29,6 @@ export class ProductsService {
             let fileName = await this.filesService.createFile(image)
             fileNames.push(fileName)
         }
-        console.log(createProductDto)
         const newProduct = new this.productModel({ ...createProductDto, category: productCategory, imagePaths: fileNames })
         const { productName, manufacturer, releaseYear, price, category, rating, imagePaths, _id, props } = await newProduct.save()
         const product: ResponseProductDto = { _id, productName, manufacturer, releaseYear, price, category, imagePaths, props, rating }
@@ -65,16 +64,14 @@ export class ProductsService {
 
     async deleteProduct(productId: string){
         const deletedProduct = await this.productModel.deleteOne({ _id: productId})
-        console.log(deletedProduct)
 
         return deletedProduct
     }
 
     async getAllOfCategory(categoryName: string): Promise<ResponseProductIdDto[]> {
         const products: ResponseProductIdDto[] = await this.productModel.find({ 'category.name': categoryName }).select({ '_id': 1, 'productName': 1})
-        console.log(products)
-        return products
 
+        return products
     }
 
 
