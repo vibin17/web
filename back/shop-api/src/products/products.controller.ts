@@ -38,7 +38,6 @@ export class ProductsController {
     }
     @Get('/category')
     async getAllOfCategory(@Query('category') category: string) {
-        console.log(category)
         return this.productsService.getAllOfCategory(category)
     }
 
