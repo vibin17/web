@@ -2,10 +2,11 @@ import { HttpCode, HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { Product, ProductDocument } from './schemas/product.schema';
 import { Model, Document } from "mongoose";
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateProductDto } from './dto/create-product.dto';
+import { CreateProductDto, UpdateProductDto } from './dto/request-product';
 import { categories, Category } from './types/types';
 import { FilesService } from 'src/files/files.service';
-import { ResponseProductDto, ResponseProductIdDto, ResponseProductSummaryDto } from './dto/response-product.dto';
+import { DeletedProductDto, ResponseProductDto, ResponseProductIdDto, ResponseProductSummaryDto } from './dto/response-product.dto';
+import { info } from 'console';
 
 @Injectable()
 export class ProductsService {
@@ -36,6 +37,24 @@ export class ProductsService {
         return product
     }
 
+    async updateProduct(updateProductDto: UpdateProductDto): Promise<ResponseProductDto> {
+        const { id, ...updateInfo } = updateProductDto
+        const updatedProduct = await this.productModel.findByIdAndUpdate(updateProductDto.id, updateInfo)
+
+        return updatedProduct
+    }
+
+    async deleteProduct(productId: string): Promise<DeletedProductDto> {
+        const { imagePaths } = await this.productModel.findById(productId)
+        let deletedFiles: string[] = []
+        for (let imagePath of imagePaths) {
+            deletedFiles.push(await this.filesService.deleteFile(imagePath))
+        }
+        const deletedProduct = await this.productModel.deleteOne({ _id: productId})
+
+        return { deletedFiles, ...deletedProduct }
+    }
+
     async getCategories(): Promise<Category[]> {
         return categories
     }
@@ -62,13 +81,7 @@ export class ProductsService {
         return product
     }
 
-    async deleteProduct(productId: string){
-        const deletedProduct = await this.productModel.deleteOne({ _id: productId})
-
-        return deletedProduct
-    }
-
-    async getAllOfCategory(categoryName: string): Promise<ResponseProductIdDto[]> {
+    async getProductsAllOfCategory(categoryName: string): Promise<ResponseProductIdDto[]> {
         const products: ResponseProductIdDto[] = await this.productModel.find({ 'category.name': categoryName }).select({ '_id': 1, 'productName': 1})
 
         return products

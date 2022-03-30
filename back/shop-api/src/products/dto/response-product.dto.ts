@@ -23,3 +23,11 @@ export class ResponseProductSummaryDto {
     readonly price: number
     readonly imagePath: string
 }
+
+
+export class DeletedProductDto {
+    readonly deletedFiles: string[]
+    deletedCount: number
+    acknowledged: boolean
+    
+}

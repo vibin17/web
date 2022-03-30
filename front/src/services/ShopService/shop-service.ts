@@ -1,13 +1,15 @@
 import { AxiosResponse } from "axios";
 import { FileWithPath } from "react-dropzone";
 import { shopAPI, SHOP_URL } from "../../http";
-import { CategoryResponseDto, CreateProductData, DeletedResponse, ProductIdResponse, ProductResponse } from "../models/shop-models";
+import { CategoryResponseDto, CreateProductData, DeletedResponse, ProductIdResponse, ProductResponse, ProductSummaryResponse } from "../models/shop-models";
 
 export default class ShopService {
     static async getCategories(): Promise<AxiosResponse<CategoryResponseDto[]>> {
         return shopAPI.get('products/categories')
     }
-
+    static async getAllProducts(): Promise<AxiosResponse<ProductIdResponse[]>> {
+        return shopAPI.get('products/all')
+    }
     static async getAllProductsOfCategory(categoryName: string): Promise<AxiosResponse<ProductIdResponse[]>> {
         return shopAPI.get('products/category', { 
             params: {
@@ -18,6 +20,14 @@ export default class ShopService {
 
     static async getProductById(productId: string): Promise<AxiosResponse<ProductResponse>> {
         return shopAPI.get('products/', { 
+            params: {
+                id: productId
+            }
+        })
+    }
+
+    static async getProductSummaryById(productId: string): Promise<AxiosResponse<ProductSummaryResponse>> {
+        return shopAPI.get('products/summary', { 
             params: {
                 id: productId
             }

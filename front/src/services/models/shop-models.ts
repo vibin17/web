@@ -47,6 +47,7 @@ export type ProductResponse = {
 }
 
 export type DeletedResponse = {
-    acknowledged: boolean
-    deletedCount: number
+    readonly deletedFiles: string[]
+    readonly acknowledged: boolean
+    readonly deletedCount: number
 }

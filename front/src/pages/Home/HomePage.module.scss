@@ -1,0 +1,11 @@
+.homepage {
+    width: 100%;
+    height: 100%;
+}
+
+.section {
+    &-content {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}

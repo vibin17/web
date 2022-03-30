@@ -1,0 +1,13 @@
+.product-card {
+    height: 300px;
+    width: 300px;
+    transition: all .2s;
+    &:hover {
+        transform: scale(1.1, 1.1);
+    }
+}
+
+.card-image {
+    height: 200px;
+}
+

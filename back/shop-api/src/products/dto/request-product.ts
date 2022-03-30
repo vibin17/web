@@ -14,3 +14,19 @@ export class CreateProductDto {
     readonly description: string
     readonly props: string[]
 }
+
+export class UpdateProductDto {
+    readonly id: string
+    @IsString()
+    readonly productName: string
+    @IsString()
+    readonly manufacturer: string
+    @IsNumberString()
+    readonly releaseYear: number
+    @IsNumberString()
+    readonly price: number
+    @IsString()
+    readonly categoryName: string
+    readonly description: string
+    readonly props: string[]
+}

@@ -16,7 +16,7 @@ export type ProductData = {
 }
 
 
-const DeleteProductPage = () => {
+const UpdateProductPage = () => {
     let [categories, setCategories] = useState<CategoryResponseDto[]>([])
     let [productsOfCategory, setProductsOfCategory] = useState<ProductIdResponse[]>([])
     let [selectedCategory, setCategory] = useState<CategoryResponseDto>()
@@ -90,7 +90,7 @@ const DeleteProductPage = () => {
             {selectedCategory && 
                 <>   
                     <div className={styles['form-field']}>
-                        <div className={styles['form-field__label']}> Выберите товар </div>
+                        <div className={styles['form-field__label']}> Выберите категорию товара </div>
                         <select className={styles['select-category']} 
                             defaultValue={'default'}
                             onChange={
@@ -143,10 +143,8 @@ const DeleteProductPage = () => {
                             onSubmit={async (values) => {
                                 try {
                                     const result = await ShopService.deleteProduct(selectedProduct?._id || 'error')
-                                    let deletedFiles = result.data.deletedFiles.reduce((prev, cur, index) => `${prev}${index + 1}) ${cur}; `, '')
-                                    console.log(deletedFiles)
-                                    setMessage(`Удален товар с id ${selectedProduct?._id};
-                                                Удалены файлы ${deletedFiles}`)
+                                    console.log(result)
+                                    setMessage(`Удален товар с id ${selectedProduct?._id}`)
                                     setInactive(true)
                                 }
                                 catch (e: any) {
@@ -169,7 +167,7 @@ const DeleteProductPage = () => {
                                             id="productName" 
                                             name="productName"
                                             placeholder="Название продукта" 
-                                            disabled
+                                            required
                                         />
                                     </div>
                                     <div className={styles['form-field']}>
@@ -182,7 +180,7 @@ const DeleteProductPage = () => {
                                             id="manufacturer" 
                                             name="manufacturer"
                                             placeholder="Производитель" 
-                                            disabled
+                                            required
                                         />
                                     </div>
                                     <div className={styles['form-field']}>
@@ -195,7 +193,7 @@ const DeleteProductPage = () => {
                                             id="releaseYear" 
                                             name="releaseYear" 
                                             placeholder="Год выпуска" 
-                                            disabled
+                                            required
                                         />
                                     </div>
                                     <div className={styles['form-field']}>
@@ -208,7 +206,7 @@ const DeleteProductPage = () => {
                                             id="price" 
                                             name="price" 
                                             placeholder="Цена"
-                                            disabled
+                                            required
                                         />
                                     </div>
                                     <div className={styles['form-field']}>
@@ -222,7 +220,7 @@ const DeleteProductPage = () => {
                                             name="productDescription" 
                                             placeholder="Описание товара"
                                             rows={5}
-                                            disabled
+                                            required
                                         />
                                     </div>
 
@@ -238,14 +236,14 @@ const DeleteProductPage = () => {
                                                     id={`props[${index}]`} 
                                                     name={`props[${index}]`}
                                                     placeholder={prop}
-                                                    disabled
+                                                    required
                                                 />
                                             </div>
                                         )
                                     })}
                                 </div>
                                 <div className={styles['form__upload-section']}>
-                                    <Dropzone files={files} setFiles={setFiles} disabled/>
+                                    <Dropzone files={files} setFiles={setFiles}/>
                                 </div>
                                 <div className={styles['form__submit-section']}>
                                     <button className={styles['form-button']} type="submit">Удалить товар</button>
@@ -264,4 +262,4 @@ const DeleteProductPage = () => {
     )
 }
 
-export default DeleteProductPage
+export default UpdateProductPage

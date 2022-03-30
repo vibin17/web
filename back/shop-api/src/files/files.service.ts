@@ -26,8 +26,19 @@ export class FilesService {
             return fileName;  
         } 
         
-        catch (e) {
+        catch {
             throw new HttpException('Произошла ошибка при записи файла', HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+    async deleteFile(fileName: string) {
+        try {
+            const filePath = path.resolve(__dirname, '../..', 'product-images')
+            await fs.promises.rm(path.join(filePath, fileName))
+
+            return path.join(filePath, fileName);
+        }
+        catch {
+            throw new HttpException('Произошла ошибка при удалении файла', HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
