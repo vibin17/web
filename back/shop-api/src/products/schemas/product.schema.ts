@@ -34,29 +34,38 @@ export class Product {
     @Prop()
     imagePaths: string[]
 
-    @Prop({ _id: false, type: {
-        '5': {
-            type: mongoose.SchemaTypes.Number
-        },
-        '4': {
-            type: mongoose.SchemaTypes.Number
-        },
-        '3': {
-            type: mongoose.SchemaTypes.Number
-        },
-        '2': {
-            type: mongoose.SchemaTypes.Number
-        },
-        '1': {
-            type: mongoose.SchemaTypes.Number
+    @Prop({ 
+        _id: false, 
+        type: {
+            '5': {
+                type: mongoose.SchemaTypes.Number,
+                required: true
+            },
+            '4': {
+                type: mongoose.SchemaTypes.Number,
+                required: true
+            },
+            '3': {
+                type: mongoose.SchemaTypes.Number,
+                required: true
+            },
+            '2': {
+                type: mongoose.SchemaTypes.Number,
+                required: true
+            },
+            '1': {
+                type: mongoose.SchemaTypes.Number,
+                required: true
+            }
+        }, 
+        default: {
+            '5': 0,
+            '4': 0,
+            '3': 0,
+            '2': 0,
+            '1': 0
         }
-    }, default: {
-        '5': 0,
-        '4': 0,
-        '3': 0,
-        '2': 0,
-        '1': 0
-    }})
+    })
     rating: Rating
 
     @Prop()
