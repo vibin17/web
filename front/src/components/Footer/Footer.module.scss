@@ -1,5 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import '../global';
-@import url('https://fonts.googleapis.com/css?family=PT+Sans');
 
 .footer {
     width: 100%;
@@ -9,6 +9,7 @@
     flex: 0 0 100px;
     display: flex;
     justify-content: center;
+    font: bold 18px 'Ubuntu';
 }
 
 .container {
@@ -17,5 +18,4 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font: 18px 'PT Sans', Arial;
 }

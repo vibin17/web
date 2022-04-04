@@ -3,6 +3,7 @@ import { useTypedSelector } from '../../hooks/useTypedSelector'
 import styles from './AdminPanelPage.module.scss'
 import CreateProductPage from './CreateProduct/CreateProductPage'
 import DeleteProductPage from './DeleteProduct/DeleteProductPage'
+import UpdateProductPage from './UpdateProduct/UpdateProductPage'
 
 const AdminPanelPage = () => {
     let { userData, isSignedIn } = useTypedSelector(state => state.auth)
@@ -24,6 +25,7 @@ const AdminPanelPage = () => {
                     </ul>}
                 />
                 <Route path='create' element={<CreateProductPage/>}/>
+                <Route path='update' element={<UpdateProductPage/>}/>
                 <Route path='delete' element={<DeleteProductPage/>}/>
                     
             </Routes>

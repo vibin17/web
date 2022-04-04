@@ -8,21 +8,28 @@ const HomePage = () => {
     let [productIds, setProductIds] = useState<ProductIdResponse[]>([])
     useEffect(() => {
         (async () => {
-            setProductIds((await ShopService.getAllProducts()).data)
-            console.log('HOME', (await ShopService.getAllProducts()).data)
+            let productIds = (await ShopService.getAllProducts()).data
+            setProductIds(productIds)
         })()
     }, [])
     return (
         <div className={styles['homepage']}>
-            <section className={styles['products-section']}>
+            <section className={styles['section']}>
                 <div className={styles['section-header']}>
                     Новые товары
                 </div>
                 <div className={styles['section-content']}>
-                    {
-                        productIds.map((productId) => {
-                            return <ProductSummaryCard productId={productId._id}/>
-                        })
+                    {productIds.length &&
+                        // productIds.map((productId) => {
+                        //     return <ProductSummaryCard productId={productId._id}/>
+                        // })
+                        <>
+                            <ProductSummaryCard productId={productIds[0]._id}/>
+                            <ProductSummaryCard productId={productIds[0]._id}/>
+                            <ProductSummaryCard productId={productIds[0]._id}/>
+                            <ProductSummaryCard productId={productIds[0]._id}/>
+                            <ProductSummaryCard productId={productIds[0]._id}/>
+                        </>
                     }
                 </div>
 

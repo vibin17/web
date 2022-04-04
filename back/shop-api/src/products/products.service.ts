@@ -6,7 +6,6 @@ import { CreateProductDto, UpdateProductDto } from './dto/request-product';
 import { categories, Category } from './types/types';
 import { FilesService } from 'src/files/files.service';
 import { DeletedProductDto, ResponseProductDto, ResponseProductIdDto, ResponseProductSummaryDto } from './dto/response-product.dto';
-import { info } from 'console';
 
 @Injectable()
 export class ProductsService {
@@ -37,10 +36,27 @@ export class ProductsService {
         return product
     }
 
-    async updateProduct(updateProductDto: UpdateProductDto): Promise<ResponseProductDto> {
+    async updateProduct(updateProductDto: UpdateProductDto, imageFiles: any): Promise<ResponseProductDto> {
         const { id, ...updateInfo } = updateProductDto
-        const updatedProduct = await this.productModel.findByIdAndUpdate(updateProductDto.id, updateInfo)
+        const productToUpdate: ResponseProductDto = await this.productModel.findById(updateProductDto.id)
 
+        let fileNames: string[] = []
+        for (let image of imageFiles) {
+            if (!productToUpdate.imagePaths.includes(image.originalname)) {
+                let fileName = await this.filesService.createFile(image)
+                fileNames.push(fileName)
+            } else {
+                fileNames.push(image.originalname)
+            }
+        }
+
+        const updatedProduct = await this.productModel.findByIdAndUpdate(updateProductDto.id, {
+            ...updateInfo, 
+            imagePaths: fileNames 
+        }, { 
+            new: true 
+        })
+        console.log(updatedProduct)
         return updatedProduct
     }
 
@@ -50,7 +66,7 @@ export class ProductsService {
         for (let imagePath of imagePaths) {
             deletedFiles.push(await this.filesService.deleteFile(imagePath))
         }
-        const deletedProduct = await this.productModel.deleteOne({ _id: productId})
+        const deletedProduct = await this.productModel.deleteOne({ _id: productId })
 
         return { deletedFiles, ...deletedProduct }
     }
@@ -71,9 +87,8 @@ export class ProductsService {
     }
 
     async getProductById(productId: string): Promise<ResponseProductDto> {
-        const { _id, productName, manufacturer, releaseYear, price, rating, category, props, imagePaths } = await this.productModel.findById(productId)
-        const imagePath: string = imagePaths[0]
-        const product: ResponseProductDto = { _id, productName, manufacturer, releaseYear, price, rating, category, props, imagePaths }
+        const product: ResponseProductDto = await this.productModel.findById(productId, '-__v')
+        console.log(product)
         if (!product) {
             throw new HttpException('Товар с таким ID не найден', HttpStatus.BAD_REQUEST)
         }

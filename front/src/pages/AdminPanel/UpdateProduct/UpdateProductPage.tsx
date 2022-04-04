@@ -103,15 +103,15 @@ const UpdateProductPage = () => {
                                         manufacturer: product.manufacturer,
                                         releaseYear: product.releaseYear,
                                         price: product.price,
-                                        productDescription: product.price,
+                                        productDescription: product.description,
                                         props: product.props
                                     }
+                                    setInitialValues(initialValues)
                                     let files = []
                                     for (let filePath of product.imagePaths) {
                                         let imageData = (await ShopService.getProductImage(filePath)).data
                                         files.push(new File([imageData], filePath))
                                     }
-                                    setInitialValues(initialValues)
                                     setFiles(files)
                                 }
 
@@ -141,10 +141,19 @@ const UpdateProductPage = () => {
                         <Formik
                             initialValues={{...initialValues}}
                             onSubmit={async (values) => {
+                                console.log(values)
                                 try {
-                                    const result = await ShopService.deleteProduct(selectedProduct?._id || 'error')
-                                    console.log(result)
-                                    setMessage(`Удален товар с id ${selectedProduct?._id}`)
+                                    const result = await ShopService.updateProduct({
+                                        id: selectedProduct?._id || 'error',
+                                        productName: values.productName,
+                                        manufacturer: values.manufacturer,
+                                        description: values.productDescription,
+                                        price: values.price,
+                                        releaseYear: values.releaseYear,
+                                        categoryName: selectedCategory?.name || 'error',
+                                        props: values.props
+                                    }, files)
+                                    setMessage(`Обновлен товар с id ${selectedProduct?._id}`)
                                     setInactive(true)
                                 }
                                 catch (e: any) {
@@ -246,7 +255,7 @@ const UpdateProductPage = () => {
                                     <Dropzone files={files} setFiles={setFiles}/>
                                 </div>
                                 <div className={styles['form__submit-section']}>
-                                    <button className={styles['form-button']} type="submit">Удалить товар</button>
+                                    <button className={styles['form-button']} type="submit">Обновить товар</button>
                                 </div>
                             </Form>
                         </Formik>

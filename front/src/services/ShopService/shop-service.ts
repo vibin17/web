@@ -1,15 +1,17 @@
 import { AxiosResponse } from "axios";
 import { FileWithPath } from "react-dropzone";
 import { shopAPI, SHOP_URL } from "../../http";
-import { CategoryResponseDto, CreateProductData, DeletedResponse, ProductIdResponse, ProductResponse, ProductSummaryResponse } from "../models/shop-models";
+import { CategoryResponseDto, CreateProductData, DeletedResponse, ProductIdResponse, ProductResponse, ProductSummaryResponse, UpdateProductData } from "../models/shop-models";
 
 export default class ShopService {
     static async getCategories(): Promise<AxiosResponse<CategoryResponseDto[]>> {
         return shopAPI.get('products/categories')
     }
+
     static async getAllProducts(): Promise<AxiosResponse<ProductIdResponse[]>> {
         return shopAPI.get('products/all')
     }
+    
     static async getAllProductsOfCategory(categoryName: string): Promise<AxiosResponse<ProductIdResponse[]>> {
         return shopAPI.get('products/category', { 
             params: {
@@ -54,7 +56,30 @@ export default class ShopService {
         for (let image of images) {
             data.append('images', image)
         }
-        return shopAPI.post('products/create', data, {
+        return shopAPI.post('products/', data, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+    }
+
+    static async updateProduct(productData: UpdateProductData, images: FileWithPath[]): Promise<AxiosResponse<ProductResponse>> {
+        console.log(productData)
+        let data = new FormData()
+        data.append('id', productData.id)
+        data.append('productName', productData.productName)
+        data.append('manufacturer', productData.manufacturer)
+        data.append('releaseYear', productData.releaseYear)
+        data.append('categoryName', productData.categoryName)
+        data.append('price', productData.price)
+        data.append('description', productData.description)
+        for (let prop of productData.props) {
+            data.append('props[]', prop)
+        }
+        for (let image of images) {
+            data.append('images', image)
+        }
+        return shopAPI.patch('products/', data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

@@ -23,14 +23,7 @@ const DeleteProductPage = () => {
     let [selectedProduct, setProduct] = useState<ProductIdResponse>()
     let [inactive, setInactive] = useState(false)
     let [message, setMessage] = useState('')
-    let [initialValues, setInitialValues] = useState<ProductData>({
-        productName: '',
-        manufacturer: '',
-        releaseYear: '',
-        price: '',
-        productDescription: '',
-        props: []
-    })
+    let [initialValues, setInitialValues] = useState<ProductData>()
     const [files, setFiles] = useState<FileWithPath[]>([])
     useEffect(() => {
         (async () => {
@@ -50,6 +43,7 @@ const DeleteProductPage = () => {
                             let productsOfCategory = (await ShopService.getAllProductsOfCategory(selectedCategory.name)).data
                             setProductsOfCategory(productsOfCategory)
                             setCategory(selectedCategory)
+
                             let initialValues: ProductData = {
                                 productName: '',
                                 manufacturer: '',
@@ -106,12 +100,12 @@ const DeleteProductPage = () => {
                                         productDescription: product.price,
                                         props: product.props
                                     }
+                                    setInitialValues(initialValues)
                                     let files = []
                                     for (let filePath of product.imagePaths) {
                                         let imageData = (await ShopService.getProductImage(filePath)).data
                                         files.push(new File([imageData], filePath))
                                     }
-                                    setInitialValues(initialValues)
                                     setFiles(files)
                                 }
 

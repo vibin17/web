@@ -2,10 +2,11 @@ import styles from './App.module.scss'
 import Header from './components/Header/Header';
 import { useActions } from './hooks/useActions';
 import { useEffect } from 'react';
-import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AdminPanelPage from './pages/AdminPanel/AdminPanelPage';
 import Footer from './components/Footer/Footer';
 import HomePage from './pages/Home/HomePage';
+import ProductPage from './pages/Product/ProductPage';
 
 function App() {
   let { checkAuth } = useActions()
@@ -26,6 +27,9 @@ function App() {
                   <Route index element={<HomePage/>}/>
                   <Route path='*' element={<h2>Ресурс не найден</h2>}/>
                   <Route path='/admin/*' element={<AdminPanelPage/>}/>
+                  <Route path='/products'>
+                    <Route path=':id' element={<ProductPage/>}/>
+                  </Route>  {/* переделать потом */}
                 </Route>
               </Routes>
             </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { SHOP_URL } from '../../../http'
 import { ProductSummaryResponse } from '../../../services/models/shop-models'
 import ShopService from '../../../services/ShopService/shop-service'
@@ -12,24 +13,29 @@ const ProductSummaryCard = ({ productId }: props) => {
     let [product, setProduct] = useState<ProductSummaryResponse>()
     useEffect(() => {
         (async () => {
-            console.log((await ShopService.getProductSummaryById(productId)).data)
-            setProduct((await ShopService.getProductSummaryById(productId)).data)
+            let product = (await ShopService.getProductSummaryById(productId)).data
+            setProduct(product)
         })()
     }, [])
     return (
-        <div className={styles['product-card']}>
-            <div className={styles['image-section']}>
-                <img className={styles['card-image']} src={`${SHOP_URL}/products/images/${product?.imagePath}`}/>
-            </div>
-            <div className={styles['product-info']}>
-                <div className={styles['product-name']}> {
-                    product?.productName
-                }</div>
-                <div className={styles['product-price']}> {
-                    product?.price
-                }</div>
-            </div>
-        </div>
+        <Link to={`products/${productId}`} className={styles['product-card']}>
+            {product &&
+                <>
+                    <div className={styles['image-section']}>
+                        <img className={styles['card-image']} src={`${SHOP_URL}/products/images/${product?.imagePath}`}/>
+                    </div>
+                    <div className={styles['product-info']}>
+                        <div className={styles['product-name']}> {
+                            product?.productName
+                        }</div>
+                        <div className={styles['product-price']}> {
+                            product?.price + ' ₽'
+                        }</div>
+                    </div>
+                </>
+            }
+
+        </Link>
     )
 }
 

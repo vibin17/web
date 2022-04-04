@@ -4,6 +4,7 @@
     background: white;
     border-radius: inherit;
     overflow: hidden;
+    font: normal 14px 'Roboto';
     &__container {
         width: 100%;
     }
@@ -12,7 +13,6 @@
         justify-content: center;
         align-items: center;
         padding: 5px;
-        font-size: 14px;
         font-weight: bold;
     }
     &__button {
@@ -26,14 +26,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 14px;
         transition: 0.3s;
+        color: rgb(0, 0, 0);
         &:hover {
             filter: invert(0%);
             background: rgb(218, 218, 218);
-        }
-        &:visited {
-            color: inherit;
         }
         &--red {
             color: rgb(255, 64, 64)

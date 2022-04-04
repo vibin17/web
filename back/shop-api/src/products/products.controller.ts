@@ -10,9 +10,9 @@ import { ProductsService } from './products.service';
 export class ProductsController {
     constructor(private productsService: ProductsService) {}
 
-    @Get('/categories')
-    async getCategories() {
-        return this.productsService.getCategories()
+    @Get('/')
+    async getProductById(@Query('id') productId: string) {
+        return this.productsService.getProductById(productId)
     }
 
     @Get('/all')
@@ -20,13 +20,10 @@ export class ProductsController {
         return this.productsService.getAll()
     }
 
+    
     @Get('/summary')
     async getSummaryById(@Query('id') productId: string) {
         return this.productsService.getSummaryById(productId)
-    }
-    @Get('/')
-    async getProductById(@Query('id') productId: string) {
-        return this.productsService.getProductById(productId)
     }
 
     @Get('/category')
@@ -34,7 +31,7 @@ export class ProductsController {
         return this.productsService.getProductsAllOfCategory(category)
     }
 
-    @Post('/create')
+    @Post('/')
     @UseInterceptors(FilesInterceptor('images'))
     @UseGuards(RolesAuthGuard)
     @Roles(RolesEnum.Admin)
@@ -42,18 +39,24 @@ export class ProductsController {
         return this.productsService.create(createProductDto, images)
     }
 
+    @Patch('/')
+    @UseGuards(RolesAuthGuard)
+    @UseInterceptors(FilesInterceptor('images'))
+    @Roles(RolesEnum.Admin)
+    async updateProduct(@Body() updateProductDto: UpdateProductDto, @UploadedFiles() images) {
+        return this.productsService.updateProduct(updateProductDto, images)
+    }
+
     @Delete('/')
     @UseGuards(RolesAuthGuard)
     @Roles(RolesEnum.Admin)
     async deleteProduct(@Query('id') productId: string) {
         return this.productsService.deleteProduct(productId)
+    }    
+
+    @Get('/categories')
+    async getCategories() {
+        return this.productsService.getCategories()
     }
 
-    @Patch('/')
-    @UseGuards(RolesAuthGuard)
-    @Roles(RolesEnum.Admin)
-    async updateProduct(@Body() updateProductDto: UpdateProductDto, @UploadedFiles() images) {
-        return this.productsService.updateProduct(updateProductDto)
-    }
-    
 }

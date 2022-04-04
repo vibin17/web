@@ -21,14 +21,7 @@ const CreateProductPage = () => {
     let [selectedCategory, setCategory] = useState<CategoryResponseDto>()
     let [inactive, setInactive] = useState(false)
     let [message, setMessage] = useState('')
-    let [initialValues, setInitialValues] = useState<ProductData>({
-        productName: '',
-        manufacturer: '',
-        releaseYear: '',
-        price: '',
-        productDescription: '',
-        props: []
-    })
+    let [propsInitValues, setPropsInitValues] = useState<string[]>([])
     const [files, setFiles] = useState<FileWithPath[]>([])
     useEffect(() => {
         (async () => {
@@ -46,19 +39,12 @@ const CreateProductPage = () => {
                         async (e) => {
                             let selectedCategory = categories[e.target.selectedIndex - 1]
                             setCategory(selectedCategory)
-                            let initialValues: ProductData = {
-                                productName: '',
-                                manufacturer: '',
-                                releaseYear: '',
-                                price: '',
-                                productDescription: '',
-                                props: []
-                            }
+                            let propsInitValues: string[] = []
                             let categoryProps = selectedCategory.props
                             for (let i = 0; i < categoryProps.length; i++) {
-                                initialValues.props.push('')
+                                propsInitValues.push('')
                             }
-                            setInitialValues(initialValues)
+                            setPropsInitValues(propsInitValues)
                         }
 
                     }>
@@ -85,7 +71,15 @@ const CreateProductPage = () => {
             </div>
             {selectedCategory && 
                 <Formik
-                    initialValues={{...initialValues}}
+                    initialValues={{
+                        productName: '',
+                        manufacturer: '',
+                        releaseYear: '',
+                        price: '',
+                        productDescription: '',
+                        props: propsInitValues
+                    }}
+                    enableReinitialize
                     onSubmit={async (values) => {
                         try {
                             const result = await ShopService.createProduct({
@@ -105,8 +99,7 @@ const CreateProductPage = () => {
                             setMessage(e.response.data.message)
                         }
 
-                    }}
-                    enableReinitialize>
+                    }}>
                     <Form className={styles['form__main']}>
                         <div className={styles['form__fields-section']}>
                             <div className={styles['form-field']}>
