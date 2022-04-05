@@ -1,0 +1,26 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
+
+.product {
+    &-header {
+        font: bold 28px 'Ubuntu';
+    }
+    &-main {
+
+    }
+    &-gallery {
+        &__og {
+            height: 400px;
+            & img { 
+                height: 100%;
+            }
+        }
+        &__thumbnail {
+            height: 100px;
+            & img { 
+                height: 90px;
+            }
+        }
+    }
+}
