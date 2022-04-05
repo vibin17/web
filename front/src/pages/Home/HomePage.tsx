@@ -24,11 +24,11 @@ const HomePage = () => {
                         //     return <ProductSummaryCard productId={productId._id}/>
                         // })
                         <>
-                            <ProductSummaryCard productId={productIds[0]._id}/>
-                            <ProductSummaryCard productId={productIds[0]._id}/>
-                            <ProductSummaryCard productId={productIds[0]._id}/>
-                            <ProductSummaryCard productId={productIds[0]._id}/>
-                            <ProductSummaryCard productId={productIds[0]._id}/>
+                            <ProductSummaryCard productId={productIds[2]._id}/>
+                            <ProductSummaryCard productId={productIds[2]._id}/>
+                            <ProductSummaryCard productId={productIds[2]._id}/>
+                            <ProductSummaryCard productId={productIds[2]._id}/>
+                            <ProductSummaryCard productId={productIds[2]._id}/>
                         </>
                     }
                 </div>

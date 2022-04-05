@@ -1,8 +1,6 @@
 import {Field, Form, Formik} from 'formik'
 import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
-import LoadingSpinner from '../../ModalWindow/LoadingSpinner/LoadingSpinner';
-import ModalWindow from '../../ModalWindow/ModalWindow';
 import styles from './Form.module.scss'
 
 const SignInForm = () => {
