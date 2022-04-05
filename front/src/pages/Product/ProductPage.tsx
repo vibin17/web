@@ -17,31 +17,32 @@ const ProductPage = () => {
             setProduct((await ShopService.getProductById(params.id || 'undef')).data)
         })()
     }, [])
-    return <div>
+    return <div className={styles['product']}>
         {product &&
             <>
-                <section className={styles['product-header']}>
+                <div className={styles['product-header']}>
                     {
                         product.productName
                     }
-                </section>
-                <section className={styles['product-main']}>
+                </div>
+                <div className={styles['product-main']}>
                     <div className={styles['product-gallery']}>
                         <ImageGallery
                             items={product.imagePaths.map((image) => {
                                 return {
                                     original:`${SHOP_URL}/products/images/${image}`,
-                                    originalClass: styles['product-gallery__og'],
+                                    originalClass: styles['slider__og'],
                                     thumbnail:`${SHOP_URL}/products/images/${image}`,
-                                    thumbnailClass: styles['product-gallery__thumbnail'],        
+                                    thumbnailClass: styles['slider__thumbnail'],        
                                 }
                             })}
                             showFullscreenButton={false}
                             showPlayButton={false}
                             showBullets
+                            additionalClass={styles['slider']}
                         />
                     </div>
-                </section>
+                </div>
             </>           
         }
     </div>

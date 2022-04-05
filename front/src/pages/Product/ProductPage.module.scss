@@ -3,24 +3,34 @@
 
 
 .product {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+    width: 100%;
     &-header {
         font: bold 28px 'Ubuntu';
     }
     &-main {
-
+        display: flex;
     }
     &-gallery {
-        &__og {
-            height: 400px;
-            & img { 
-                height: 100%;
-            }
+        flex: 0 0 70%;
+    }
+}
+
+.slider {
+    width: 600px;
+    &__og {
+        height: 400px;
+        & img { 
+            height: 100%;
         }
-        &__thumbnail {
-            height: 100px;
-            & img { 
-                height: 90px;
-            }
+    }
+    &__thumbnail {
+        height: 100px;
+        & img { 
+            height: 90px;
         }
     }
 }
