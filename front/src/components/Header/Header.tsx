@@ -52,7 +52,7 @@ const Header = () => {
                 <FiHeart className={styles['header-item__icon']}/>
                 {shopLocal.favorsCount > 0 && 
                   <div className={styles['header-item__count']}>
-                    ({shopLocal.favorsCount})
+                    <b>({shopLocal.favorsCount})</b>
                   </div>
                 }
               </div>
@@ -68,7 +68,7 @@ const Header = () => {
               <BsCart2 className={styles['header-item__icon']}/>
               {shopLocal.cartCount > 0 && 
                   <div className={styles['header-item__count']}>
-                    ({shopLocal.cartCount})
+                    <b>({shopLocal.cartCount})</b>
                   </div>
                 }
             </div>
