@@ -1,5 +1,4 @@
-import { KeyboardEventHandler, ReactElement, useEffect, useState } from "react"
-import { useActions } from "../../hooks/useActions"
+import { useEffect } from "react"
 import { useTypedSelector } from "../../hooks/useTypedSelector"
 import LoadingSpinner from "./LoadingSpinner/LoadingSpinner"
 import styles from './ModalWindow.module.scss'

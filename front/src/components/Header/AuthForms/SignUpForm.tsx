@@ -1,13 +1,13 @@
 import {Field, Form, Formik, FormikContext} from 'formik'
 import { FormEvent, useState } from 'react';
 import validator from 'validator';
-import { useActions } from '../../../hooks/useActions';
+import { useAuthActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import styles from './Form.module.scss'
 
 
 const SignUpForm = () => {
-    let { signUp } = useActions()
+    let { signUp } = useAuthActions()
     let { signUpError } = useTypedSelector(state => state.auth)
     let [isNameValidated, setNameValidated] = useState(true)
     let [isPasswordValidated, setPasswordValidated] = useState(true)

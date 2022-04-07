@@ -15,11 +15,7 @@ const Header = () => {
   let [isSignInFormActive, setSignInFormActive] = useState(false)
   let [isSignUpFormActive, setSignUpFormActive] = useState(false)
   let { isSignedIn: signedIn } = useTypedSelector(state => state.auth)
-  let [favorsCount, setFavorsCount] = useState(0)
-  let [cartCount, setCartCount] = useState(0)
-  useEffect(() => {
-
-  })
+  let shopLocal = useTypedSelector( state => state.shopLocal)
   
   return (
     <header className={styles['header']}>
@@ -54,9 +50,11 @@ const Header = () => {
           <div className={styles['header-item']}>
               <div className={styles['header-item__summary']}>
                 <FiHeart className={styles['header-item__icon']}/>
-                <div className={styles['header-item__count']}>
-                  (27)
-                </div>
+                {shopLocal.favorsCount > 0 && 
+                  <div className={styles['header-item__count']}>
+                    ({shopLocal.favorsCount})
+                  </div>
+                }
               </div>
               <div className={styles['header-item__details']}>
                 <div className={styles['header-item__description']}>
@@ -68,6 +66,11 @@ const Header = () => {
           <div className={styles['header-item']}>
             <div className={styles['header-item__summary']}>
               <BsCart2 className={styles['header-item__icon']}/>
+              {shopLocal.cartCount > 0 && 
+                  <div className={styles['header-item__count']}>
+                    ({shopLocal.cartCount})
+                  </div>
+                }
             </div>
             <div className={styles['header-item__details']}>
               <div className={styles['header-item__description']}>

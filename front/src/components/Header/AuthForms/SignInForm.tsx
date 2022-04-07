@@ -1,10 +1,10 @@
 import {Field, Form, Formik} from 'formik'
-import { useActions } from '../../../hooks/useActions';
+import { useAuthActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import styles from './Form.module.scss'
 
 const SignInForm = () => {
-  let { signIn } = useActions()
+  let { signIn } = useAuthActions()
   let { signInError } = useTypedSelector(state => state.auth)
   return (
   <div className={styles['form']}>

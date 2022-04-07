@@ -1,6 +1,6 @@
 import styles from './App.module.scss'
 import Header from './components/Header/Header';
-import { useActions } from './hooks/useActions';
+import { useAuthActions, useShopLocalActions } from './hooks/useActions';
 import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AdminPanelPage from './pages/AdminPanel/AdminPanelPage';
@@ -9,11 +9,13 @@ import HomePage from './pages/Home/HomePage';
 import ProductPage from './pages/Product/ProductPage';
 
 function App() {
-  let { checkAuth } = useActions()
+  let { checkAuth } = useAuthActions()
+  let { InitShopLocal } = useShopLocalActions()
   useEffect(() => {
     if (localStorage.getItem('refresh')) {
       checkAuth()
     }
+    InitShopLocal()
   }, [])
 
   return (

@@ -10,10 +10,13 @@ import RatingStars from "../../components/RatingStars/RatingStars"
 import { BsCart2 } from "react-icons/bs"
 import { FiHeart } from "react-icons/fi"
 import ProductMenu from "./ProductMenu/ProductMenu"
+import { useShopLocalActions } from "../../hooks/useActions"
+import { AddToFavors } from "../../store/action-creators/shopLocalAction"
 
 const ProductPage = () => {
     const params = useParams()
     let [product, setProduct] = useState<ProductResponse>()
+    let { AddToCart } = useShopLocalActions()
     useEffect(() => {
         (async () => {
             setProduct((await ShopService.getProductById(params.id || 'undef')).data)
@@ -58,24 +61,21 @@ const ProductPage = () => {
                                     '2': 0,
                                     '1': 0
                                 }}/>
-                            <button className={styles['product-button']} onClick={() => {
-                                // let cart: string[] = JSON.parse(localStorage.getItem('cart') || '[]')
-                                // if (product) {
-                                //     cart.push(product._id)
-                                // }
-                                // localStorage.setItem('cart', JSON.stringify(cart))
-                            }}>
+                            <button className={styles['product-button']} 
+                                onClick={() => {
+                                    if (product) {
+                                        AddToCart(product._id)
+                                    }
+                                }}>
                                 <BsCart2 className={styles['product-button__icon']}/>
                                 Добавить в корзину
                             </button>
 
                             <button className={`${styles['product-button']} ${styles['product-button--favors']}`}
                                 onClick={() => {
-                                    let favors: string[] = JSON.parse(localStorage.getItem('favors') || '[]')
-                                    if (product && !favors.includes(product._id)) {
-                                        favors.push(product._id)
+                                    if (product) {
+                                        AddToFavors(product._id)
                                     }
-                                    localStorage.setItem('favors', JSON.stringify(favors))
                                 }}>
                                 <FiHeart className={styles['product-button__icon']}/>
                                 Добавить в избранное
