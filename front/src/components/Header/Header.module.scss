@@ -64,6 +64,7 @@
         &__summary {
             padding: 0 10px;
             transition: all 0.3s;
+            position: relative;
             list-style: none;
             height: 100%;
             width: 100%;
@@ -77,6 +78,20 @@
 
         &__icon {
             font-size: 32px;
+        }
+
+        &__count {
+            font: normal 12px 'Roboto';
+            position: absolute;
+            top: 65%;
+            right: 10%;
+        }
+        &__description {
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font: normal 14px "Roboto";
         }
 
         &__details {

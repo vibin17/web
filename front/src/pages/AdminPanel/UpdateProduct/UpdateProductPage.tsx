@@ -107,12 +107,16 @@ const UpdateProductPage = () => {
                                         props: product.props
                                     }
                                     setInitialValues(initialValues)
-                                    let files = []
-                                    for (let filePath of product.imagePaths) {
-                                        let imageData = (await ShopService.getProductImage(filePath)).data
-                                        files.push(new File([imageData], filePath))
+                                    try {
+                                        let files = []
+                                        for (let filePath of product.imagePaths) {
+                                            let imageData = (await ShopService.getProductImage(filePath)).data
+                                            files.push(new File([imageData], filePath))
+                                        }
+                                        setFiles(files)
+                                    } catch {
+                                        setFiles([])
                                     }
-                                    setFiles(files)
                                 }
 
                             }>

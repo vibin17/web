@@ -26,10 +26,10 @@ const ProductSummaryCard = ({ productId }: props) => {
                     </div>
                     <div className={styles['product-info']}>
                         <div className={styles['product-name']}> {
-                            product?.productName
+                            product.productName
                         }</div>
                         <div className={styles['product-price']}> {
-                            product?.price + ' ₽'
+                            product.price + ' ₽'
                         }</div>
                     </div>
                 </>

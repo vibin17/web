@@ -1,5 +1,5 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 
 
 .product {
@@ -13,14 +13,49 @@
     }
     &-main {
         display: flex;
+        justify-content: space-between;
     }
     &-gallery {
-        flex: 0 0 70%;
+
+    }
+    &-buy {
+        padding: 0 40px 40px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-end;
+        justify-content: center;
+    }
+    &-price {
+        font: bold 26px "Rubik"
+    }
+
+    &-button {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: 15px;
+        border: 0;
+        outline: 0;
+        font: bold 18px 'Ubuntu';
+        cursor: pointer;
+        padding: 10px;
+        transition: all 0.3s;
+        background: rgba(255, 169, 57, 0.514);
+        &__icon {
+            font-size: 22px;
+        }
+        &--favors {
+            background: rgba(255, 128, 128, 0.521);
+        }
+        &:hover {
+            filter: invert(10%);
+        }
     }
 }
 
 .slider {
-    width: 600px;
+    width: 800px;
     &__og {
         height: 400px;
         & img { 

@@ -1,8 +1,8 @@
 $ig-small-screen: 768px !default;
 $ig-xsmall-screen: 480px !default;
-$ig-white: rgb(193, 193, 193) !default;
+$ig-white: rgb(224, 224, 224) !default;
 $ig-black: #000 !default;
-$ig-blue: rgba(76, 77, 78, 0.404) !default;
+$ig-blue: rgba(124, 124, 124, 0.404) !default;
 $ig-background-black: rgba(0, 0, 0, .4) !default;
 $ig-transparent: rgba(0, 0, 0, 0) !default;
 $ig-shadow: 0 0px 1px lighten($ig-black, 10%);
@@ -24,7 +24,6 @@ $ig-shadow: 0 0px 1px lighten($ig-black, 10%);
   outline: none;
   position: absolute;
   z-index: 1;
-  filter: drop-shadow($ig-shadow);
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
@@ -154,6 +153,9 @@ $ig-shadow: 0 0px 1px lighten($ig-black, 10%);
   position: relative;
   line-height: 0;
   top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 
   &.fullscreen {
     background: $ig-black;

@@ -4,20 +4,22 @@ import SignInForm from './AuthForms/SignInForm';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { RiUserLine } from 'react-icons/ri'
 import { BsCart2 } from 'react-icons/bs'
+import { FiHeart } from "react-icons/fi"
 import styles from './Header.module.scss'
 import UserMenu from './UserMenu/UserMenu';
 import SignUpForm from './AuthForms/SignUpForm';
-import logo from '../../images/logo.png'
 import { Link } from 'react-router-dom';
 
 const Header = () => {
   let [isMenuActive, setMenuState] = useState(false)
   let [isSignInFormActive, setSignInFormActive] = useState(false)
   let [isSignUpFormActive, setSignUpFormActive] = useState(false)
-  let { userData, isSignedIn: signedIn } = useTypedSelector(state => state.auth)
+  let { isSignedIn: signedIn } = useTypedSelector(state => state.auth)
+  let [favorsCount, setFavorsCount] = useState(0)
+  let [cartCount, setCartCount] = useState(0)
   useEffect(() => {
-    setSignInFormActive(false)
-  }, [signedIn])
+
+  })
   
   return (
     <header className={styles['header']}>
@@ -48,9 +50,29 @@ const Header = () => {
         </div>
 
         <div className={`${styles['header__section']} ${styles['user-section']}`}>
+          
+          <div className={styles['header-item']}>
+              <div className={styles['header-item__summary']}>
+                <FiHeart className={styles['header-item__icon']}/>
+                <div className={styles['header-item__count']}>
+                  (27)
+                </div>
+              </div>
+              <div className={styles['header-item__details']}>
+                <div className={styles['header-item__description']}>
+                  Избранные товары
+                </div>
+              </div>
+          </div>
+
           <div className={styles['header-item']}>
             <div className={styles['header-item__summary']}>
               <BsCart2 className={styles['header-item__icon']}/>
+            </div>
+            <div className={styles['header-item__details']}>
+              <div className={styles['header-item__description']}>
+                Корзина
+              </div>
             </div>
           </div>
 
@@ -58,6 +80,7 @@ const Header = () => {
             <div className={styles['header-item__summary']}>
               <RiUserLine className={styles['header-item__icon']}/>
             </div>
+            
             <div className={styles['header-item__details']}>
               <UserMenu setSignInFormActive={setSignInFormActive} setSignUpFormActive={setSignUpFormActive}/>
             </div>

@@ -24,6 +24,10 @@ export class ProductsService {
             throw new HttpException('Такой категории товаров не существует', HttpStatus.BAD_REQUEST)
         }
 
+        if (imageFiles.length > 5) {
+            throw new HttpException('Не больше 5 прикрепленных файлов', HttpStatus.BAD_REQUEST)
+        }
+
         let fileNames: string[] = []
         for (let image of imageFiles) {
             let fileName = await this.filesService.createFile(image)
@@ -39,6 +43,10 @@ export class ProductsService {
     async updateProduct(updateProductDto: UpdateProductDto, imageFiles: any): Promise<ResponseProductDto> {
         const { id, ...updateInfo } = updateProductDto
         const productToUpdate: ResponseProductDto = await this.productModel.findById(updateProductDto.id)
+
+        if (imageFiles.length > 5) {
+            throw new HttpException('Не больше 5 прикрепленных файлов', HttpStatus.BAD_REQUEST)
+        }
 
         let fileNames: string[] = []
         for (let image of imageFiles) {
