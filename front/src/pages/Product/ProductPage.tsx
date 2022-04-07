@@ -13,7 +13,6 @@ import ProductMenu from "./ProductMenu/ProductMenu"
 
 const ProductPage = () => {
     const params = useParams()
-    const 
     let [product, setProduct] = useState<ProductResponse>()
     useEffect(() => {
         (async () => {
