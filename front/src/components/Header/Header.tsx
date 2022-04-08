@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import SignInForm from './AuthForms/SignInForm';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
@@ -33,7 +33,7 @@ const Header = () => {
 
         <div className={`${styles['header__section']} ${styles['shop-section']}`}>
           <div className={styles['header-item']}>
-            <div className={`${styles['header-item__summary']} ${styles['header-item__summary--cursor-pointer']}`}>
+            <div className={`${styles['header-item__summary']} ${styles['header-item__summary--clickable']}`}>
               <div className={styles['burger-menu']} onClick={() => setMenuState(!isMenuActive)}>
                 <div className={styles['burger-menu__line']}/>
                 Каталог
@@ -48,7 +48,7 @@ const Header = () => {
         <div className={`${styles['header__section']} ${styles['user-section']}`}>
           
           <div className={styles['header-item']}>
-              <div className={styles['header-item__summary']}>
+              <div className={`${styles['header-item__summary']} ${styles['header-item__summary--clickable']}`}>
                 <FiHeart className={styles['header-item__icon']}/>
                 {shopLocal.favorsCount > 0 && 
                   <div className={styles['header-item__count']}>
@@ -64,14 +64,14 @@ const Header = () => {
           </div>
 
           <div className={styles['header-item']}>
-            <div className={styles['header-item__summary']}>
+            <Link to='/cart' className={`${styles['header-item__summary']}`}>
               <BsCart2 className={styles['header-item__icon']}/>
-              {shopLocal.cartCount > 0 && 
-                  <div className={styles['header-item__count']}>
-                    <b>({shopLocal.cartCount})</b>
+              {shopLocal.cartPrice > 0 && 
+                  <div className={`${styles['header-item__count']} ${styles['header-item__count--centered']}`}>
+                    <b>{shopLocal.cartPrice + ' ₽'}</b>
                   </div>
                 }
-            </div>
+            </Link>
             <div className={styles['header-item__details']}>
               <div className={styles['header-item__description']}>
                 Корзина

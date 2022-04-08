@@ -7,6 +7,7 @@ import AdminPanelPage from './pages/AdminPanel/AdminPanelPage';
 import Footer from './components/Footer/Footer';
 import HomePage from './pages/Home/HomePage';
 import ProductPage from './pages/Product/ProductPage';
+import CartPage from './pages/Cart/CartPage';
 
 function App() {
   let { checkAuth } = useAuthActions()
@@ -32,6 +33,7 @@ function App() {
                   <Route path='/products'>
                     <Route path=':id' element={<ProductPage/>}/>
                   </Route>  {/* переделать потом */}
+                  <Route path='/cart' element={<CartPage/>}/>
                 </Route>
               </Routes>
             </div>

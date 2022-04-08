@@ -9,7 +9,7 @@ import ImageGallery from 'react-image-gallery'
 import RatingStars from "../../components/RatingStars/RatingStars"
 import { BsCart2 } from "react-icons/bs"
 import { FiHeart } from "react-icons/fi"
-import ProductMenu from "./ProductMenu/ProductMenu"
+import ProductInfo from "./ProductInfo/ProductInfo"
 import { useShopLocalActions } from "../../hooks/useActions"
 import { AddToFavors } from "../../store/action-creators/shopLocalAction"
 
@@ -64,7 +64,7 @@ const ProductPage = () => {
                             <button className={styles['product-button']} 
                                 onClick={() => {
                                     if (product) {
-                                        AddToCart(product._id)
+                                        AddToCart(product._id, product.price)
                                     }
                                 }}>
                                 <BsCart2 className={styles['product-button__icon']}/>
@@ -83,7 +83,7 @@ const ProductPage = () => {
                         </div>
                     </div>
                     <div className={styles['product-info']}>
-                        <ProductMenu product={product}/>
+                        <ProductInfo product={product}/>
                     </div>
                 </>           
             }

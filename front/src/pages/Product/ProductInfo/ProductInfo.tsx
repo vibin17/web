@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { ProductResponse } from '../../../services/models/shop-models'
-import styles from './ProductMenu.module.scss'
+import styles from './ProductInfo.module.scss'
 
 type props = {
     product: ProductResponse
 }
 
-const ProductMenu = ({ product }: props) => {
+const ProductInfo = ({ product }: props) => {
     let [reviewsTabActive, setReviewsTabActive] = useState(false)
     return (
         <div className={styles['menu']}>
@@ -101,4 +101,4 @@ const ProductMenu = ({ product }: props) => {
     )
 }
 
-export default ProductMenu
+export default ProductInfo

@@ -1,8 +1,6 @@
-import { type } from "os"
-
 export type ShopLocalState = {
     favorsCount: number
-    cartCount: number
+    cartPrice: number
 }
 
 export enum ShopLocalActionTypes {
@@ -23,7 +21,8 @@ type AddToFavorsAction = {
 }
 
 type AddToCartAction = {
-    type: ShopLocalActionTypes.ADD_TO_CART
+    type: ShopLocalActionTypes.ADD_TO_CART,
+    payload: number
 }
 
 type ClearFavors = {

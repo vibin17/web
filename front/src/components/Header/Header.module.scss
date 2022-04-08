@@ -71,7 +71,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            &--cursor-pointer {
+            color: rgb(0, 0, 0);
+            &--clickable {
                 cursor: pointer;
             }
         } 
@@ -81,10 +82,17 @@
         }
 
         &__count {
-            font: normal 12px 'Roboto';
+            font: normal 14px 'Roboto';
             position: absolute;
             top: 65%;
             right: 10%;
+            &--centered {
+                font: normal 12px 'Roboto';
+                top: 80%;
+                left: 50%;
+                white-space: nowrap;
+                transform: translateX(-50%);
+            }
         }
         &__description {
             padding: 5px;
@@ -98,7 +106,7 @@
             width: 140px;
             padding: 5px 0;
             position: absolute;
-            top: calc(85% + 0px);
+            top: calc(85% + 10px);
             left: 50%; 
             transform: translateX(-50%); 
             border: 1px solid rgb(172, 172, 172);

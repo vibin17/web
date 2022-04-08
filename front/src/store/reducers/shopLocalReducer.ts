@@ -2,7 +2,7 @@ import { ShopLocalAction, ShopLocalActionTypes, ShopLocalState } from "../types/
 
 const initialState: ShopLocalState = {
     favorsCount: 0,
-    cartCount: 0
+    cartPrice: 0
 }
 
 export const shopLocalReducer = (state = initialState, action: ShopLocalAction): ShopLocalState => {
@@ -10,19 +10,19 @@ export const shopLocalReducer = (state = initialState, action: ShopLocalAction):
         case ShopLocalActionTypes.INIT:
             return {
                 favorsCount: action.payload[0],
-                cartCount: action.payload[1]
+                cartPrice: action.payload[1]
             }
         
         case ShopLocalActionTypes.ADD_TO_FAVORS:
             return {
                 favorsCount: state.favorsCount + 1,
-                cartCount: state.cartCount
+                cartPrice: state.cartPrice
             }
 
         case ShopLocalActionTypes.ADD_TO_CART:
             return {
                 favorsCount: state.favorsCount,
-                cartCount: state.cartCount + 1
+                cartPrice: state.cartPrice + action.payload
             }
 
         default:
