@@ -84,9 +84,9 @@ export class ProductsService {
     }
     
     async getSummaryById(productId: string): Promise<ResponseProductSummaryDto> {
-        const { productName, imagePaths, price, _id } = await this.productModel.findById(productId)
+        const { productName, imagePaths, price, rating, _id } = await this.productModel.findById(productId)
         const imagePath: string = imagePaths[0]
-        const product: ResponseProductSummaryDto = { _id, productName, price, imagePath }
+        const product: ResponseProductSummaryDto = { _id, productName, price, rating, imagePath }
         if (!product) {
             throw new HttpException('Товар с таким ID не найден', HttpStatus.BAD_REQUEST)
         }

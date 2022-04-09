@@ -2,7 +2,7 @@ import { Dispatch } from "react"
 import ShopService from "../../services/ShopService/shop-service"
 import { ShopLocalAction, ShopLocalActionTypes } from "../types/shopLocalTypes"
 
-export const InitShopLocal = () => {
+export const initShopLocal = () => {
     return async (dispatch: Dispatch<ShopLocalAction>) => {
         let favors: string[] = JSON.parse(localStorage.getItem('favors') || '[]')
         let cart: string[] = JSON.parse(localStorage.getItem('cart') || '[]')
@@ -19,7 +19,7 @@ export const InitShopLocal = () => {
     }
 }
 
-export const AddToFavors = (productId: string) => {
+export const addToFavors = (productId: string) => {
     return async (dispatch: Dispatch<ShopLocalAction>) => {
         let favors: string[] = JSON.parse(localStorage.getItem('favors') || '[]')
         if (!favors.includes(productId)) {
@@ -32,7 +32,7 @@ export const AddToFavors = (productId: string) => {
     }
 }
 
-export const AddToCart = (productId: string, productPrice: string) => {
+export const addToCart = (productId: string, productPrice: string) => {
     return async (dispatch: Dispatch<ShopLocalAction>) => {
         let cart: string[] = JSON.parse(localStorage.getItem('cart') || '[]')
         // if (!cart.includes(productId)) {
@@ -48,6 +48,24 @@ export const AddToCart = (productId: string, productPrice: string) => {
         dispatch({
             type: ShopLocalActionTypes.ADD_TO_CART,
             payload: parseInt(productPrice)
+        })
+    }
+}
+
+export const clearFavors = () => {
+    return async (dispatch: Dispatch<ShopLocalAction>) => {
+        localStorage.removeItem('favors')
+        dispatch({
+            type: ShopLocalActionTypes.CLEAR_FAVORS
+        })
+    }
+}
+
+export const clearCart = () => {
+    return async (dispatch: Dispatch<ShopLocalAction>) => {
+        localStorage.removeItem('cart')
+        dispatch({
+            type: ShopLocalActionTypes.CLEAR_CART
         })
     }
 }

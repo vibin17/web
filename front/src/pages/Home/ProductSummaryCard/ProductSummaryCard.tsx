@@ -18,7 +18,7 @@ const ProductSummaryCard = ({ productId }: props) => {
         })()
     }, [])
     return (
-        <Link to={`products/${productId}`} className={styles['product-card']}>
+        <Link to={`/products/${productId}`} className={styles['product-summary']}>
             {product &&
                 <>
                     <div className={styles['image-section']}>

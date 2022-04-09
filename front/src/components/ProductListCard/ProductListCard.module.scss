@@ -1,0 +1,81 @@
+.product-list-card {
+    width: 100%;
+    transition: all .2s;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Lato', sans-serif;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    background: rgb(255, 255, 255);
+    gap: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.267);
+    padding: 20px 20px;
+    &:hover .product-name {
+        text-decoration: underline;
+    }
+}
+
+.product {
+    &-info {
+        flex: 1;
+        display: flex;
+        justify-content: flex-start;
+    }
+    &-description {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        flex: 1;
+        justify-content: space-between;
+    }
+    &-name {
+        font: normal 16px 'Rubik';
+    }
+    &-rating {
+        align-self: flex-start;
+    }
+    &-buy {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 20px;
+        cursor: default;
+        &__button {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            gap: 15px;
+            border: 0;
+            outline: 0;
+            font: bold 18px 'Ubuntu';
+            cursor: pointer;
+            padding: 10px;
+            transition: all 0.3s;
+            align-self: flex-start;
+            background: rgba(214, 214, 214, 0.514);
+            &__icon {
+                font-size: 22px;
+            }
+            &:hover {
+                filter: invert(10%);
+            }
+        }
+    }
+    &-price {
+        flex: 0 0 20%;
+        text-align: right;
+        font: bold 20px 'Rubik';;
+    }
+}
+
+.image-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-image {
+    height: 160px;
+}
+

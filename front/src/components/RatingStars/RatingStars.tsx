@@ -11,17 +11,33 @@ type props = {
         '2': number
         '1': number
     }
+    listCardMode?: boolean
 }
 
-const RatingStars = ({ rating }: props) => {
+const RatingStars = ({ rating, listCardMode = false }: props) => {
     let [averageRating, setAverageRating] = useState(0)
     let [totalReviews, setTotalReviews] = useState(0)
     let [stars, setStars] = useState<React.ReactNode[]>([])
+    let starIconStyle = !listCardMode? `${styles['star__icon']}` 
+        : 
+        `${styles['star__icon']} ${styles['star__icon--bigger']}`
+    console.log(starIconStyle)
     useEffect(() => {
         (async () => {
             let totalRating = 0
             let totalReviews = 0
             let scores: ['5', '4', '3', '2', '1'] = ['5', '4', '3', '2', '1']
+            let initStars: React.ReactNode[] = []
+            setStars(initStars)
+            for (let i = 0; i < 5; i++) {
+                initStars.push(
+                    <div key={i} className={styles['star']}>
+                        <BsStar
+                            strokeWidth='0'
+                            className={starIconStyle}/>
+                    </div>
+                )
+            }
             for (let i = 0; i < 5; i++) {
                 let currentScore = scores[i]
                 totalRating += parseInt(currentScore) * rating[currentScore]
@@ -36,7 +52,7 @@ const RatingStars = ({ rating }: props) => {
                     stars.push(
                         <div key={i} className={styles['star']}>
                             <BsStarFill
-                                className={`${styles['star__icon']} ${styles['star__icon--filled']}`}/>
+                                className={`${starIconStyle} ${styles['star__icon--filled']}`}/>
                         </div>
                     )
                 } else {
@@ -44,7 +60,7 @@ const RatingStars = ({ rating }: props) => {
                         <div key={i} className={styles['star']}>
                             <BsStar
                                 strokeWidth='0'
-                                className={`${styles['star__icon']}`}/>
+                                className={`${starIconStyle}`}/>
                         </div>
                     )
                 }
@@ -53,19 +69,20 @@ const RatingStars = ({ rating }: props) => {
         })()
     }, [])
     return (
-        <div className={styles['rating']}>
+        <div className={`${styles['rating']} ${listCardMode && styles['rating--left-aligned']}`}>
             <div className={styles['rating-stars']}> {
                 stars
             } </div>
-            <div className={styles['rating-label']}> 
-                Рейтинг 
-                    <span className={styles['rating-label__value']}> {averageRating} </span>
-                на основе
-                    <span className={styles['rating-label__value']}> {totalReviews} </span>
-                оценок
-            </div>
+            {!listCardMode &&
+                <div className={styles['rating-label']}> 
+                    Рейтинг 
+                        <span className={styles['rating-label__value']}> {averageRating} </span>
+                    на основе
+                        <span className={styles['rating-label__value']}> {totalReviews} </span>
+                    оценок
+                </div>
+            }
         </div>
-
     )
 }
 

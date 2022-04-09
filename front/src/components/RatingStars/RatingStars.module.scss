@@ -5,6 +5,9 @@
     gap: 3px;
     flex-direction: column;
     align-items: flex-end;
+    &--left-aligned {
+        align-items: flex-start;
+    }
     &-stars {
         display: flex;
         gap: 5px;
@@ -23,6 +26,9 @@
         color: rgba(0, 0, 0, 0.3);
         &--filled {
             color: rgb(255, 232, 103);
+        }
+        &--bigger {
+            font-size: 28px;
         }
     }
 }

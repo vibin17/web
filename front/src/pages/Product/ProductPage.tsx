@@ -11,12 +11,11 @@ import { BsCart2 } from "react-icons/bs"
 import { FiHeart } from "react-icons/fi"
 import ProductInfo from "./ProductInfo/ProductInfo"
 import { useShopLocalActions } from "../../hooks/useActions"
-import { AddToFavors } from "../../store/action-creators/shopLocalAction"
 
 const ProductPage = () => {
     const params = useParams()
     let [product, setProduct] = useState<ProductResponse>()
-    let { AddToCart } = useShopLocalActions()
+    let { addToCart, addToFavors } = useShopLocalActions()
     useEffect(() => {
         (async () => {
             setProduct((await ShopService.getProductById(params.id || 'undef')).data)
@@ -64,7 +63,7 @@ const ProductPage = () => {
                             <button className={styles['product-button']} 
                                 onClick={() => {
                                     if (product) {
-                                        AddToCart(product._id, product.price)
+                                        addToCart(product._id, product.price)
                                     }
                                 }}>
                                 <BsCart2 className={styles['product-button__icon']}/>
@@ -74,7 +73,7 @@ const ProductPage = () => {
                             <button className={`${styles['product-button']} ${styles['product-button--favors']}`}
                                 onClick={() => {
                                     if (product) {
-                                        AddToFavors(product._id)
+                                        addToFavors(product._id)
                                     }
                                 }}>
                                 <FiHeart className={styles['product-button__icon']}/>

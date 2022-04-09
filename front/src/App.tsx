@@ -11,12 +11,12 @@ import CartPage from './pages/Cart/CartPage';
 
 function App() {
   let { checkAuth } = useAuthActions()
-  let { InitShopLocal } = useShopLocalActions()
+  let { initShopLocal } = useShopLocalActions()
   useEffect(() => {
     if (localStorage.getItem('refresh')) {
       checkAuth()
     }
-    InitShopLocal()
+    initShopLocal()
   }, [])
 
   return (

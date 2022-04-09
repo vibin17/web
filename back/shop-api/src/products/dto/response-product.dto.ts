@@ -22,6 +22,7 @@ export class ResponseProductSummaryDto {
     readonly productName: string
     readonly price: number
     readonly imagePath: string
+    readonly rating: Rating
 }
 
 
