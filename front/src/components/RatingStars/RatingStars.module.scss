@@ -22,13 +22,10 @@
 
 .star {
     &__icon {
-        font-size: 20px;
-        color: rgba(0, 0, 0, 0.3);
-        &--filled {
-            color: rgb(255, 232, 103);
-        }
+        font-size: 26px;
+        color: rgb(255, 232, 103);
         &--bigger {
-            font-size: 28px;
+            font-size: 26px;
         }
     }
 }

@@ -25,6 +25,18 @@ export const shopLocalReducer = (state = initialState, action: ShopLocalAction):
                 cartPrice: state.cartPrice + action.payload
             }
 
+        case ShopLocalActionTypes.REMOVE_FROM_FAVORS:
+            return {
+                favorsCount: state.favorsCount - 1,
+                cartPrice: state.cartPrice
+            }
+
+        case ShopLocalActionTypes.REMOVE_FROM_CART:
+            return {
+                favorsCount: state.favorsCount,
+                cartPrice: state.cartPrice - action.payload
+            }
+
         case ShopLocalActionTypes.CLEAR_FAVORS:
             return {
                 favorsCount: 0,

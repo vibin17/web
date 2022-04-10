@@ -8,6 +8,7 @@ import Footer from './components/Footer/Footer';
 import HomePage from './pages/Home/HomePage';
 import ProductPage from './pages/Product/ProductPage';
 import CartPage from './pages/Cart/CartPage';
+import PurchasePage from './pages/Cart/Purchase/PurchasePage';
 
 function App() {
   let { checkAuth } = useAuthActions()
@@ -33,7 +34,10 @@ function App() {
                   <Route path='/products'>
                     <Route path=':id' element={<ProductPage/>}/>
                   </Route>  {/* переделать потом */}
-                  <Route path='/cart' element={<CartPage/>}/>
+                  <Route path='/cart/'>
+                    <Route index element={<CartPage/>}/> 
+                    <Route path='checkout' element={<PurchasePage/>}/>
+                  </Route>
                 </Route>
               </Routes>
             </div>

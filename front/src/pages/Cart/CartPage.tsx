@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import ProductListCard from "../../components/ProductListCard/ProductListCard"
 import { useShopLocalActions } from "../../hooks/useActions"
 import { useTypedSelector } from "../../hooks/useTypedSelector"
@@ -8,6 +9,7 @@ const CartPage = () => {
     let [productIds, setProductIds] = useState<string[]>([])
     let { cartPrice } =  useTypedSelector(state => state.shopLocal)
     let { clearCart } = useShopLocalActions()
+    let favors: string[] = JSON.parse(localStorage.getItem('favors')?? '[]')
     useEffect(() => {
         (async () => {
             let cart: string[] = JSON.parse(localStorage.getItem('cart') || '[]')
@@ -33,9 +35,19 @@ const CartPage = () => {
                     </div>
                     <div className={styles['cart-products']}> {
                         productIds.map((productId, index) => {
-                            return <ProductListCard key={index} productId={productId} cartMode/>
+                            return <ProductListCard key={index} 
+                                        cardKey={index} 
+                                        favored={favors.includes(productId)} 
+                                        productId={productId} 
+                                        cartMode
+                                    />
                         })
                     }
+                    </div>
+                    <div className={styles['cart-footer']}>
+                        <Link to='checkout' className={styles['cart-footer__button']}>
+                            Оформить заказ
+                        </Link>
                     </div>
                 </>
                 :

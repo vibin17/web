@@ -15,10 +15,16 @@ import { useShopLocalActions } from "../../hooks/useActions"
 const ProductPage = () => {
     const params = useParams()
     let [product, setProduct] = useState<ProductResponse>()
+    let [isFavored, setIsFavored] =  useState(false)
     let { addToCart, addToFavors } = useShopLocalActions()
     useEffect(() => {
         (async () => {
-            setProduct((await ShopService.getProductById(params.id || 'undef')).data)
+            const product = (await ShopService.getProductById(params.id || 'undef')).data
+            setProduct(product)
+            let favors: string[] = JSON.parse(localStorage.getItem('favors')?? '[]')
+            if (favors.includes(product._id)) {
+                setIsFavored(true)
+            } 
         })()
     }, [])
     return (
@@ -69,16 +75,22 @@ const ProductPage = () => {
                                 <BsCart2 className={styles['product-button__icon']}/>
                                 Добавить в корзину
                             </button>
-
-                            <button className={`${styles['product-button']} ${styles['product-button--favors']}`}
-                                onClick={() => {
-                                    if (product) {
-                                        addToFavors(product._id)
-                                    }
-                                }}>
-                                <FiHeart className={styles['product-button__icon']}/>
-                                Добавить в избранное
-                            </button>
+                            {!isFavored?
+                                <button className={`${styles['product-button']} ${styles['product-button--favors']}`}
+                                    onClick={() => {
+                                        if (product) {
+                                            addToFavors(product._id)
+                                        }
+                                    }}>
+                                    <FiHeart className={styles['product-button__icon']}/>
+                                    Добавить в избранное
+                                </button>
+                                :
+                                <button className={`${styles['product-button']} ${styles['product-button--favors']}`}>
+                                    <FiHeart className={styles['product-button__icon']}/>
+                                    В избранном
+                                </button>
+                            }
                         </div>
                     </div>
                     <div className={styles['product-info']}>

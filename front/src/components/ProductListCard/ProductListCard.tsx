@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useShopLocalActions } from '../../hooks/useActions'
 import { SHOP_URL } from '../../http'
 import { ProductSummaryResponse } from '../../services/models/shop-models'
 import ShopService from '../../services/ShopService/shop-service'
@@ -7,12 +8,20 @@ import RatingStars from '../RatingStars/RatingStars'
 import styles from './ProductListCard.module.scss'
 
 type props = {
-    productId: string,
+    productId: string
+    cardKey: number
+    favored: boolean
     cartMode?: boolean
 }
 
-const ProductListCard = ({ productId, cartMode = false }: props) => {
+const ProductListCard = ({ productId, cardKey, favored, cartMode = false }: props) => {
     let [product, setProduct] = useState<ProductSummaryResponse>()
+    let { 
+        addToFavors, 
+        addToCart,
+        RemoveFromFavors,
+        removeFromCart 
+        } = useShopLocalActions()
     useEffect(() => {
         (async () => {
             let product = (await ShopService.getProductSummaryById(productId)).data
@@ -33,11 +42,41 @@ const ProductListCard = ({ productId, cartMode = false }: props) => {
                             }
                             </div>
                             <div className={styles['product-rating']}>
-                                <RatingStars rating={product.rating} listCardMode/>
+                                <RatingStars 
+                                    rating={
+                                        // product.rating
+                                        {
+                                            '5': 3,
+                                            '4': 3,
+                                            '3': 2,
+                                            '2': 0,
+                                            '1': 1
+                                        }
+                                    } 
+                                    listCardMode
+                                />
                             </div>
-                            <button className={styles['product-buy__button']}>
-                                Добавить в избранное
-                            </button>
+                            {!favored?
+                                <button className={styles['product-buy__button']}
+                                    onClick={(event) => {
+                                        event.preventDefault()
+                                        if (product) {
+                                            addToFavors(product._id)
+                                        }
+                                    }}
+                                >
+                                    Добавить в избранное
+                                </button>
+                                :
+                                <button className={styles['product-buy__button']}
+                                    onClick={(event) => {
+                                        event.preventDefault()
+                                    }}
+                                >
+                                    В избранном
+                                </button>
+
+                            }
                         </div>
                         <div className={styles['product-buy']}
                             onClick={(event) => {
@@ -58,8 +97,13 @@ const ProductListCard = ({ productId, cartMode = false }: props) => {
                                 </button>
                                 :
                                 <button className={styles['product-buy__button']}
-                                onClick={(event) => {
-                                    
+                                onClick={() => {
+                                    if (product) {
+                                        removeFromCart(cardKey, product.price)
+                                        setTimeout(() => {
+                                            window.location.reload()
+                                        }, 100)
+                                    }
                                 }}
                                 >
                                     Удалить из корзины
