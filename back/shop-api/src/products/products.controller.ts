@@ -3,7 +3,7 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { Roles } from 'src/guard/roles-auth.decorator';
 import { RolesAuthGuard } from 'src/guard/roles-auth.guard';
 import { RolesEnum } from 'src/guard/roles.enum';
-import { CreateProductDto, UpdateProductDto } from './dto/request-product';
+import { CreateProductDto, UpdateProductDto } from './dto/request-product.dto';
 import { ProductsService } from './products.service';
 
 @Controller('products')

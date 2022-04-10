@@ -1,8 +1,8 @@
-import { HttpCode, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Product, ProductDocument } from './schemas/product.schema';
-import { Model, Document } from "mongoose";
+import { Model } from "mongoose";
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateProductDto, UpdateProductDto } from './dto/request-product';
+import { CreateProductDto, UpdateProductDto } from './dto/request-product.dto';
 import { categories, Category } from './types/types';
 import { FilesService } from 'src/files/files.service';
 import { DeletedProductDto, ResponseProductDto, ResponseProductIdDto, ResponseProductSummaryDto } from './dto/response-product.dto';
@@ -64,7 +64,6 @@ export class ProductsService {
         }, { 
             new: true 
         })
-        console.log(updatedProduct)
         return updatedProduct
     }
 
@@ -96,7 +95,6 @@ export class ProductsService {
 
     async getProductById(productId: string): Promise<ResponseProductDto> {
         const product: ResponseProductDto = await this.productModel.findById(productId, '-__v')
-        console.log(product)
         if (!product) {
             throw new HttpException('Товар с таким ID не найден', HttpStatus.BAD_REQUEST)
         }

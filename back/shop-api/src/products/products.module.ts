@@ -6,7 +6,6 @@ import { ENV_PATH } from 'src/consts';
 import { FilesModule } from 'src/files/files.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Product, ProductSchema } from './schemas/product.schema';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 import * as path from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 
@@ -20,15 +19,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     ServeStaticModule.forRoot({
       rootPath: path.resolve(__dirname, '../..', 'product-images'),
       serveRoot: '/products/images'
-    }),
-    ClientsModule.register([{
-      name: 'AUTH_CLIENT',
-      transport: Transport.TCP,
-      options: {
-        host: 'localhost',
-        port: parseInt(process.env.MICROSERVICE_PORT)
-      }
-    }])
+    })
   ],
   controllers: [ProductsController],
   providers: [ProductsService],
