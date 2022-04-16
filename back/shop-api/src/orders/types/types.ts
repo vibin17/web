@@ -1,29 +1,14 @@
-export interface Shop {
-    id: string
-    address: string
+export enum OrderTypes {
+    Delivery = 'DELIVERY', 
+    Pickup = 'PICKUP'
 }
 
-const Tablets: Shop = {
-    name: 'Планшеты',
-    props: [
-        'Баллы Antutu',
-        'Диагональ экрана',
-        'Тип матрицы',
-        'Разрешение экрана',
-        'Операционная система', 
-        'Процессор',
-        'Тактовая частота процессора',
-        'Оперативная память, гб',
-        'Встроенная память, гб',
-        'NFC',
-        'Емкость аккумулятора',
-        'Основная камера',
-        'Фронтальная камера'
-    ]
+export enum PaymentTypes {
+    OnDelivery = 'ON_DELIVERY', 
+    Online = 'ONLINE'
 }
 
-
-export const categories: Category[] = [
-    Smartphones, Tablets
-]
-
+export interface User {
+    userName: string
+    phoneNumber: string
+}

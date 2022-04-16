@@ -10,14 +10,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
   imports: [
     ConfigModule.forRoot({envFilePath: ENV_PATH, isGlobal: true}),
     MongooseModule.forRoot(process.env.DB_URL),
-    ClientsModule.register([{
-      name: 'AUTH_CLIENT',
-      transport: Transport.TCP,
-      options: {
-        host: 'localhost',
-        port: parseInt(process.env.MICROSERVICE_PORT)
-      }
-    }]),
     ProductsModule,
     OrdersModule
   ]

@@ -1,9 +1,8 @@
-import { BadRequestException, HttpException, HttpStatus, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { SignUpUserDto } from 'src/users/dto/signup-user.dto';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcryptjs'
 import { User } from 'src/users/schemas/user.schema';
-import { SignInUserDto } from 'src/users/dto/signin-user.dto';
+import { SignInUserDto, SignUpUserDto } from 'src/users/dto/request.dto';
 import { AuthCheckDto, AuthResponseDto, UserTokenData} from 'src/auth/dto/auth-response.dto';
 import { TokenService } from './token.service';
 

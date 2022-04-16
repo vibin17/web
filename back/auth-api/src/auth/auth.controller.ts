@@ -1,7 +1,6 @@
 import { Body, Controller, Post, UsePipes } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
-import { SignInUserDto } from 'src/users/dto/signin-user.dto';
-import { SignUpUserDto } from 'src/users/dto/signup-user.dto';
+import { SignInUserDto, SignUpUserDto } from 'src/users/dto/request.dto';
 import { ValidationPipe } from 'src/validation/validation';
 import { AuthService } from './auth.service';
 import { AccessDto, RefreshDto } from './dto/tokens.dto';

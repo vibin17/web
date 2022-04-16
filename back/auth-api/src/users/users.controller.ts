@@ -3,6 +3,8 @@ import { UsersService } from './users.service';
 import { RolesAuthGuard } from 'src/auth/roles-guard/roles-auth.guard';
 import { Roles } from 'src/auth/roles-guard/roles-auth.decorator';
 import { RolesEnum } from './schemas/roles.enum';
+import { MessagePattern } from '@nestjs/microservices';
+import { AccessDto } from 'src/auth/dto/tokens.dto';
 
 @Controller('users')
 export class UsersController {
@@ -28,5 +30,11 @@ export class UsersController {
   @Delete(':username')
   remove(@Param('username') userName: string) {
     return this.usersService.deleteByName(userName);
+  }
+
+  @MessagePattern({ role: 'users', cmd: 'get'})
+  async getIdByToken(tokensDto: AccessDto) {
+      const response = this.usersService.getIdByToken(tokensDto.access)
+      return response
   }
 }

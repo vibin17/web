@@ -8,9 +8,18 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Product, ProductSchema } from './schemas/product.schema';
 import * as path from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
-  imports: [ConfigModule.forRoot({ envFilePath: ENV_PATH }), 
+  imports: [ConfigModule.forRoot({ envFilePath: ENV_PATH }),
+    ClientsModule.register([{
+      name: 'AUTH_CLIENT',
+      transport: Transport.TCP,
+      options: {
+        host: 'localhost',
+        port: parseInt(process.env.MICROSERVICE_PORT)
+      }
+    }]),
     FilesModule, 
     MongooseModule.forFeature([{
       name: Product.name, 
@@ -23,5 +32,6 @@ import { ServeStaticModule } from '@nestjs/serve-static';
   ],
   controllers: [ProductsController],
   providers: [ProductsService],
+  exports: [ProductsService]
 })
 export class ProductsModule {}

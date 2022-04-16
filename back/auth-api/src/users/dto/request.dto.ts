@@ -10,3 +10,8 @@ export class SignUpUserDto {
     @Length(6, 16, { message: 'Не меньше 4 и не больше 16' })
     readonly password: string;
 }
+
+export class SignInUserDto {
+    readonly userName: string;
+    readonly password: string;
+}

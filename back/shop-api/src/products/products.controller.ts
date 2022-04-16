@@ -28,7 +28,7 @@ export class ProductsController {
 
     @Get('/category')
     async getAllProductsOfCategory(@Query('category') category: string) {
-        return this.productsService.getProductsAllOfCategory(category)
+        return this.productsService.getAllProductsOfCategory(category)
     }
 
     @Post('/')

@@ -6,6 +6,7 @@ import { UserTokenData } from "src/auth/dto/auth-response.dto";
 @Injectable()
 export class TokenService {
     constructor(private jwtService: JwtService) {}
+    
     async generateAccessToken(payload: UserTokenData): Promise<string> {
         return this.jwtService.sign(payload, {
             secret: process.env.ACCESS_KEY,
@@ -35,15 +36,6 @@ export class TokenService {
         }
         catch {
             throw new UnauthorizedException({message: "Refresh токен недействителен"})
-        }
-    }
-
-    syncValidateAccessToken(access: string): UserTokenData {
-        try {
-            return this.jwtService.verify(access, { secret: process.env.ACCESS_KEY })
-        }
-        catch {
-            throw new UnauthorizedException({message: "Access токен недействителен"})
         }
     }
 }

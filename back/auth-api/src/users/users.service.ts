@@ -1,15 +1,18 @@
-import { BadRequestException, HttpCode, HttpStatus, Injectable } from '@nestjs/common';
-import { SignUpUserDto } from './dto/signup-user.dto';
-import { SignInUserDto } from './dto/signin-user.dto';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { SignInUserDto, SignUpUserDto } from './dto/request.dto';
 import { User, UserDocument } from './schemas/user.schema';
 import { Model } from "mongoose";
 import { InjectModel } from '@nestjs/mongoose';
 import { RolesEnum } from './schemas/roles.enum';
+import { TokenService } from 'src/auth/token.service';
+import { UserTokenData } from 'src/auth/dto/auth-response.dto';
+import { UserIdDto } from './dto/response.dto';
 
 @Injectable()
 export class UsersService {
   
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>, 
+              private tokenService: TokenService) {}
   
   async create(createUserDto: SignUpUserDto) {
     const newUser = new this.userModel(createUserDto);
@@ -33,7 +36,7 @@ export class UsersService {
 
   async updateByName(userName: string, updateUserDto: SignInUserDto) {
     const updatedUser = this.userModel.findOneAndUpdate({ userName }, updateUserDto, { new: true });
-    return updateUserDto
+    return updatedUser
   }
 
   async setAdmin(userName: string) {
@@ -48,4 +51,13 @@ export class UsersService {
     const deletedUser = await this.userModel.deleteOne({ userName })
     return deletedUser
   }
+
+  async getIdByToken(access: string): Promise<UserIdDto> {
+    const userData: UserTokenData  = await this.tokenService.validateAccessToken(access)
+    const { _id: userId } = await this.getByName(userData.userName)
+    if (!userId) {
+        throw new HttpException('Пользователь из токена не найден', HttpStatus.UNAUTHORIZED)
+    }
+    return { userId }
+}
 }

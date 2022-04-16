@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, HttpException, HttpStatus, Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { ClientProxy } from "@nestjs/microservices";
-import { lastValueFrom, Observable, timeout } from "rxjs";
+import { lastValueFrom, timeout } from "rxjs";
 import { UserTokenData } from "src/products/dto/auth-response.dto";
 import { ROLES_KEY } from "./roles-auth.decorator";
 
@@ -18,15 +18,14 @@ export class RolesAuthGuard implements CanActivate {
         ])
         const authHeader = <string> req.headers.authorization
         if (!authHeader) {
-            throw new HttpException('Access токен отсутствует или некоректен', HttpStatus.UNAUTHORIZED)
+            throw new HttpException('Access токен отсутствует или некорректен', HttpStatus.UNAUTHORIZED)
         }
         const bearer = authHeader.split(' ')[0]
         const token = authHeader.split(' ')[1]
         if (bearer !== 'Bearer' || !token) {
-            throw new HttpException('Access токен отсутствует или некоректен', HttpStatus.UNAUTHORIZED)
+            throw new HttpException('Access токен отсутствует или некорректен', HttpStatus.UNAUTHORIZED)
         }
-        let response
-        response = await (lastValueFrom(this.client.send({
+        let response = await (lastValueFrom<{ userData: UserTokenData }>(this.client.send({
             role: 'auth',
             cmd: 'check'
         }, {

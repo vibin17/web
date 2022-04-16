@@ -18,10 +18,10 @@ export class Product {
 
     @Prop({ _id: false, type: {
         name: {
-            type: mongoose.SchemaTypes.String
+            type: mongoose.Schema.Types.String
         },
         props: {
-            type: mongoose.SchemaTypes.Array
+            type: mongoose.Schema.Types.Array
         }
     }, 
         required: true
@@ -38,23 +38,23 @@ export class Product {
         _id: false, 
         type: {
             '5': {
-                type: mongoose.SchemaTypes.Number,
+                type: mongoose.Schema.Types.Number,
                 required: true
             },
             '4': {
-                type: mongoose.SchemaTypes.Number,
+                type: mongoose.Schema.Types.Number,
                 required: true
             },
             '3': {
-                type: mongoose.SchemaTypes.Number,
+                type: mongoose.Schema.Types.Number,
                 required: true
             },
             '2': {
-                type: mongoose.SchemaTypes.Number,
+                type: mongoose.Schema.Types.Number,
                 required: true
             },
             '1': {
-                type: mongoose.SchemaTypes.Number,
+                type: mongoose.Schema.Types.Number,
                 required: true
             }
         }, 

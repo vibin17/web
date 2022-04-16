@@ -1,37 +1,72 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from "mongoose";
+import { lastValueFrom, timeout } from 'rxjs';
+import { Product, ProductDocument } from 'src/products/schemas/product.schema';
+import { CreateOrderDto, UserIdDto } from './dto/request-order.dto';
+import { ResponseOrderDto } from './dto/response-order.dto';
+import { Order, OrderDocument } from './schemas/order.schema';
 
 @Injectable()
 export class OrdersService {
-    constructor(@InjectModel(Order.name) private productModel: Model<Order>) {}
+    constructor(@Inject('AUTH_CLIENT') private readonly client: ClientProxy,
+                @InjectModel(Order.name) private orderModel: Model<OrderDocument>) {}
 
-    async create(createProductDto: CreateProductDto): Promise<ResponseProductDto> {
-        const existingProduct: Product = await this.productModel.findOne({ productName: createProductDto.productName })
+    async create(authHeader: string, createOrderDto: CreateOrderDto): Promise<ResponseOrderDto> {
+        const token = authHeader.split(' ')[1]
+        let response = await (lastValueFrom<UserIdDto>(this.client.send({
+            role: 'users',
+            cmd: 'get'
+        }, {
+            access: token
+        }).pipe(timeout(2000)))).catch(error => { 
+            throw new HttpException('Авторизация не пройдена', HttpStatus.UNAUTHORIZED)
+        })
+        let {
+            _id,
+            user, 
+            products,
+            orderType,
+            orderDate,
+            deliveryAddress,
+            paymentType
+        } = await new this.orderModel({
+            user: response.userId,
+            products: createOrderDto.products,
+            orderType: createOrderDto.orderType,
+            orderDate: createOrderDto.orderDate,
+            deliveryAddress: createOrderDto.deliveryAddress,
+            paymentType: createOrderDto.paymentType
+        }).save()
 
-        if (existingProduct) {
-            throw new HttpException('Товар с таким названием уже существует', HttpStatus.BAD_REQUEST)
+        let order: ResponseOrderDto = {
+            _id,
+            user, 
+            products,
+            orderType,
+            orderDate,
+            deliveryAddress,
+            paymentType 
         }
 
-        const productCategory = categories.find(x => x.name === createProductDto.categoryName)
-        if (!productCategory) {
-            throw new HttpException('Такой категории товаров не существует', HttpStatus.BAD_REQUEST)
-        }
+        return order
+    }
 
-        if (imageFiles.length > 5) {
-            throw new HttpException('Не больше 5 прикрепленных файлов', HttpStatus.BAD_REQUEST)
-        }
+    async getAllOfUser(authHeader: string): Promise<ResponseOrderDto[]> {
+        const token = authHeader.split(' ')[1]
+        let response = await (lastValueFrom<UserIdDto>(this.client.send({
+            role: 'users',
+            cmd: 'get'
+        }, {
+            access: token
+        }).pipe(timeout(2000)))).catch(error => { 
+            throw new HttpException('Авторизация не пройдена', HttpStatus.UNAUTHORIZED)
+        })
 
-        let fileNames: string[] = []
-        for (let image of imageFiles) {
-            let fileName = await this.filesService.createFile(image)
-            fileNames.push(fileName)
-        }
-        const newProduct = new this.productModel({ ...createProductDto, category: productCategory, imagePaths: fileNames })
-        const { productName, manufacturer, releaseYear, price, category, rating, imagePaths, _id, props } = await newProduct.save()
-        const product: ResponseProductDto = { _id, productName, manufacturer, releaseYear, price, category, imagePaths, props, rating }
-                    
-        return product
+        let orders = this.orderModel.find({ user: response.userId }).select('-__v')
+
+        return orders
     }
 
 }
