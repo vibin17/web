@@ -3,7 +3,7 @@ export type CreateProductData = {
     readonly manufacturer: string
     readonly releaseYear: string
     readonly price: string
-    readonly categoryName: string
+    readonly category: string
     readonly description: string
     readonly props: string[]
 }
@@ -14,14 +14,18 @@ export type UpdateProductData = {
     readonly manufacturer: string
     readonly releaseYear: string
     readonly price: string
-    readonly categoryName: string
+    readonly category: string
     readonly description: string
     readonly props: string[]
 }
 
+export type CateogryProp = {
+    name: string
+}
+
 export type CategoryResponseDto = {
     name: string,
-    props: string[]
+    props: CateogryProp[]
 }
 
 export type ProductIdResponse = {
@@ -57,10 +61,7 @@ export type ProductResponse = {
         '2': number
         '1': number
     }
-    readonly category: {
-        name: string,
-        props: string[]
-    }
+    readonly category: string
     readonly imagePaths: string[]
     readonly props: string[]
 }

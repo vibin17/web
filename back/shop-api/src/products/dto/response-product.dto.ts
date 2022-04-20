@@ -7,7 +7,7 @@ export class ResponseProductDto {
     readonly releaseYear: string
     readonly price: number
     readonly rating: Rating
-    readonly category: Category
+    readonly category: string
     readonly imagePaths: string[]
     readonly props: string[]
 }

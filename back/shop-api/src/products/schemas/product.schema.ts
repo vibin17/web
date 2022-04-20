@@ -16,17 +16,8 @@ export class Product {
     @Prop({ required: true })
     price: number
 
-    @Prop({ _id: false, type: {
-        name: {
-            type: mongoose.Schema.Types.String
-        },
-        props: {
-            type: mongoose.Schema.Types.Array
-        }
-    }, 
-        required: true
-    })
-    category: Category
+    @Prop({ required: true })
+    category: string
 
     @Prop({ default: 'Вставьте описание' })
     description: string

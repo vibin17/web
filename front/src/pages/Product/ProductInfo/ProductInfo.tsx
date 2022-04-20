@@ -1,5 +1,6 @@
-import { useState } from 'react'
-import { ProductResponse } from '../../../services/models/shop-models'
+import { useEffect, useState } from 'react'
+import { CategoryResponseDto, ProductResponse } from '../../../services/models/shop-models'
+import ShopService from '../../../services/ShopService/shop-service'
 import styles from './ProductInfo.module.scss'
 
 type props = {
@@ -8,6 +9,18 @@ type props = {
 
 const ProductInfo = ({ product }: props) => {
     let [reviewsTabActive, setReviewsTabActive] = useState(false)
+    let [category, setCategory] = useState<CategoryResponseDto>()
+    useEffect(() => {
+        (async () => {
+            let allCategories = (await ShopService.getCategories()).data
+            console.log(allCategories)
+            let category = allCategories.find((category) =>
+                category.name == product.category
+            )
+            console.log(product.category)
+            setCategory(category)
+        })()
+    }, [])
     return (
         <div className={styles['menu']}>
             <div className={styles['menu-navbar']}>
@@ -79,7 +92,7 @@ const ProductInfo = ({ product }: props) => {
                                         <div key={index} className={styles['product-info__prop-row']}>
                                             <div className={styles['product-info__prop-name']}>
                                                 {
-                                                    product.category.props[index]
+                                                    category?.props[index].name
                                                 }
                                             </div>
                                             <div className={styles['product-info__prop-separator']}/>

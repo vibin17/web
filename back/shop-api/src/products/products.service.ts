@@ -19,7 +19,7 @@ export class ProductsService {
             throw new HttpException('Товар с таким названием уже существует', HttpStatus.BAD_REQUEST)
         }
 
-        const productCategory = categories.find(x => x.name === createProductDto.categoryName)
+        const productCategory = categories.find(x => x.name === createProductDto.category)
         if (!productCategory) {
             throw new HttpException('Такой категории товаров не существует', HttpStatus.BAD_REQUEST)
         }
@@ -33,7 +33,7 @@ export class ProductsService {
             let fileName = await this.filesService.createFile(image)
             fileNames.push(fileName)
         }
-        const newProduct = new this.productModel({ ...createProductDto, category: productCategory, imagePaths: fileNames })
+        const newProduct = new this.productModel({ ...createProductDto, imagePaths: fileNames })
         const { productName, manufacturer, releaseYear, price, category, rating, imagePaths, _id, props } = await newProduct.save()
         const product: ResponseProductDto = { _id, productName, manufacturer, releaseYear, price, category, imagePaths, props, rating }
                     

@@ -10,7 +10,7 @@ export class CreateProductDto {
     @IsNumberString()
     readonly price: number
     @IsString()
-    readonly categoryName: string
+    readonly category: string
     readonly description: string
     readonly props: string[]
 }
@@ -26,7 +26,7 @@ export class UpdateProductDto {
     @IsNumberString()
     readonly price: number
     @IsString()
-    readonly categoryName: string
+    readonly category: string
     readonly description: string
     readonly props: string[]
 }

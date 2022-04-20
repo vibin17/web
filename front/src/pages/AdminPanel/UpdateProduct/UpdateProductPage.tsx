@@ -154,7 +154,7 @@ const UpdateProductPage = () => {
                                         description: values.productDescription,
                                         price: values.price,
                                         releaseYear: values.releaseYear,
-                                        categoryName: selectedCategory?.name || 'error',
+                                        category: selectedCategory?.name || 'error',
                                         props: values.props
                                     }, files)
                                     setMessage(`Обновлен товар с id ${selectedProduct?._id}`)

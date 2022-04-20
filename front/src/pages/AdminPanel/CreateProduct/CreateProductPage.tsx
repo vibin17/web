@@ -46,7 +46,6 @@ const CreateProductPage = () => {
                             }
                             setPropsInitValues(propsInitValues)
                         }
-
                     }>
                     <option 
                         className={styles['select-category__options']} 
@@ -88,7 +87,7 @@ const CreateProductPage = () => {
                                 description: values.productDescription,
                                 price: values.price,
                                 releaseYear: values.releaseYear,
-                                categoryName: selectedCategory?.name || 'error',
+                                category: selectedCategory?.name || 'error',
                                 props: values.props
                             }, files)
                             setMessage(`Товар добавлен с id ${result.data._id}`)
@@ -173,14 +172,14 @@ const CreateProductPage = () => {
                                 return (
                                     <div className={styles['form-field']} key={index}>
                                         <div className={styles['form-field__label']}>
-                                            {prop}
+                                            {prop.name}
                                         </div>
                                         <Field 
                                             className={styles['form-field__input']}
                                             type='text' 
                                             id={`props[${index}]`} 
                                             name={`props[${index}]`}
-                                            placeholder={prop}
+                                            placeholder={prop.name}
                                             required
                                         />
                                     </div>
