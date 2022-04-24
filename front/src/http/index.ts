@@ -25,7 +25,8 @@ authAPI.interceptors.request.use((config) => {
 shopAPI.interceptors.request.use((config) => {
     const access = `Bearer ${localStorage.getItem('access')}`
     config.headers = {
-        Authorization: access
+        Authorization: access,
+        'Content-Type': 'application/json'
     }
     return config
 })

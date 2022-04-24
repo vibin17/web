@@ -1,8 +1,7 @@
-import { MongooseModule, Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
 import { Document } from 'mongoose';
-import { Product } from "src/products/schemas/product.schema";
-import { OrderTypes, PaymentTypes, User } from "../types/types";
+import { OrderTypes, PaymentTypes } from "../types/types";
 
 export type OrderDocument = Order & Document
 @Schema()

@@ -8,7 +8,15 @@ export enum PaymentTypes {
     Online = 'ONLINE'
 }
 
-export interface User {
-    userName: string
-    phoneNumber: string
+export type Shop = {
+    address: string
 }
+
+export const Shops: Shop[] = [
+    {
+        address: 'ТЦ Маркет-Молл, ул. Центральная 9/2, этаж 2'
+    },
+    {
+        address: 'ТЦ Мега, ул. Василевского 40'
+    }
+]

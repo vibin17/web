@@ -71,3 +71,24 @@ export type DeletedResponse = {
     readonly acknowledged: boolean
     readonly deletedCount: number
 }
+
+export type ShopResponse = {
+    address: string
+}
+
+export type CreateOrderData = {
+    orderType: string
+    orderDate: Date
+    deliveryAddress: string
+    paymentType: string
+}
+
+export type OrderResponse = {
+    _id: string
+    user: string
+    products: string[]
+    orderType: string
+    orderDate: Date
+    deliveryAddress: string
+    paymentType: string
+}

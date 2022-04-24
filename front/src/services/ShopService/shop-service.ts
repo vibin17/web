@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { FileWithPath } from "react-dropzone";
 import { shopAPI, SHOP_URL } from "../../http";
-import { CategoryResponseDto, CreateProductData, DeletedResponse, ProductIdResponse, ProductResponse, ProductSummaryResponse, UpdateProductData } from "../models/shop-models";
+import { CategoryResponseDto, CreateOrderData, CreateProductData, DeletedResponse, OrderResponse, ProductIdResponse, ProductResponse, ProductSummaryResponse, ShopResponse, UpdateProductData } from "../models/shop-models";
 
 export default class ShopService {
     static async getCategories(): Promise<AxiosResponse<CategoryResponseDto[]>> {
@@ -94,8 +94,16 @@ export default class ShopService {
         })
     }
 
-    static async createOrder() {
-        
+    static async getShops(): Promise<AxiosResponse<ShopResponse[]>> {
+        return shopAPI.get('orders/shops')
     }
+
+    static async createOrder(order: CreateOrderData): Promise<AxiosResponse<OrderResponse>> {
+        let products: string[] = JSON.parse(localStorage.getItem('cart') || '[]')
+        return shopAPI.post('orders', { 
+            ...order,
+            products
+        })
+    }       
 
 }

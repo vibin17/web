@@ -10,17 +10,17 @@ export class OrdersController {
     constructor(private ordersService: OrdersService) {}
 
     @Post('/')
-    @UseGuards(RolesAuthGuard)
-    @Roles()
     async createOrder(@Headers('authorization') authHeader, @Body() createOrderDto: CreateOrderDto) {
         return this.ordersService.create(authHeader, createOrderDto)
     }
 
     @Get('/')
-    @UseGuards(RolesAuthGuard)
-    @Roles()
     async getAllOfUser(@Headers('authorization') authHeader) {
         return this.ordersService.getAllOfUser(authHeader)
     }
 
+    @Get('/shops')
+    async getShops() {
+        return this.ordersService.getShops()
+    }
 }

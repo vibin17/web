@@ -7,6 +7,7 @@ import { Product, ProductDocument } from 'src/products/schemas/product.schema';
 import { CreateOrderDto, UserIdDto } from './dto/request-order.dto';
 import { ResponseOrderDto } from './dto/response-order.dto';
 import { Order, OrderDocument } from './schemas/order.schema';
+import { Shop, Shops } from './types/types';
 
 @Injectable()
 export class OrdersService {
@@ -67,6 +68,10 @@ export class OrdersService {
         let orders = this.orderModel.find({ user: response.userId }).select('-__v')
 
         return orders
+    }
+    
+    async getShops(): Promise<Shop[]> {
+        return Shops
     }
 
 }
