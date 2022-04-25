@@ -81,5 +81,8 @@
 
 .card-image {
     height: 160px;
+    &--smaller {
+        height: 100px;
+    }
 }
 

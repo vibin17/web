@@ -10,9 +10,7 @@ const AdminPanelPage = () => {
     if (userData.roles?.includes('ADMIN') && isSignedIn) {
         return ( 
         <div className={styles['admin-panel']}>
-            <Routes>
-                <Route path='/' element={                
-                    <ul className={styles['list']}>
+            <ul className={styles['list']}>
                         <li className={styles['list__item']}>
                             <Link to='create' className={styles['link']}>Добавить товар в каталог</Link>
                         </li>
@@ -22,13 +20,7 @@ const AdminPanelPage = () => {
                         <li className={styles['list__item']}>
                             <Link to='delete' className={styles['link']}>Удалить товар из каталога</Link>
                         </li>
-                    </ul>}
-                />
-                <Route path='create' element={<CreateProductPage/>}/>
-                <Route path='update' element={<UpdateProductPage/>}/>
-                <Route path='delete' element={<DeleteProductPage/>}/>
-                    
-            </Routes>
+                    </ul>
         </div>
         )
     }

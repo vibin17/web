@@ -10,34 +10,23 @@ type props = {
         '3': number
         '2': number
         '1': number
-    }
-    listCardMode?: boolean
+    },
+    rightAligned?: boolean
+    summaryCardMode?: boolean
 }
 
-const RatingStars = ({ rating, listCardMode = false }: props) => {
+const RatingStars = ({ rating, rightAligned = false, summaryCardMode = false }: props) => {
     let [averageRating, setAverageRating] = useState(0)
     let [totalReviews, setTotalReviews] = useState(0)
     let [stars, setStars] = useState<React.ReactNode[]>([])
-    let starIconStyle = !listCardMode? `${styles['star__icon']}` 
+    let starIconStyle = !summaryCardMode? `${styles['star__icon']}` 
         : 
-        `${styles['star__icon']} ${styles['star__icon--bigger']}`
-    console.log(starIconStyle)
+        `${styles['star__icon']} ${styles['star__icon--smaller']}`
     useEffect(() => {
         (async () => {
             let totalRating = 0
             let totalReviews = 0
             let scores: ['5', '4', '3', '2', '1'] = ['5', '4', '3', '2', '1']
-            let initStars: React.ReactNode[] = []
-            setStars(initStars)
-            for (let i = 0; i < 5; i++) {
-                initStars.push(
-                    <div key={i} className={styles['star']}>
-                        <BsStar
-                            strokeWidth='0'
-                            className={starIconStyle}/>
-                    </div>
-                )
-            }
             for (let i = 0; i < 5; i++) {
                 let currentScore = scores[i]
                 totalRating += parseInt(currentScore) * rating[currentScore]
@@ -76,20 +65,19 @@ const RatingStars = ({ rating, listCardMode = false }: props) => {
                 )
             }
             setStars(stars)
-            console.log(averageRating)
         })()
     }, [])
     return (
-        <div className={`${styles['rating']} ${listCardMode && styles['rating--left-aligned']}`}>
+        <div className={`${styles['rating']} ${!rightAligned && styles['rating--left-aligned']}`}>
             <div className={styles['rating-stars']}> {
                 stars
             } </div>
-            {/* {!listCardMode && */
+            {!summaryCardMode &&
                 <div className={styles['rating-label']}> 
                     Рейтинг 
-                        <span className={styles['rating-label__value']}> {averageRating.toFixed(2)} </span>
+                    <span className={styles['rating-label__value']}> {averageRating.toFixed(2)} </span>
                     на основе
-                        <span className={styles['rating-label__value']}> {totalReviews} </span>
+                    <span className={styles['rating-label__value']}> {totalReviews} </span>
                     оценок
                 </div>
             }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import RatingStars from '../../../components/RatingStars/RatingStars'
 import { SHOP_URL } from '../../../http'
 import { ProductSummaryResponse } from '../../../services/models/shop-models'
 import ShopService from '../../../services/ShopService/shop-service'
@@ -28,9 +29,12 @@ const ProductSummaryCard = ({ productId }: props) => {
                         <div className={styles['product-name']}> {
                             product.productName
                         }</div>
-                        <div className={styles['product-price']}> {
-                            product.price + ' ₽'
-                        }</div>
+                        <div className={styles['product-info__additional']}>
+                            <RatingStars rating={product.rating} summaryCardMode/>
+                            <div className={styles['product-price']}> {
+                                product.price + ' ₽'
+                            }</div>
+                        </div>
                     </div>
                 </>
             }

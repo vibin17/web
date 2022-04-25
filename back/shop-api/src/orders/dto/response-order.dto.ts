@@ -6,4 +6,5 @@ export class ResponseOrderDto {
     orderDate: Date
     deliveryAddress: string
     paymentType: string
+    price: number
 }

@@ -70,7 +70,7 @@ export default class ShopService {
         data.append('productName', productData.productName)
         data.append('manufacturer', productData.manufacturer)
         data.append('releaseYear', productData.releaseYear)
-        data.append('categoryName', productData.category)
+        data.append('category', productData.category)
         data.append('price', productData.price)
         data.append('description', productData.description)
         for (let prop of productData.props) {
@@ -104,6 +104,10 @@ export default class ShopService {
             ...order,
             products
         })
-    }       
+    }
+
+    static async getUserOrders(): Promise<AxiosResponse<OrderResponse[]>> {
+        return shopAPI.get('orders')
+    }   
 
 }

@@ -53,6 +53,7 @@ const PurchasePage = () => {
                                                     values.shopAddress),
                                                 paymentType: values.paymentType
                                             })
+                                            console.log(result)
                                             setMessage(`Ваш заказ сформирован с номером ${result.data._id}. Переход на страницу заказов...`)
                                         }, 1500)
                                         setTimeout(() => {

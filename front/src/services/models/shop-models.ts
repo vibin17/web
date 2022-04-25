@@ -91,4 +91,5 @@ export type OrderResponse = {
     orderDate: Date
     deliveryAddress: string
     paymentType: string
+    price: number
 }

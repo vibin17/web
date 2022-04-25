@@ -29,6 +29,8 @@ const SignUpForm = () => {
         let validated = password.length >= 4 && password.length <= 16 || !password
         if (passwordConfirm && password != passwordConfirm) {
             setPasswordConfirmValidated(false)
+        } else {
+            setPasswordConfirmValidated(true)
         }
         setPassword(password)
         if (validated) 

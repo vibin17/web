@@ -30,8 +30,11 @@ const UserMenu = ({ setSignInFormActive, setSignUpFormActive }: props) => {
                     {userData.roles?.includes('ADMIN') && 
                         <Link to={'/admin'} className={styles['user-menu__button']}>
                             Панель админа
-                        </Link>}
-                    
+                        </Link>
+                    }
+                    <Link to={'/orders'} className={styles['user-menu__button']}>
+                        История заказов
+                    </Link>
                     <Link to={'/'} className={`${styles['user-menu__button']} ${styles['user-menu__button--red']}`} onClick={() => { signOut() }}>
                         Выйти из аккаунта
                     </Link>

@@ -28,6 +28,8 @@ export class Order {
         type: mongoose.Schema.Types.String 
     })
     paymentType: PaymentTypes
+    @Prop({ required: true })
+    price: number
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order)

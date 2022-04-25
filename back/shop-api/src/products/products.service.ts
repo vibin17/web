@@ -103,7 +103,7 @@ export class ProductsService {
     }
 
     async getAllProductsOfCategory(categoryName: string): Promise<ResponseProductIdDto[]> {
-        const products: ResponseProductIdDto[] = await this.productModel.find({ 'category.name': categoryName }).select({ '_id': 1, 'productName': 1})
+        const products: ResponseProductIdDto[] = await this.productModel.find({ category: categoryName }).select({ '_id': 1, 'productName': 1})
 
         return products
     }

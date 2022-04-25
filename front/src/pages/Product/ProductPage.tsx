@@ -65,7 +65,9 @@ const ProductPage = () => {
                                     '3': 1,
                                     '2': 0,
                                     '1': 0
-                                }}/>
+                                }} 
+                                rightAligned
+                            />
                             <button className={styles['product-button']} 
                                 onClick={() => {
                                     if (product) {
@@ -80,6 +82,7 @@ const ProductPage = () => {
                                     onClick={() => {
                                         if (product) {
                                             addToFavors(product._id)
+                                            setIsFavored(true)
                                         }
                                     }}>
                                     <FiHeart className={styles['product-button__icon']}/>

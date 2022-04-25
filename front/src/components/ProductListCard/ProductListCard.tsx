@@ -9,12 +9,13 @@ import styles from './ProductListCard.module.scss'
 
 type props = {
     productId: string
+    ordersHistoryMode?: boolean
     cardKey: number
-    favored: boolean
+    favored?: boolean
     cartMode?: boolean
 }
 
-const ProductListCard = ({ productId, cardKey, favored, cartMode = false }: props) => {
+const ProductListCard = ({ productId, cardKey, ordersHistoryMode = false, favored = false, cartMode = false }: props) => {
     let [product, setProduct] = useState<ProductSummaryResponse>()
     let { 
         addToFavors, 
@@ -33,7 +34,11 @@ const ProductListCard = ({ productId, cardKey, favored, cartMode = false }: prop
             {product &&
                 <>
                     <div className={styles['image-section']}>
-                        <img className={styles['card-image']} src={`${SHOP_URL}/products/images/${product.imagePath}`}/>
+                        <img 
+                            className={`${styles['card-image']} ${ordersHistoryMode &&
+                                styles['card-image--smaller']}`} 
+                            src={`${SHOP_URL}/products/images/${product.imagePath}`}
+                        />
                     </div>
                     <div className={styles['product-info']}>
                         <div className={styles['product-description']}> 
@@ -41,22 +46,23 @@ const ProductListCard = ({ productId, cardKey, favored, cartMode = false }: prop
                                 product.productName
                             }
                             </div>
-                            <div className={styles['product-rating']}>
-                                <RatingStars 
-                                    rating={
-                                        // product.rating
-                                        {
-                                            '5': 3,
-                                            '4': 3,
-                                            '3': 2,
-                                            '2': 0,
-                                            '1': 1
-                                        }
-                                    } 
-                                    listCardMode
-                                />
-                            </div>
-                            {!favored?
+                            {!ordersHistoryMode &&
+                                <div className={styles['product-rating']}>
+                                    <RatingStars 
+                                        rating={
+                                            // product.rating
+                                            {
+                                                '5': 3,
+                                                '4': 3,
+                                                '3': 2,
+                                                '2': 0,
+                                                '1': 1
+                                            }
+                                        } 
+                                    />
+                                </div>
+                            }
+                            {!ordersHistoryMode && (!favored?
                                 <button className={styles['product-buy__button']}
                                     onClick={(event) => {
                                         event.preventDefault()
@@ -75,8 +81,7 @@ const ProductListCard = ({ productId, cardKey, favored, cartMode = false }: prop
                                 >
                                     В избранном
                                 </button>
-
-                            }
+                            )}
                         </div>
                         <div className={styles['product-buy']}
                             onClick={(event) => {
@@ -87,7 +92,7 @@ const ProductListCard = ({ productId, cardKey, favored, cartMode = false }: prop
                                 product.price + ' ₽'
                             }
                             </div>
-                            {!cartMode ?
+                            {!ordersHistoryMode && (!cartMode?
                                 <button className={styles['product-buy__button']} 
                                     onClick={() => {
                                         
@@ -108,7 +113,7 @@ const ProductListCard = ({ productId, cardKey, favored, cartMode = false }: prop
                                 >
                                     Удалить из корзины
                                 </button>                       
-                            }
+                            )}
                         </div>
                     </div>
                 </>
