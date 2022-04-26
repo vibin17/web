@@ -19,12 +19,12 @@ const OrderCard = ({ order }: props) => {
         <div className={styles['order-card']}>
             <div className={styles['card-header']}>
                 <div className={styles['card-header__item']}>
-                    Номер заказа <b>
+                    Идентификатор заказа: <b>
                         { order._id }
                     </b>
                 </div>
                 <div className={styles['card-header__item']}>
-                    Дата заказа <b>
+                    Дата заказа: <b>
                         {`
                             ${date.getDate()}.${date.getMonth() + 1 < 10?
                                 `0${date.getMonth() + 1}`
@@ -49,7 +49,7 @@ const OrderCard = ({ order }: props) => {
                             `Заказ будет ждать вас в магазине по адресу`
                             :
                             `Заказ будет доставлен по адресу`
-                    } {order.deliveryAddress}
+                    }: {order.deliveryAddress}
                 </div>
                 <div className={styles['card-header__item']}>
                     {
@@ -57,15 +57,14 @@ const OrderCard = ({ order }: props) => {
                             `Оплачено`
                             :
                             `К оплате`
-                    }
-                    <b> {order.price} ₽ </b>
+                    }:<b> {order.price} ₽ </b>
                 </div>
             </div>
             <div className={styles['card-main']}>
                 {
                     order.products.map((id, index) => {
                         console.log(id);
-                        return <ProductListCard productId={id} cardKey={index} ordersHistoryMode/>
+                        return <ProductListCard productId={id} cardKey={index} key={index} ordersHistoryMode/>
                     })
                 }
 

@@ -18,6 +18,12 @@
     &:hover .product-name {
         text-decoration: underline;
     }
+
+    &--smaller {
+        border-radius: 0;
+        padding: 10px 70px;
+        border: 0;
+    }
 }
 
 .product {

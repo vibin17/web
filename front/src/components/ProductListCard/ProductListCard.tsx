@@ -30,7 +30,9 @@ const ProductListCard = ({ productId, cardKey, ordersHistoryMode = false, favore
         })()
     }, [])
     return (
-        <Link to={`/products/${productId}`} className={styles['product-list-card']}>
+        <Link to={`/products/${productId}`} 
+            className={`${styles['product-list-card']} ${ordersHistoryMode &&
+                styles['product-list-card--smaller']}`}>
             {product &&
                 <>
                     <div className={styles['image-section']}>
