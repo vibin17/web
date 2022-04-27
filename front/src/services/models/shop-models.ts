@@ -24,7 +24,8 @@ export type CateogryProp = {
 }
 
 export type CategoryResponseDto = {
-    name: string,
+    name: string
+    route: string
     props: CateogryProp[]
 }
 

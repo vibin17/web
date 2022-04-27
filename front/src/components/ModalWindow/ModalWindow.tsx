@@ -6,10 +6,11 @@ import styles from './ModalWindow.module.scss'
 type props = {
     isWindowActive: boolean
     setWindowActive: (active: boolean) => void
+    noCloseButton?: boolean
     children: React.ReactNode
 }
 
-const ModalWindow = ({ isWindowActive, setWindowActive, children }: props) => {
+const ModalWindow = ({ isWindowActive, setWindowActive, noCloseButton = false, children }: props) => {
     const closeWindow = () => setWindowActive(false)
     const handleEscapePress =  (e: KeyboardEvent) => {
         if (e.key === 'Escape') {
@@ -30,10 +31,14 @@ const ModalWindow = ({ isWindowActive, setWindowActive, children }: props) => {
                 <div className={styles['modal-window__main']}>
                     { isLoading && <LoadingSpinner/> }
                     <div className={styles['modal-window__header']}>
-                        <button className={styles['modal-window__close-button']} onClick={closeWindow}/>    
+                        {noCloseButton &&
+                            <button className={styles['modal-window__close-button']} onClick={closeWindow}/>
+                        }  
                     </div>
                     <div className={styles['modal-window__content']}>
-                        {/*isWindowActive &&*/ /*Убрать если что*/ children}
+                        {
+                            children
+                        }
                     </div>
                 </div>
             </div>

@@ -12,11 +12,13 @@ export type Prop = {
 
 export interface Category {
     name: string,
+    route: string,
     props: Prop[]
 }
 
 const Smartphones: Category = {
     name: 'Смартфоны',
+    route: 'smartphones',
     props: [
         {
             name: 'Баллы Antutu',
@@ -61,6 +63,7 @@ const Smartphones: Category = {
 }
 const Tablets: Category = {
     name: 'Планшеты',
+    route: 'tablets',
     props: [
         {
             name: 'Баллы Antutu',

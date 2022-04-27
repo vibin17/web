@@ -9,9 +9,10 @@ import styles from './Header.module.scss'
 import UserMenu from './UserMenu/UserMenu';
 import SignUpForm from './AuthForms/SignUpForm';
 import { Link } from 'react-router-dom';
+import CatalogueMenu from './CatalogueMenu/CatalogueMenu';
 
 const Header = () => {
-  let [isMenuActive, setMenuState] = useState(false)
+  let [isMenuActive, setMenuActive] = useState(false)
   let [isSignInFormActive, setSignInFormActive] = useState(false)
   let [isSignUpFormActive, setSignUpFormActive] = useState(false)
   let { isSignedIn: signedIn } = useTypedSelector(state => state.auth)
@@ -20,9 +21,9 @@ const Header = () => {
   return (
     <header className={styles['header']}>
       <div className={styles['header__container']}>
-        
-        <div className={`${styles['catalogue-menu']} ${isMenuActive && styles['catalogue-menu--active']}`}/>
 
+        <CatalogueMenu isMenuActive={isMenuActive} setMenuActive={setMenuActive}/>
+        
         {!signedIn && <ModalWindow isWindowActive={isSignInFormActive} setWindowActive={setSignInFormActive}>
           <SignInForm/>  
         </ModalWindow>}
@@ -34,7 +35,7 @@ const Header = () => {
         <div className={`${styles['header__section']} ${styles['shop-section']}`}>
           <div className={styles['header-item']}>
             <div className={`${styles['header-item__summary']} ${styles['header-item__summary--clickable']}`}>
-              <div className={styles['burger-menu']} onClick={() => setMenuState(!isMenuActive)}>
+              <div className={styles['burger-menu']} onClick={() => setMenuActive(!isMenuActive)}>
                 <div className={styles['burger-menu__line']}/>
                 Каталог
               </div>

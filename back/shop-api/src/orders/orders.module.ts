@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -22,7 +22,7 @@ import { Order, OrderSchema } from './schemas/order.schema';
       name: Order.name, 
       schema: OrderSchema
     }]),
-    ProductsModule
+    forwardRef(() => ProductsModule)
   ],
   controllers: [OrdersController],
   providers: [OrdersService]

@@ -194,16 +194,3 @@
         filter: invert(20%);
     }   
 }
-.catalogue-menu {
-    left: -1500px;
-    top: $header-height + 1px;
-    position: absolute;
-    width: 400px;
-    height: 300px;
-    background: yellow;
-    transition: all 0.5s;
-
-    &--active {
-        left: 0;
-    }
-}
