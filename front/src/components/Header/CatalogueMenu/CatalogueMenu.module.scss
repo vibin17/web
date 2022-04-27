@@ -1,4 +1,5 @@
 @import '../../global';
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 
 .catalogue-menu {
     left: -1500px;
@@ -10,8 +11,28 @@
     border: 1px solid rgba(0, 0, 0, 0.308);
     border-radius: 10px;
     transition: all 0.5s;
-
+    padding: 15px 30px;
     &--active {
-        left: 0;
+        left: 5px;
     }
 }
+
+.menu-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    list-style: none;
+    &__item {
+        &:hover .link {
+            text-decoration: underline;
+        }
+    }
+}
+
+.link {
+    text-decoration: none;
+    font: normal 18px 'Ubuntu';
+    color: rgb(0, 0, 0)
+}   

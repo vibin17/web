@@ -6,7 +6,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { RolesEnum } from './schemas/roles.enum';
 import { TokenService } from 'src/auth/token.service';
 import { UserTokenData } from 'src/auth/dto/auth-response.dto';
-import { UserIdDto } from './dto/response.dto';
+import { UserInfoDto } from './dto/response.dto';
 
 @Injectable()
 export class UsersService {
@@ -52,12 +52,12 @@ export class UsersService {
     return deletedUser
   }
 
-  async getIdByToken(access: string): Promise<UserIdDto> {
+  async getUserInfoByToken(access: string): Promise<UserInfoDto> {
     const userData: UserTokenData  = await this.tokenService.validateAccessToken(access)
-    const { _id: userId } = await this.getByName(userData.userName)
+    const { _id: userId, userName } = await this.getByName(userData.userName)
     if (!userId) {
         throw new HttpException('Пользователь из токена не найден', HttpStatus.UNAUTHORIZED)
     }
-    return { userId }
+    return { userId, userName }
 }
 }

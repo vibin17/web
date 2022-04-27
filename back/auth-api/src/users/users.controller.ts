@@ -33,8 +33,8 @@ export class UsersController {
   }
 
   @MessagePattern({ role: 'users', cmd: 'get'})
-  async getIdByToken(tokensDto: AccessDto) {
-      const response = this.usersService.getIdByToken(tokensDto.access)
+  async getUserInfoByToken(tokensDto: AccessDto) {
+      const response = this.usersService.getUserInfoByToken(tokensDto.access)
       return response
   }
 }

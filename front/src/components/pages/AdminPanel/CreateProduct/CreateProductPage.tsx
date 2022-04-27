@@ -1,7 +1,7 @@
 import { Field, Form, Formik } from "formik"
 import { useEffect, useState } from "react"
 import { FileWithPath } from "react-dropzone"
-import { CategoryResponseDto } from "../../../../services/models/shop-models"
+import { CategoryResponse } from "../../../../services/models/shop-models"
 import ShopService from "../../../../services/ShopService/shop-service"
 import Dropzone from "../Dropzone/Dropzone"
 import styles from '../CreateProductPage.module.scss'
@@ -17,8 +17,8 @@ export type ProductData = {
 
 
 const CreateProductPage = () => {
-    let [categories, setCategories] = useState<CategoryResponseDto[]>([])
-    let [selectedCategory, setCategory] = useState<CategoryResponseDto>()
+    let [categories, setCategories] = useState<CategoryResponse[]>([])
+    let [selectedCategory, setCategory] = useState<CategoryResponse>()
     let [inactive, setInactive] = useState(false)
     let [message, setMessage] = useState('')
     let [propsInitValues, setPropsInitValues] = useState<string[]>([])

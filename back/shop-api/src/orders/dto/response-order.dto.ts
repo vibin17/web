@@ -1,10 +1,10 @@
 export class ResponseOrderDto {
-    _id: string
-    user: string
-    products: string[]
-    orderType: string
-    orderDate: Date
-    deliveryAddress: string
-    paymentType: string
-    price: number
+    readonly _id: string
+    readonly user: string
+    readonly products: string[]
+    readonly orderType: string
+    readonly orderDate: Date
+    readonly deliveryAddress: string
+    readonly paymentType: string
+    readonly price: number
 }

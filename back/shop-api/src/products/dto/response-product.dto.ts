@@ -28,7 +28,7 @@ export class ResponseProductSummaryDto {
 
 export class DeletedProductDto {
     readonly deletedFiles: string[]
-    deletedCount: number
-    acknowledged: boolean
+    readonly deletedCount: number
+    readonly acknowledged: boolean
     
 }

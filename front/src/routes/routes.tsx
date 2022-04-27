@@ -5,6 +5,7 @@ import DeleteProductPage from "../components/pages/AdminPanel/DeleteProduct/Dele
 import UpdateProductPage from "../components/pages/AdminPanel/UpdateProduct/UpdateProductPage"
 import CartPage from "../components/pages/Cart/CartPage"
 import PurchasePage from "../components/pages/Cart/Purchase/PurchasePage"
+import CataloguePage from "../components/pages/Catalogue/CataloguePage"
 import HomePage from "../components/pages/Home/HomePage"
 import OrdersHistoryPage from "../components/pages/OrdersHistory/OrdersHistory"
 import ProductPage from "../components/pages/Product/ProductPage"
@@ -19,6 +20,9 @@ const AppRoutes = () => {
                 <Route path='create' element={<CreateProductPage/>}/>
                 <Route path='update' element={<UpdateProductPage/>}/>
                 <Route path='delete' element={<DeleteProductPage/>}/>
+            </Route>
+            <Route path='/catalogue'>
+                <Route path=':categoryName' element={<CataloguePage/>}/>
             </Route>
             <Route path='/products'>
                 <Route path=':id' element={<ProductPage/>}/>

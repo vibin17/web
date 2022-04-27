@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { CategoryResponseDto, ProductResponse } from '../../../../services/models/shop-models'
+import { CategoryResponse, ProductResponse } from '../../../../services/models/shop-models'
 import ShopService from '../../../../services/ShopService/shop-service'
 import styles from './ProductInfo.module.scss'
+import ProductReviews from './Review/ProductReviews'
 
 type props = {
     product: ProductResponse
@@ -9,7 +10,7 @@ type props = {
 
 const ProductInfo = ({ product }: props) => {
     let [reviewsTabActive, setReviewsTabActive] = useState(false)
-    let [category, setCategory] = useState<CategoryResponseDto>()
+    let [category, setCategory] = useState<CategoryResponse>()
     useEffect(() => {
         (async () => {
             let allCategories = (await ShopService.getCategories()).data
@@ -47,7 +48,7 @@ const ProductInfo = ({ product }: props) => {
                         styles['menu-content--reviews']
                         : 
                         styles['menu-content--description']}`}>
-                {!reviewsTabActive &&
+                {!reviewsTabActive?
                     <div className={styles['product-info']}>
 
                         <div className={styles['product-info__description']}>
@@ -108,6 +109,8 @@ const ProductInfo = ({ product }: props) => {
                         </div>
     
                     </div>
+                    :
+                    <ProductReviews productId={product._id}/>
                 }
             </div>
         </div>

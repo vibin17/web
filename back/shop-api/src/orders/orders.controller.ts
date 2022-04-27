@@ -1,7 +1,4 @@
-import { Body, Controller, Get, Header, Headers, Post, UseGuards } from '@nestjs/common';
-import { Roles } from 'src/guard/roles-auth.decorator';
-import { RolesAuthGuard } from 'src/guard/roles-auth.guard';
-import { RolesEnum } from 'src/guard/roles.enum';
+import { Body, Controller, Get, Headers, Post } from '@nestjs/common';
 import { CreateOrderDto } from './dto/request-order.dto';
 import { OrdersService } from './orders.service';
 

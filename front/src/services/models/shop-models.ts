@@ -23,7 +23,7 @@ export type CateogryProp = {
     name: string
 }
 
-export type CategoryResponseDto = {
+export type CategoryResponse = {
     name: string
     route: string
     props: CateogryProp[]
@@ -67,7 +67,7 @@ export type ProductResponse = {
     readonly props: string[]
 }
 
-export type DeletedResponse = {
+export type DeletedProductResponse = {
     readonly deletedFiles: string[]
     readonly acknowledged: boolean
     readonly deletedCount: number
@@ -93,4 +93,32 @@ export type OrderResponse = {
     deliveryAddress: string
     paymentType: string
     price: number
+}
+
+export type CreateReviewData = {
+    readonly product: string
+    readonly rating: number
+    readonly content: string
+}
+
+export type DeleteReviewData = {
+    readonly product: string
+}
+
+export type ReviewResponse = {
+    readonly _id: string
+    readonly user: string
+    readonly userName: string
+    readonly product: string
+    readonly rating: number
+    readonly content: string
+}
+
+export type ReviewIdResponse = {
+    readonly _id: string
+}
+
+export type DeletedReviewResponse = {
+    readonly deletedCount: number
+    readonly acknowledged: boolean
 }

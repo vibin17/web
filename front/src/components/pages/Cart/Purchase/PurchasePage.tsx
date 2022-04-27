@@ -43,17 +43,16 @@ const PurchasePage = () => {
                                 try {
                                     if (!isOnDeliveryPayment) {
                                         setMessage('Оплата...')
+                                        const result = await ShopService.createOrder({
+                                            orderType: values.orderType,
+                                            orderDate: new Date(),
+                                            deliveryAddress: (isPickup?
+                                                values.deliveryAddress
+                                                :
+                                                values.shopAddress),
+                                            paymentType: values.paymentType
+                                        })
                                         setTimeout(async () => {
-                                            const result = await ShopService.createOrder({
-                                                orderType: values.orderType,
-                                                orderDate: new Date(),
-                                                deliveryAddress: (isPickup?
-                                                    values.deliveryAddress
-                                                    :
-                                                    values.shopAddress),
-                                                paymentType: values.paymentType
-                                            })
-                                            console.log(result)
                                             setMessage(`Ваш заказ сформирован с номером ${result.data._id}. Переход на страницу заказов...`)
                                         }, 1500)
                                         setTimeout(() => {
@@ -72,6 +71,10 @@ const PurchasePage = () => {
                                             paymentType: values.paymentType
                                         })
                                         setMessage(`Ваш заказ сформирован с номером ${result.data._id}. Переход на главную страницу...`)
+                                        setTimeout(() => {
+                                            clearCart()
+                                            navigate('/orders')
+                                        }, 2500)
                                     }
                                 }
                                 catch (e: any) {

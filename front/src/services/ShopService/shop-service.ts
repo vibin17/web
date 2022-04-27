@@ -1,10 +1,10 @@
-import { AxiosResponse } from "axios";
+import { Axios, AxiosResponse } from "axios";
 import { FileWithPath } from "react-dropzone";
 import { shopAPI, SHOP_URL } from "../../http";
-import { CategoryResponseDto, CreateOrderData, CreateProductData, DeletedResponse, OrderResponse, ProductIdResponse, ProductResponse, ProductSummaryResponse, ShopResponse, UpdateProductData } from "../models/shop-models";
+import { CategoryResponse, CreateOrderData, CreateProductData, CreateReviewData, DeletedProductResponse, OrderResponse, ProductIdResponse, ProductResponse, ProductSummaryResponse, ReviewIdResponse, ReviewResponse, ShopResponse, UpdateProductData } from "../models/shop-models";
 
 export default class ShopService {
-    static async getCategories(): Promise<AxiosResponse<CategoryResponseDto[]>> {
+    static async getCategories(): Promise<AxiosResponse<CategoryResponse[]>> {
         return shopAPI.get('products/categories')
     }
 
@@ -86,7 +86,7 @@ export default class ShopService {
         })
     }
 
-    static async deleteProduct(productId: string): Promise<AxiosResponse<DeletedResponse>> {
+    static async deleteProduct(productId: string): Promise<AxiosResponse<DeletedProductResponse>> {
         return shopAPI.delete('products/', { 
             params: {
                 id: productId
@@ -108,6 +108,26 @@ export default class ShopService {
 
     static async getUserOrders(): Promise<AxiosResponse<OrderResponse[]>> {
         return shopAPI.get('orders')
-    }   
+    }
+    
+    static async createReview(review: CreateReviewData): Promise<AxiosResponse<ReviewResponse>> {
+        return shopAPI.post('reviews', review)
+    }
+
+    static async getAllReviewIdsForProduct(productId: string): Promise<AxiosResponse<ReviewIdResponse[]>> {
+        return shopAPI.get('reviews/all', {
+            params: {
+                id: productId
+            }
+        })
+    }
+    
+    static async getReview(reviewId: string): Promise<AxiosResponse<ReviewResponse>> {
+        return shopAPI.get('reviews', {
+            params: {
+                id: reviewId
+            }
+        })
+    }
 
 }

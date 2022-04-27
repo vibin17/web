@@ -1,17 +1,18 @@
 import { IsString, IsDate, IsDateString } from "class-validator"
 
 export class CreateOrderDto {
-    products: string[]
+    readonly products: string[]
     @IsString()
-    orderType: string
+    readonly orderType: string
     @IsDateString()
-    orderDate: Date
+    readonly orderDate: Date
     @IsString()
-    deliveryAddress: string
+    readonly deliveryAddress: string
     @IsString()
-    paymentType: string
+    readonly paymentType: string
 }
 
 export class UserIdDto {
-    userId: string
+    readonly userId: string
+    readonly userName: string
 }
