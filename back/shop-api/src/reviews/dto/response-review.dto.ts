@@ -4,6 +4,7 @@ export class ResponseReviewDto {
     readonly userName: string
     readonly product: string
     readonly rating: number
+    readonly reviewDate: Date
     readonly content: string
 }
 

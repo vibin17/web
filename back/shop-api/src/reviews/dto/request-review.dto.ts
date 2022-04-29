@@ -1,10 +1,12 @@
-import { IsNumberString, IsString } from "class-validator"
+import { IsDateString, IsNumberString, IsString } from "class-validator"
 
 export class CreateReviewDto {
     @IsString()
     readonly product: string
     @IsNumberString()
     readonly rating: number
+    @IsDateString()
+    readonly reviewDate: Date
     readonly content: string
 }
 

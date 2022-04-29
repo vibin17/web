@@ -19,6 +19,8 @@ export class Review {
     product: string
     @Prop({ required: true })
     rating: number
+    @Prop({ required: true })
+    reviewDate: Date
     @Prop()
     content: string
 }

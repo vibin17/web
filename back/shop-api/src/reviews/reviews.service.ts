@@ -25,35 +25,50 @@ export class ReviewsService {
             throw new HttpException('Авторизация не пройдена', HttpStatus.UNAUTHORIZED)
         })
 
-        let productInDb = (await this.productService.getProductById(createReviewDto.product))
+        let productInDb = await this.productService.getProductById(createReviewDto.product)
         if (!productInDb) {
             throw new HttpException('Товар с таким ID не найден', HttpStatus.BAD_REQUEST)
         }
+        
+        let existingReview = await this.reviewModel.find({ 
+            user: response.userId,
+            product: createReviewDto.product 
+        })
+        if (existingReview.length > 0) {
+            throw new HttpException('Пользователем уже написан отзыв на этот товар', HttpStatus.BAD_REQUEST)
+        }
+
+        let rates = ['1', '2', '3', '4', '5']
+        let rate = rates[createReviewDto.rating - 1]
+
         let {
             _id,
             user,
             userName,
             product,
-            rating, 
+            rating,
+            reviewDate,
             content
         } = await new this.reviewModel({
             user: response.userId,
             userName: response.userName,
             product: createReviewDto.product,
             rating: createReviewDto.rating,
+            reviewDate: createReviewDto.reviewDate,
             content: createReviewDto.content
         }).save()
+
+        this.productService.addReview(product, rate)
 
         let review: ResponseReviewDto = {
             _id,
             user,
             userName, 
             product,
-            rating, 
+            rating,
+            reviewDate,
             content
         }
-
-        console.log(review)
 
         return review
     }
@@ -69,19 +84,19 @@ export class ReviewsService {
             throw new HttpException('Авторизация не пройдена', HttpStatus.UNAUTHORIZED)
         })
 
-        const deletedReview = await this.reviewModel.deleteOne({ user: response.userId, _id: deleteReviewDto.product })
+        const deletedReview = await this.reviewModel.deleteOne({ user: response.userId, product: deleteReviewDto.product })
 
         return deletedReview
     }
 
     async getReview(reviewId: string): Promise<ResponseReviewDto> {
-        let review = this.reviewModel.findById(reviewId).select('-__v')
+        let review = await this.reviewModel.findById(reviewId).select('-__v')
 
         return review
     }
 
     async getAllIdsForProduct(productId: string): Promise<ResponseReviewDto[]> {
-        let reviewIds = this.reviewModel.find({ product: productId }).select({ '_id': 1 })
+        let reviewIds = await this.reviewModel.find({ product: productId }).select({ '_id': 1 })
 
         return reviewIds
     }

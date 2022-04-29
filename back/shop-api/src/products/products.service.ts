@@ -94,12 +94,13 @@ export class ProductsService {
     }
 
     async getProductById(productId: string): Promise<ResponseProductDto> {
-        const product: ResponseProductDto = await this.productModel.findById(productId, '-__v')
-        if (!product) {
+        try {
+            const product: ResponseProductDto = await this.productModel.findById(productId, '-__v')
+            return product
+        }
+        catch {
             throw new HttpException('Товар с таким ID не найден', HttpStatus.BAD_REQUEST)
         }
-
-        return product
     }
 
     async getAllProductsOfCategory(categoryName: string): Promise<ResponseProductIdDto[]> {
@@ -112,6 +113,14 @@ export class ProductsService {
         const products: ResponseProductIdDto[] = await this.productModel.find().select({ '_id': 1, 'productName': 1})
 
         return products
+    }
+
+    async addReview(productId: string, reviewRating: string): Promise<ResponseProductDto>  {
+        const productToUpdate = await this.productModel.findById(productId)
+        console.log(productToUpdate)
+        productToUpdate.rating[reviewRating] += 1
+        await productToUpdate.save()
+        return productToUpdate
     }
 
 }

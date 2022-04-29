@@ -76,7 +76,7 @@ export class OrdersService {
             throw new HttpException('Авторизация не пройдена', HttpStatus.UNAUTHORIZED)
         })
 
-        let orders = this.orderModel.find({ user: response.userId }).select('-__v')
+        let orders = await this.orderModel.find({ user: response.userId }).select('-__v')
 
         return orders
     }
