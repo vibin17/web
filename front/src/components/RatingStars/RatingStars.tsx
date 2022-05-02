@@ -1,7 +1,7 @@
 import { ProductResponse } from "../../services/models/shop-models"
 import { BsStar, BsStarHalf, BsStarFill } from 'react-icons/bs'
 import styles from './RatingStars.module.scss'
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 
 type props = {
     rating: {
@@ -18,66 +18,80 @@ type props = {
 const RatingStars = ({ rating, rightAligned = false, summaryCardMode = false }: props) => {
     let [averageRating, setAverageRating] = useState(0)
     let [totalReviews, setTotalReviews] = useState(0)
-    let [stars, setStars] = useState<React.ReactNode[]>([])
-    let starIconStyle = !summaryCardMode? `${styles['star__icon']}` 
+    let scores: ['5', '4', '3', '2', '1']  = useMemo(() => {
+        return ['5', '4', '3', '2', '1']
+    }, [])
+    let starIconStyle = useMemo(() => {
+        return !summaryCardMode? `${styles['rating__star-icon']}` 
         : 
-        `${styles['star__icon']} ${styles['star__icon--smaller']}`
-    useEffect(() => {
-        (async () => {
+        `${styles['rating__star-icon']} ${styles['rating__star-icon--smaller']}`
+    }, [summaryCardMode])
+    let calcAverageRating = useMemo(() => {
+        return async () => {
             let totalRating = 0
             let totalReviews = 0
-            let scores: ['5', '4', '3', '2', '1'] = ['5', '4', '3', '2', '1']
             for (let i = 0; i < 5; i++) {
                 let currentScore = scores[i]
                 totalRating += parseInt(currentScore) * rating[currentScore]
                 totalReviews += rating[currentScore]
             }
-            let averageRating = totalRating / totalReviews
-            setAverageRating(averageRating)
             setTotalReviews(totalReviews)
-            let stars: React.ReactNode[] = []
-            let lastFullStar = 0
-            for (let i = 0; i < 5; i++) {
-                if (i + 1 <= averageRating) {
-                    stars.push(
-                        <div key={i} className={styles['star']}>
-                            <BsStarFill
-                                className={starIconStyle}/>
-                        </div>
-                    )
-                    lastFullStar++
-                } else {
-                    stars.push(
-                        <div key={i} className={styles['star']}>
-                            <BsStar
-                                strokeWidth='0'
-                                className={starIconStyle}/>
-                        </div>
-                    )
-                }
+            if (totalReviews > 0) {
+                setAverageRating(totalRating / totalReviews)
             }
-            if (averageRating % 1 >= 0.5) {
-                stars[lastFullStar] = (                      
-                    <div key={lastFullStar} className={styles['star']}>
-                        <BsStarHalf
-                            className={starIconStyle}/>
-                    </div>
-                )
-            }
-            setStars(stars)
+        }
+    }, [rating])
+    let stars = useMemo(() => {
+        let stars = [0, 1, 2, 3, 4].map((index) => {
+            return (
+                <div key={index} className={styles['rating__star']}>
+                    <BsStar
+                        strokeWidth='0'
+                        className={starIconStyle}/>
+                </div>
+            )
+        })
+        let lastFullStar = 0
+        for (let i = 0; i <= averageRating - 1; i++) {
+            stars[i] = (
+                <div key={i} 
+                    className={styles['rating__star']}>
+                    <BsStarFill
+                        className={starIconStyle}
+                    />
+                </div>
+            )
+            lastFullStar++
+        }
+        if (averageRating % 1 >= 0.5) {
+            stars[lastFullStar] = (                      
+                <div key={lastFullStar} className={styles['rating__star']}>
+                    <BsStarHalf
+                        className={starIconStyle}/>
+                </div>
+            )
+        }
+        return stars
+    }, [averageRating, totalReviews])
+
+    useEffect(() => {
+        (async () => {
+            calcAverageRating()
         })()
-    }, [])
+    }, [rating])
     return (
         <div className={`${styles['rating']} ${!rightAligned && styles['rating--left-aligned']}`}>
-            <div className={styles['rating-stars']}> {
-                stars
-            } </div>
+            <div className={styles['rating__stars']}> 
+                {
+                    stars
+                } 
+            </div>
             {!summaryCardMode &&
-                <div className={styles['rating-label']}> 
+                <div className={styles['rating__label']}> 
                     Рейтинг 
-                    <span className={styles['rating-label__value']}> {averageRating.toFixed(2)} </span>
+                    <span className={styles['rating__label-value']}> {averageRating.toFixed(2)} </span>
                     на основе
-                    <span className={styles['rating-label__value']}> {totalReviews} </span>
+                    <span className={styles['rating__label-value']}> {totalReviews} </span>
                     оценок
                 </div>
             }

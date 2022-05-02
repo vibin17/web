@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useParams } from "react-router"
 import { SHOP_URL } from "../../../http"
 import { ProductResponse } from "../../../services/models/shop-models"
@@ -17,6 +17,27 @@ const ProductPage = () => {
     let [product, setProduct] = useState<ProductResponse>()
     let [isFavored, setIsFavored] =  useState(false)
     let { addToCart, addToFavors } = useShopLocalActions()
+    let gallery = useMemo(() => {
+        return (
+            <ImageGallery
+                items={product? 
+                    product.imagePaths.map((image) => {
+                    return {
+                        original:`${SHOP_URL}/products/images/${image}`,
+                        originalClass: styles['slider__image-og'],
+                        thumbnail:`${SHOP_URL}/products/images/${image}`,
+                        thumbnailClass: styles['slider__image-thumbnail'],        
+                    }})
+                    :
+                    []
+                }
+                showFullscreenButton={false}
+                showPlayButton={false}
+                showBullets
+                additionalClass={styles['slider']}
+            />
+        )
+    }, [product])
     useEffect(() => {
         (async () => {
             const product = (await ShopService.getProductById(params.id || 'undef')).data
@@ -31,74 +52,65 @@ const ProductPage = () => {
         <div className={styles['product']}>
             {product &&
                 <>
-                    <div className={styles['product-header']}>
+                    <div className={styles['product__header']}>
                         {
                             product.productName
                         }
                     </div>
-                    <div className={styles['product-main']}>
-                        <div className={styles['product-gallery']}>
-                            <ImageGallery
-                                items={product.imagePaths.map((image) => {
-                                    return {
-                                        original:`${SHOP_URL}/products/images/${image}`,
-                                        originalClass: styles['slider__og'],
-                                        thumbnail:`${SHOP_URL}/products/images/${image}`,
-                                        thumbnailClass: styles['slider__thumbnail'],        
-                                    }
-                                })}
-                                showFullscreenButton={false}
-                                showPlayButton={false}
-                                showBullets
-                                additionalClass={styles['slider']}
-                            />
+                    <div className={styles['product__main']}>
+                        <div className={styles['product__gallery']}>
+                            {
+                                gallery
+                            }
                         </div>
-                        <div className={styles['product-buy']}>
-                            <div className={styles['product-price']}>
+                        <div className={styles['product__buy-section']}>
+                            <div className={styles['product__price']}>
                                 {
                                     product.price + ' ₽'
                                 }
                             </div>
                             <RatingStars rating={{
-                                    '5': 0,
+                                    '5': 1,
                                     '4': 1,
                                     '3': 1,
-                                    '2': 0,
+                                    '2': 1,
                                     '1': 0
                                 }} 
                                 rightAligned
                             />
-                            <button className={styles['product-button']} 
+                            <button className={styles['product__button']} 
                                 onClick={() => {
                                     if (product) {
                                         addToCart(product._id, product.price)
                                     }
                                 }}>
-                                <BsCart2 className={styles['product-button__icon']}/>
+                                <BsCart2 className={styles['product__button-icon']}/>
                                 Добавить в корзину
                             </button>
                             {!isFavored?
-                                <button className={`${styles['product-button']} ${styles['product-button--favors']}`}
+                                <button className={`${styles['product__button']}
+                                    ${styles['product__button--favors']}`}
                                     onClick={() => {
                                         if (product) {
                                             addToFavors(product._id)
                                             setIsFavored(true)
                                         }
-                                    }}>
-                                    <FiHeart className={styles['product-button__icon']}/>
+                                    }}
+                                >
+                                    <FiHeart className={styles['product__button-icon']}/>
                                     Добавить в избранное
                                 </button>
                                 :
-                                <button className={`${styles['product-button']} ${styles['product-button--favors']}`}>
-                                    <FiHeart className={styles['product-button__icon']}/>
+                                <button className={`${styles['product__button']}
+                                    ${styles['product__button--favors']}`}
+                                >
+                                    <FiHeart className={styles['product__button__icon']}/>
                                     В избранном
                                 </button>
                             }
                         </div>
                     </div>
-                    <div className={styles['product-info']}>
-                        <ProductInfo product={product}/>
-                    </div>
+                    <ProductInfo product={product}/>
                 </>           
             }
         </div>

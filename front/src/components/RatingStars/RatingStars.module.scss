@@ -9,27 +9,26 @@
     &--left-aligned {
         align-items: flex-start;
     }
-    &-stars {
+    &__stars {
         display: flex;
         gap: 5px;
     }
-    &-label {
-        font: normal 14px 'Arimo';
-        &__value {
-
+    &__star {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &-icon {
+            font-size: 26px;
+            color: rgb(255, 206, 151);
+            &--smaller {
+                font-size: 21px;
+            }
         }
     }
-}
+    &__label {
+        font: normal 14px 'Arimo';
+        &-value {
 
-.star {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    &__icon {
-        font-size: 26px;
-        color: rgb(255, 206, 151);
-        &--smaller {
-            font-size: 21px;
         }
     }
 }

@@ -4,8 +4,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from "mongoose";
 import { lastValueFrom, timeout } from 'rxjs';
 import { ProductsService } from 'src/products/products.service';
-import { CreateReviewDto, DeleteReviewDto, UserInfoDto } from './dto/request-review.dto';
-import { DeletedReviewDto, ResponseReviewDto } from './dto/response-review.dto';
+import { CreateReviewDto, UserInfoDto } from './dto/request-review.dto';
+import { DeletedReviewDto, ResponseAllReviewIdsDto, ResponseReviewDto } from './dto/response-review.dto';
 import { Review, ReviewDocument } from './schemas/review.schema';
 
 @Injectable()
@@ -30,11 +30,11 @@ export class ReviewsService {
             throw new HttpException('Товар с таким ID не найден', HttpStatus.BAD_REQUEST)
         }
         
-        let existingReview = await this.reviewModel.find({ 
+        let existingReview = await this.reviewModel.findOne({ 
             user: response.userId,
             product: createReviewDto.product 
         })
-        if (existingReview.length > 0) {
+        if (existingReview) {
             throw new HttpException('Пользователем уже написан отзыв на этот товар', HttpStatus.BAD_REQUEST)
         }
 
@@ -73,7 +73,7 @@ export class ReviewsService {
         return review
     }
 
-    async delete(authHeader: string, deleteReviewDto: DeleteReviewDto): Promise<DeletedReviewDto> {
+    async delete(authHeader: string, product: string): Promise<DeletedReviewDto> {
         const token = authHeader.split(' ')[1]
         let response = await (lastValueFrom<UserInfoDto>(this.client.send({
             role: 'users',
@@ -83,8 +83,16 @@ export class ReviewsService {
         }).pipe(timeout(2000)))).catch(error => { 
             throw new HttpException('Авторизация не пройдена', HttpStatus.UNAUTHORIZED)
         })
+        let existingReview = await this.reviewModel.findOne({ 
+            user: response.userId,
+            product: product 
+        })
 
-        const deletedReview = await this.reviewModel.deleteOne({ user: response.userId, product: deleteReviewDto.product })
+        let rates = ['1', '2', '3', '4', '5']
+        let rate = rates[existingReview.rating - 1]
+
+        this.productService.removeReview(product, rate)
+        const deletedReview = await this.reviewModel.deleteOne({ user: response.userId, product })
 
         return deletedReview
     }
@@ -95,9 +103,33 @@ export class ReviewsService {
         return review
     }
 
-    async getAllIdsForProduct(productId: string): Promise<ResponseReviewDto[]> {
-        let reviewIds = await this.reviewModel.find({ product: productId }).select({ '_id': 1 })
+    async getAllIdsForProduct(authHeader: string, productId: string): Promise<ResponseAllReviewIdsDto> {
+        let userId=''
+        try {
+            const token = authHeader.split(' ')[1]
+            let response = await (lastValueFrom<UserInfoDto>(this.client.send({
+                role: 'users',
+                cmd: 'get'
+            }, {
+                access: token
+            }).pipe(timeout(2000))))
+            userId = response.userId
+        }
+        catch {
 
-        return reviewIds
+        }
+        let reviewIds = await this.reviewModel.find({ product: productId }).select({ '_id': 1})
+        try {
+            let userReviewId = await this.reviewModel.findOne({ user: userId, product: productId }).select({ '_id': 1})
+            return {
+                userReview: userReviewId,
+                reviews: reviewIds
+            }
+        }
+        catch {
+            return {
+                reviews: reviewIds
+            }
+        }
     }
 }

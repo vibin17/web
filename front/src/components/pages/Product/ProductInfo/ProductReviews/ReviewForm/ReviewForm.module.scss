@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
+.review-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    &__main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+    }
+    &__fields-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+    }
+    &__field {
+        width: 70%;
+        &-label {
+            font: normal 16px 'Ubuntu';
+            padding: 5px 0;
+        }
+        &-input {
+            padding: 2px;
+            width: 100%;
+            font: normal 16px 'Ubuntu';
+            &--textarea {
+                resize: none;
+            }
+        }
+    }
+    &__select {
+        font: normal 16px 'Ubuntu';
+        width: 50%;
+
+        &-options {
+            font: normal 14px 'Ubuntu';
+        }
+    }
+    &__button {
+        display: flex;
+        align-items: center;
+        width: 45%;
+        justify-content: center;
+        border: 0;
+        outline: 0;
+        text-decoration: none;
+        color: rgb(0, 0, 0);
+        font: normal 16px 'Rubik';
+        cursor: pointer;
+        padding: 10px 80px;
+        transition: all 0.3s;
+        background: rgba(57, 159, 255, 0.733);
+        &:hover {
+            filter: invert(30%);
+        }
+    }
+    &__message {
+        font: normal 14px 'Ubuntu';
+        width: 40%; 
+    }
+}

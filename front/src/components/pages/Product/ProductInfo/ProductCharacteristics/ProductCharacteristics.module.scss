@@ -1,0 +1,54 @@
+.product-characteristics  {
+    display: flex;
+    gap: 50px;
+    &__description {
+        font: normal 16px 'Ubuntu';
+        flex: 1;
+        line-height: 22px;
+        &-paragraph {
+            &:not(:first-child) {
+                padding: 10px 0;
+            }
+        }
+    }
+    
+    &__props {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__prop {
+        &-row {
+            display: flex;
+            font: normal 16px 'Rubik';
+            border-top: 1px solid rgba(0, 0, 0, 0.3);
+            border-left: 1px solid rgba(0, 0, 0, 0.3);
+            border-right: 1px solid rgba(0, 0, 0, 0.3);
+            &:first-child {
+                border-radius: 5px 5px 0 0;
+            }
+
+            &:last-child {
+                border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+                border-radius: 0 0 5px 5px;
+            }
+        }
+
+        &-name {
+            padding: 10px;
+            flex: 1;
+        }
+
+        &-value {
+            padding: 10px;
+            flex: 1;
+            text-align: right;
+        }
+
+        &-separator {
+            background: rgba(0, 0, 0, 0.3);
+            width: 1px;
+        }
+    }
+}

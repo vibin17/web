@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Headers, Post, Query } from '@nestjs/common';
-import { CreateReviewDto, DeleteReviewDto } from './dto/request-review.dto';
+import { CreateReviewDto } from './dto/request-review.dto';
 import { ReviewsService } from './reviews.service';
 
 @Controller('reviews')
@@ -12,8 +12,8 @@ export class ReviewsController {
     }
 
     @Delete('/')
-    async deleteReview(@Headers('authorization') authHeader, @Body() deleteReviewDto: DeleteReviewDto) {
-        return this.reviewsService.delete(authHeader, deleteReviewDto)
+    async deleteReview(@Headers('authorization') authHeader, @Query('product') product: string) {
+        return this.reviewsService.delete(authHeader, product)
     }
 
     @Get('/')
@@ -22,8 +22,8 @@ export class ReviewsController {
     }
 
     @Get('/all')
-    async getAllIdsForProduct(@Query('id') productId: string) {
-        return this.reviewsService.getAllIdsForProduct(productId)
+    async getAllIdsForProduct(@Headers('authorization') authHeader, @Query('id') productId: string) {
+        return this.reviewsService.getAllIdsForProduct(authHeader, productId)
     }
 
 }

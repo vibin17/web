@@ -97,7 +97,7 @@ export type OrderResponse = {
 
 export type CreateReviewData = {
     readonly product: string
-    readonly rating: number
+    readonly rating: string
     readonly reviewDate: Date
     readonly content: string
 }
@@ -118,6 +118,11 @@ export type ReviewResponse = {
 
 export type ReviewIdResponse = {
     readonly _id: string
+}
+
+export type AllReviewIdsResponse = {
+    readonly userReview?: ReviewIdResponse
+    readonly reviews: ReviewIdResponse[]
 }
 
 export type DeletedReviewResponse = {

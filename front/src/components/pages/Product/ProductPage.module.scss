@@ -8,17 +8,18 @@
     gap: 40px;
     height: 100%;
     width: 100%;
-    &-header {
+    &__header {
         font: bold 28px 'Ubuntu';
     }
-    &-main {
+    &__main {
         display: flex;
         justify-content: space-between;
     }
-    &-gallery {
-
+    &__gallery {
+        flex: 0 0 70%;
     }
-    &-buy {
+    &__buy-section {
+        flex: 0 0 30%;
         padding: 0 0px 40px 0;
         display: flex;
         flex-direction: column;
@@ -26,11 +27,11 @@
         align-items: flex-end;
         justify-content: center;
     }
-    &-price {
+    &__price {
         font: bold 26px "Rubik"
     }
 
-    &-button {
+    &__button {
         display: flex;
         align-items: center;
         justify-content: space-around;
@@ -42,7 +43,7 @@
         padding: 10px;
         transition: all 0.3s;
         background: rgba(255, 169, 57, 0.514);
-        &__icon {
+        &-icon {
             font-size: 22px;
         }
         &--favors {
@@ -56,16 +57,18 @@
 
 .slider {
     width: 800px;
-    &__og {
-        height: 400px;
-        & img { 
-            height: 100%;
+    &__image {
+        &-og {
+            height: 400px;
+            & img { 
+                height: 100%;
+            }
         }
-    }
-    &__thumbnail {
-        height: 100px;
-        & img { 
-            height: 90px;
+        &-thumbnail {
+            height: 100px;
+            & img { 
+                height: 90px;
+            }
         }
     }
 }

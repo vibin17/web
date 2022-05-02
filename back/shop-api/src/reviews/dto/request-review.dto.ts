@@ -10,11 +10,6 @@ export class CreateReviewDto {
     readonly content: string
 }
 
-export class DeleteReviewDto {
-    @IsString()
-    readonly product: string
-}
-
 export class UserInfoDto {
     readonly userId: string
     readonly userName: string

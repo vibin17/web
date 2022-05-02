@@ -117,8 +117,14 @@ export class ProductsService {
 
     async addReview(productId: string, reviewRating: string): Promise<ResponseProductDto>  {
         const productToUpdate = await this.productModel.findById(productId)
-        console.log(productToUpdate)
         productToUpdate.rating[reviewRating] += 1
+        await productToUpdate.save()
+        return productToUpdate
+    }
+
+    async removeReview(productId: string, reviewRating: string): Promise<ResponseProductDto>  {
+        const productToUpdate = await this.productModel.findById(productId)
+        productToUpdate.rating[reviewRating] -= 1
         await productToUpdate.save()
         return productToUpdate
     }
