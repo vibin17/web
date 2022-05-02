@@ -16,7 +16,10 @@ const CatalogueMenu = ({ isMenuActive, setMenuActive }: props) => {
             return (
                 <li className={styles['menu-list__item']} key={index}>
                     {
-                        <Link className={styles['link']} to={`/catalogue/${category.route}`}>
+                        <Link className={styles['link']} to={`/catalogue/${category.route}`}
+                            onClick={() => {
+                                setMenuActive(false)
+                            }}>
                             {
                                 category.name
                             }

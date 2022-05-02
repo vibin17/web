@@ -15,12 +15,12 @@ type props = {
     cartMode?: boolean
 }
 
-const ProductListCard = ({ productId, cardKey, ordersHistoryMode = false, favored = false, cartMode = false }: props) => {
+const ProductIdListCard = ({ productId, cardKey, ordersHistoryMode = false, favored = false, cartMode = false }: props) => {
     let [product, setProduct] = useState<ProductSummaryResponse>()
     let { 
         addToFavors, 
         addToCart,
-        RemoveFromFavors,
+        removeFromFavors,
         removeFromCart 
         } = useShopLocalActions()
     useEffect(() => {
@@ -97,7 +97,9 @@ const ProductListCard = ({ productId, cardKey, ordersHistoryMode = false, favore
                             {!ordersHistoryMode && (!cartMode?
                                 <button className={styles['product-buy__button']} 
                                     onClick={() => {
-                                        
+                                        if (product) {
+                                            addToCart(product?._id, product?.price)
+                                        }
                                     }}
                                 >
                                     Добавить в корзину
@@ -124,4 +126,4 @@ const ProductListCard = ({ productId, cardKey, ordersHistoryMode = false, favore
     )
 }
 
-export default ProductListCard
+export default ProductIdListCard

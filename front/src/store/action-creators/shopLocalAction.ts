@@ -52,7 +52,7 @@ export const addToCart = (productId: string, productPrice: string) => {
     }
 }
 
-export const RemoveFromFavors = (productIndex: number) => {
+export const removeFromFavors = (productIndex: number) => {
     return async (dispatch: Dispatch<ShopLocalAction>) => {
         let favors: string[] = JSON.parse(localStorage.getItem('favors')?? '[]')
         favors = [...favors.slice(0, productIndex), ...favors.slice(productIndex + 1)]

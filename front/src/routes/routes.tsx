@@ -22,7 +22,7 @@ const AppRoutes = () => {
                 <Route path='delete' element={<DeleteProductPage/>}/>
             </Route>
             <Route path='/catalogue'>
-                <Route path=':categoryName' element={<CataloguePage/>}/>
+                <Route path=':categoryRoute' element={<CataloguePage/>}/>
             </Route>
             <Route path='/products'>
                 <Route path=':id' element={<ProductPage/>}/>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import ProductListCard from "../../../ProductListCard/ProductListCard"
+import ProductIdListCard from "../../../ProductListCard/ProductIdListCard"
 import { OrderResponse } from "../../../../services/models/shop-models"
 import styles from './OrderCard.module.scss'
 
@@ -68,7 +68,7 @@ const OrderCard = ({ order }: props) => {
                 {
                     order.products.map((id, index) => {
                         console.log(id);
-                        return <ProductListCard productId={id} cardKey={index} key={index} ordersHistoryMode/>
+                        return <ProductIdListCard productId={id} cardKey={index} key={index} ordersHistoryMode/>
                     })
                 }
 

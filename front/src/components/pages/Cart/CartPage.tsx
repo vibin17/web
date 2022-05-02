@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { Link } from "react-router-dom"
-import ProductListCard from "../../ProductListCard/ProductListCard"
+import ProductIdListCard from "../../ProductListCard/ProductIdListCard"
 import { useShopLocalActions } from "../../../hooks/useActions"
 import { useTypedSelector } from "../../../hooks/useTypedSelector"
 import styles from './CartPage.module.scss'
@@ -14,7 +14,7 @@ const CartPage = () => {
     }, [])
     let productCards = useMemo(() => {
         return  productIds.map((productId, index) => {
-            return <ProductListCard key={index} 
+            return <ProductIdListCard key={index} 
                         cardKey={index} 
                         favored={favors.includes(productId)} 
                         productId={productId} 
