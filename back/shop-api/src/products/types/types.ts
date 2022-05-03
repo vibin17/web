@@ -8,6 +8,8 @@ export type Rating = {
 
 export type Prop = {
     name: string
+    filter?: boolean
+    bool?: boolean
 }
 
 export interface Category {
@@ -28,12 +30,14 @@ const Smartphones: Category = {
         },
         {
             name: 'Тип матрицы',
+            filter: true
         },
         {
             name: 'Разрешение экрана',
         },
         {
-            name: 'Операционная система', 
+            name: 'Операционная система',
+            filter: true
         },
         {
             name: 'Процессор',
@@ -49,6 +53,8 @@ const Smartphones: Category = {
         },
         {
             name: 'NFC',
+            filter: true,
+            bool: true
         },
         {
             name: 'Емкость аккумулятора',

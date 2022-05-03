@@ -21,6 +21,8 @@ export type UpdateProductData = {
 
 export type CateogryProp = {
     name: string
+    filter?: boolean
+    bool?: boolean
 }
 
 export type CategoryResponse = {
