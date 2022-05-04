@@ -12,16 +12,30 @@
     }
     &__main {
         display: flex;
+        justify-content: space-between;
+        gap: 20px;
     }
     &__sort {
-        &-menu {  
-            flex: 0 0 30%;
+        flex: 0 0 30%;
+        align-self: flex-start;
+        position: relative;
+        &-menu { 
+            position: fixed;
+            align-self: flex-start;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+            padding: 20px;
         }
         &-btn {
             outline: 0;
             border: 0;
             background: transparent;
             transition: all 0.1s;
+            cursor: pointer;
             color: rgba(0, 0, 0, 0.5);
             display: flex;
             align-items: center;
@@ -38,13 +52,55 @@
         align-items: center;
     }
     &__filters {
-
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        &-reset-btn {
+            outline: 0;
+            border: 0;
+            cursor: pointer;
+            background: transparent;
+            transition: all 0.1s;
+            color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            font: normal 16px 'Rubik';
+            gap: 10px;
+            &:hover {
+                color: rgba(0, 0, 0, 0.5);
+            }
+        }
     }
     &__filter {
-        
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        &-name {
+            font: normal 16px 'Rubik';
+        }
+        &-props {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        &-input {
+            display: flex;
+            gap: 3px;
+            align-items: center;
+            &-label {
+                font: normal 16px 'Rubik';
+                color: rgba(0, 0, 0, 0.7);
+            }
+            &-radio {
+
+            }
+            &-checkbox {
+
+            }
+        }
     }
     &__product-cards {
-        flex: 0 0 70%;
+        flex: 0 0 65%;
         display: flex;
         flex-direction: column;
         gap: 20px;
