@@ -13,16 +13,19 @@ type propsFilter = {
 
 const CataloguePage = () => {
     const categoryRoute = useParams().categoryRoute
+    const itemsOnPage = 6
     // let [productIds, setProductIds] = useState<ProductIdResponse[]>([])
     let [products, setProducts] = useState<ProductResponse[]>([])
     let [category, setCategory] = useState<CategoryResponse>()
+    let [activePage, setActivePage] = useState(1)
+    let [totalPages, setTotalPages] = useState(0)
     let [ascendingSort, setAscendingSort] = useState(true)
     let [propFilters, setPropFilters] = useState<propsFilter[]>([])
     let [manufacturerFilters, setManufacturerFilters] = useState<string[]>([])
     let favors = useMemo(() => {
         return JSON.parse(localStorage.getItem('favors')?? '[]')
     }, [])
-    let productCards = useMemo(() => {
+    let sortedProducts = useMemo(() => {
         let filteredProducts = products.filter((product) => {
             if (manufacturerFilters.length > 0) {
                 if (!manufacturerFilters.includes(product.manufacturer)) {
@@ -39,11 +42,19 @@ const CataloguePage = () => {
             return true
         })
         let sortedProducts = filteredProducts.sort((a, b) => (ascendingSort? 1 : -1) * (parseInt(a.price) - parseInt(b.price)))
-        return sortedProducts.map((product, index) => {
+        setTotalPages(Math.ceil(sortedProducts.length / itemsOnPage))
+        setActivePage(1)
+        return sortedProducts
+    }, [products, ascendingSort, propFilters])
+    let productCards = useMemo(() => {
+        window.scrollTo(0, 0)
+        return sortedProducts.filter((product, index) => 
+            index >= (activePage - 1) * itemsOnPage && index <= activePage * itemsOnPage
+        ).map((product, index) => {
             return <ProductObjectListCard product={product}
                 cardKey={index} key={index} favored={favors.includes(product._id)}/>
         })
-    }, [products, ascendingSort, propFilters])
+    }, [sortedProducts, activePage])
     let filterProps = useMemo(() => {
         return category?.props.map((prop, index) => { 
             return { prop, index }}).filter((prop) => prop.prop.filter)
@@ -71,10 +82,10 @@ const CataloguePage = () => {
             setCategory(category)
             const productIds = (await ShopService.getAllProductsOfCategory(category?.name|| 'error')).data       
             // setProductIds(productIds)
-            const productsPromises = productIds.map(async (id) => {
+            const products = await Promise.all(productIds.map(async (id) => {
                 return (await ShopService.getProductById(id._id)).data
-            })
-            const products = await Promise.all(productsPromises)
+            }))
+            setTotalPages(Math.ceil(products.length / itemsOnPage))
             setProducts(products)
         })()
     }, [categoryRoute])
@@ -82,9 +93,11 @@ const CataloguePage = () => {
     return (
         <div className={styles['catalogue']}> 
             <div className={styles['catalogue__header']}>
-                {
-                    category?.name
-                }
+                <div className={styles['catalogue__header-label']}>
+                    {
+                        category?.name
+                    }
+                </div>
             </div>
             <div className={styles['catalogue__main']}>
                 <aside className={styles['catalogue__sort']}>
@@ -115,7 +128,7 @@ const CataloguePage = () => {
                                                         className={styles['catalogue__filter-input-checkbox']}
                                                         name={`Производитель`}
                                                         value={value}
-                                                        checked={manufacturerFilters.find((filter) => filter === value) && true || false}
+                                                        checked={(manufacturerFilters.find((filter) => filter === value) && true) || false}
                                                         onChange={() => {
                                                             let manufacturerIndex = manufacturerFilters.findIndex((manufacturer) => manufacturer === value)
                                                             if (manufacturerIndex >= 0) {
@@ -250,6 +263,26 @@ const CataloguePage = () => {
                 <div className={styles['catalogue__product-cards']}>
                     {
                         productCards
+                    }
+                </div>
+            </div>
+            <div className={styles['catalogue__footer']}>
+                <div className={styles['catalogue__pages']}>
+                    {
+                        [...Array(totalPages)].map((x, index) => {
+                            return (
+                                <button 
+                                    className={`${styles['catalogue__pages-btn']} ${
+                                        activePage === index + 1 && styles['catalogue__pages-btn--active']}`} 
+                                    onClick={() => {
+                                        setActivePage(index + 1)
+                                    }}
+                                    key={index}
+                                >
+                                    {index + 1}
+                                </button>
+                            )
+                        })
                     }
                 </div>
             </div>
