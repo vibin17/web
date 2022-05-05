@@ -5,9 +5,10 @@ import styles from './HomePage.module.scss'
 import ProductSummaryCard from './ProductSummaryCard/ProductSummaryCard'
 
 const HomePage = () => {
+    const cardsOnPage = 20
     let [productIds, setProductIds] = useState<ProductIdResponse[]>([])
     let summaryCards = useMemo(() => {
-        return productIds.map((productId, index) => {
+        return productIds.slice(-cardsOnPage).map((productId, index) => {
             return <ProductSummaryCard productId={productId._id} key={index}/>
         })
     }, [productIds])
@@ -25,7 +26,7 @@ const HomePage = () => {
                 </div>
                 <div className={styles['section-content']}>
                     {
-                        summaryCards[0]
+                        summaryCards
                     }
                 </div>
 

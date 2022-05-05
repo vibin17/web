@@ -1,5 +1,5 @@
 @import '../../global';
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 
 .catalogue-menu {
     left: -1500px;
@@ -11,10 +11,36 @@
     border: 1px solid rgba(0, 0, 0, 0.308);
     border-radius: 10px;
     transition: all 0.3s;
-    padding: 15px 30px;
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
     &--active {
         left: 5px;
     }
+    &__title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font: bold 20px 'Rubik';
+        color: rgb(0, 0, 0);
+    }
+    &__list {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        list-style: none;
+    }
+    &__link {
+        text-decoration: none;
+        font: normal 18px 'Rubik';
+        color: rgba(0, 0, 0, 0.8);
+        &:hover {
+            text-decoration: underline;
+        }
+    }   
 }
 
 .menu-list {
@@ -24,15 +50,13 @@
     justify-content: flex-start;
     align-items: flex-start;
     list-style: none;
-    &__item {
-        &:hover .link {
-            text-decoration: underline;
-        }
-    }
 }
 
 .link {
     text-decoration: none;
     font: normal 18px 'Ubuntu';
-    color: rgb(0, 0, 0)
+    color: rgb(0, 0, 0);
+    &:hover {
+        text-decoration: underline;
+    }
 }   

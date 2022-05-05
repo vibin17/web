@@ -14,9 +14,9 @@ const CatalogueMenu = ({ isMenuActive, setMenuActive }: props) => {
     let categoryItems = useMemo(() => {
         return categories.map((category, index) => {
             return (
-                <li className={styles['menu-list__item']} key={index}>
+                <li className={styles['catalogue-menu__list-item']} key={index}>
                     {
-                        <Link className={styles['link']} to={`/catalogue/${category.route}`}
+                        <Link className={styles['catalogue-menu__link']} to={`/catalogue/${category.route}`}
                             onClick={() => {
                                 setMenuActive(false)
                             }}>
@@ -37,7 +37,10 @@ const CatalogueMenu = ({ isMenuActive, setMenuActive }: props) => {
     }, [])
     return (
         <div className={`${styles['catalogue-menu']} ${isMenuActive && styles['catalogue-menu--active']}`}>
-            <ul className={styles['menu-list']}>
+            <div className={styles['catalogue-menu__title']}>
+                Категории товаров
+            </div>
+            <ul className={styles['catalogue-menu__list']}>
                 {
                     categoryItems
                 }

@@ -5,6 +5,7 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { RiUserLine } from 'react-icons/ri'
 import { BsCart2 } from 'react-icons/bs'
 import { FiHeart } from "react-icons/fi"
+import { RiHeartLine, RiHeartFill } from 'react-icons/ri'
 import styles from './Header.module.scss'
 import UserMenu from './UserMenu/UserMenu';
 import SignUpForm from './AuthForms/SignUpForm';
@@ -50,11 +51,11 @@ const Header = () => {
           
           <div className={styles['header-item']}>
               <div className={`${styles['header-item__summary']} ${styles['header-item__summary--clickable']}`}>
-                <FiHeart className={styles['header-item__icon']}/>
-                {shopLocal.favorsCount > 0 && 
-                  <div className={styles['header-item__count']}>
-                    <b>({shopLocal.favorsCount})</b>
-                  </div>
+                {shopLocal.favorsCount > 0?
+                  <RiHeartFill className={`${styles['header-item__icon']}
+                    ${styles['header-item__icon--heart-filled']}`}/>
+                  :
+                  <RiHeartLine className={styles['header-item__icon']}/>
                 }
               </div>
               <div className={styles['header-item__details']}>

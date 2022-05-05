@@ -6,16 +6,72 @@
     height: $footer-height;
     background: white;
     border-top: 1px solid rgba(124, 124, 124, 0.35);
-    flex: 0 0 100px;
     display: flex;
     justify-content: center;
     font: bold 18px 'Ubuntu';
+    &__main {
+        height: 100%;
+        padding: 20px 0;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+    }
+    &__section {
+        flex: 0 0 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        &--right {
+            align-items: flex-end;
+        }
+    }
+    &__row {
+        display: flex;
+        justify-content: space-between;
+    }
+    &__item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &__text {
+        font: normal 14px 'Rubik';
+        color: rgba(0, 0, 0, 0.4);
+    }
+    &__social-media {
+        display: flex;
+        gap: 8px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    &__icon {
+        background-position: center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 30px;
+        width: 30px;
+        transition: all 0.2s;
+        cursor: pointer;
+        filter: invert(25%);
+        &:hover {
+            filter: invert(40%);
+        }
+        &-vk {
+            background-image: url('../../images/social-media/vk.png');
+        }
+        &-yt {
+            background-image: url('../../images/social-media/youtube.png');
+        }
+        &-tg {
+            background-image: url('../../images/social-media/telegram.png');
+        }
+    }
 }
 
 .container {
     height: 100%;
     width: $container-width;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }

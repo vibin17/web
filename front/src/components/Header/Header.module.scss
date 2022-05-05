@@ -79,6 +79,9 @@
 
         &__icon {
             font-size: 32px;
+            &--heart-filled {
+                color: rgb(226, 34, 34);
+            }
         }
 
         &__count {
@@ -170,7 +173,7 @@
     justify-content: center;
     align-items: center;
     transition: 0.3s;
-    
+    font: bold 24px 'Rubik';
     &__line {
         background: black;
         width: 30px;

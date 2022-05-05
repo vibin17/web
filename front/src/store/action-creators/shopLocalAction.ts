@@ -52,9 +52,15 @@ export const addToCart = (productId: string, productPrice: string) => {
     }
 }
 
-export const removeFromFavors = (productIndex: number) => {
+export const removeFromFavors = (productId: string) => {
     return async (dispatch: Dispatch<ShopLocalAction>) => {
         let favors: string[] = JSON.parse(localStorage.getItem('favors')?? '[]')
+        const productIndex = favors.findIndex((prod) => {
+            return prod === productId
+        })
+        if (productIndex < 0) {
+            return
+        }
         favors = [...favors.slice(0, productIndex), ...favors.slice(productIndex + 1)]
         localStorage.setItem('favors', JSON.stringify(favors))
         dispatch({
@@ -63,7 +69,7 @@ export const removeFromFavors = (productIndex: number) => {
     }
 }
 
-export const removeFromCart = (productIndex: number, productPrice: string) => {
+export const removeFromCart = (productIndex: number, productPrice: string) => { //USED ONLY AT CART PAGE
     return async (dispatch: Dispatch<ShopLocalAction>) => {
         let cart: string[] = JSON.parse(localStorage.getItem('cart')?? '[]')
         cart = [...cart.slice(0, productIndex), ...cart.slice(productIndex + 1)]

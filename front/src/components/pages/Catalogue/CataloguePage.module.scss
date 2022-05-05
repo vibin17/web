@@ -35,12 +35,13 @@
             background: transparent;
             transition: all 0.2s;
             font: bold 18px 'Rubik';
+            border-radius: 5px;
             &:hover {
                 filter: invert(15%);
             }
             &--active {
                 color: rgb(255, 255, 255);
-                background: rgba(53, 50, 248, 0.521);
+                background: rgba(0, 0, 0, 0.7);
             }
         }
     }
@@ -52,8 +53,9 @@
             position: fixed;
             align-self: flex-start;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             flex-direction: column;
+            width: 300px;
             gap: 10px;
             background: rgba(0, 0, 0, 0.05);
             border-radius: 10px;

@@ -16,7 +16,7 @@ const ProductPage = () => {
     const params = useParams()
     let [product, setProduct] = useState<ProductResponse>()
     let [isFavored, setIsFavored] =  useState(false)
-    let { addToCart, addToFavors } = useShopLocalActions()
+    let { addToCart, addToFavors, removeFromFavors } = useShopLocalActions()
     let gallery = useMemo(() => {
         return (
             <ImageGallery
@@ -103,6 +103,12 @@ const ProductPage = () => {
                                 :
                                 <button className={`${styles['product__button']}
                                     ${styles['product__button--favors']}`}
+                                    onClick={() => {
+                                        if (product) {
+                                            removeFromFavors(product._id)
+                                            setIsFavored(false)
+                                        }
+                                    }}
                                 >
                                     <FiHeart className={styles['product__button__icon']}/>
                                     В избранном
