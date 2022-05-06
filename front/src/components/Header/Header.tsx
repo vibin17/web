@@ -5,7 +5,6 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { RiUserLine } from 'react-icons/ri'
 import { BsCart2 } from 'react-icons/bs'
 import { FiHeart } from "react-icons/fi"
-import { RiHeartLine, RiHeartFill } from 'react-icons/ri'
 import styles from './Header.module.scss'
 import UserMenu from './UserMenu/UserMenu';
 import SignUpForm from './AuthForms/SignUpForm';
@@ -50,14 +49,14 @@ const Header = () => {
         <div className={`${styles['header__section']} ${styles['user-section']}`}>
           
           <div className={styles['header-item']}>
-              <div className={`${styles['header-item__summary']} ${styles['header-item__summary--clickable']}`}>
-                {shopLocal.favorsCount > 0?
-                  <RiHeartFill className={`${styles['header-item__icon']}
-                    ${styles['header-item__icon--heart-filled']}`}/>
-                  :
-                  <RiHeartLine className={styles['header-item__icon']}/>
+              <Link to='/favors' className={`${styles['header-item__summary']}`}>
+                <FiHeart className={styles['header-item__icon']}/>
+                {shopLocal.favorsCount > 0 &&
+                  <div className={`${styles['header-item__count']} ${styles['header-item__count--shifted']}`}>
+                    <b>{shopLocal.favorsCount}</b>
+                  </div>
                 }
-              </div>
+              </Link>
               <div className={styles['header-item__details']}>
                 <div className={styles['header-item__description']}>
                   Избранные товары
@@ -69,7 +68,7 @@ const Header = () => {
             <Link to='/cart' className={`${styles['header-item__summary']}`}>
               <BsCart2 className={styles['header-item__icon']}/>
               {shopLocal.cartPrice > 0 && 
-                  <div className={`${styles['header-item__count']} ${styles['header-item__count--centered']}`}>
+                  <div className={`${styles['header-item__count']}`}>
                     <b>{shopLocal.cartPrice + ' ₽'}</b>
                   </div>
                 }

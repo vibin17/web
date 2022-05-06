@@ -85,16 +85,17 @@
         }
 
         &__count {
-            font: normal 14px 'Roboto';
             position: absolute;
-            top: 65%;
-            right: 10%;
-            &--centered {
-                font: normal 12px 'Roboto';
-                top: 80%;
-                left: 50%;
-                white-space: nowrap;
-                transform: translateX(-50%);
+            top: 25%;
+            right: 0;
+            font: normal 10px 'Roboto';
+            background: rgb(133, 133, 133);
+            border-radius: 7px;
+            color: rgb(255, 255, 255);
+            padding: 2px 4px;
+            &--shifted {
+                right: auto;
+                left: 60%;
             }
         }
         &__description {

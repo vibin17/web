@@ -9,17 +9,19 @@ import styles from './ProductListCard.module.scss'
 
 type props = {
     product: ProductResponse
+    smaller?: boolean
     favored?: boolean
     cardKey: number
 }
 
-const ProductObjectListCard = ({ product, cardKey, favored = false }: props) => {
+const ProductObjectListCard = ({ product, cardKey, smaller = false, favored = false }: props) => {
     let { 
         addToFavors, 
         addToCart,
         removeFromFavors,
         removeFromCart 
         } = useShopLocalActions()
+    let [isFavored, setIsFavored] = useState(favored)
     useEffect(() => {
         // (async () => {
         //     let product = (await ShopService.getProductSummaryById(productId)).data
@@ -28,10 +30,12 @@ const ProductObjectListCard = ({ product, cardKey, favored = false }: props) => 
     }, [])
     return (
         <Link to={`/products/${product._id}`} 
-            className={`${styles['product-list-card']}`}>
+            className={`${styles['product-list-card']} ${smaller &&
+                styles['product-list-card--smaller']}`}>
             <div className={styles['image-section']}>
                 <img 
-                    className={`${styles['card-image']}`} 
+                    className={`${styles['card-image']} ${smaller &&
+                        styles['card-image--smaller']}`} 
                     src={`${SHOP_URL}/products/images/${product.imagePaths[0]}`}
                 />
             </div>
@@ -55,12 +59,13 @@ const ProductObjectListCard = ({ product, cardKey, favored = false }: props) => 
                                 } 
                             />
                     </div>
-                    {!favored?
+                    {!isFavored?
                         <button className={styles['product-buy__button']}
                             onClick={(event) => {
                                 event.preventDefault()
                                 if (product) {
                                     addToFavors(product._id)
+                                    setIsFavored(true)
                                 }
                             }}
                         >
@@ -70,6 +75,10 @@ const ProductObjectListCard = ({ product, cardKey, favored = false }: props) => 
                         <button className={styles['product-buy__button']}
                             onClick={(event) => {
                                 event.preventDefault()
+                                if (product) {
+                                    removeFromFavors(product._id)
+                                    setIsFavored(false)
+                                }
                             }}
                         >
                             В избранном

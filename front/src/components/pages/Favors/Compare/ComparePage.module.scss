@@ -1,0 +1,16 @@
+.compare-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    &__header {
+        font: bold 28px "Ubuntu";
+    }
+    &__main {
+        gap: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}
