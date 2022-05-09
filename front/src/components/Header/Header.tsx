@@ -15,7 +15,7 @@ const Header = () => {
   let [isMenuActive, setMenuActive] = useState(false)
   let [isSignInFormActive, setSignInFormActive] = useState(false)
   let [isSignUpFormActive, setSignUpFormActive] = useState(false)
-  let { isSignedIn: signedIn } = useTypedSelector(state => state.auth)
+  let { isSignedIn, userData } = useTypedSelector(state => state.auth)
   let shopLocal = useTypedSelector( state => state.shopLocal)
   
   return (
@@ -24,69 +24,85 @@ const Header = () => {
 
         <CatalogueMenu isMenuActive={isMenuActive} setMenuActive={setMenuActive}/>
         
-        {!signedIn && <ModalWindow isWindowActive={isSignInFormActive} setWindowActive={setSignInFormActive}>
+        {!isSignedIn && <ModalWindow isWindowActive={isSignInFormActive} setWindowActive={setSignInFormActive}>
           <SignInForm/>  
         </ModalWindow>}
 
-        {!signedIn && <ModalWindow isWindowActive={isSignUpFormActive} setWindowActive={setSignUpFormActive}>
+        {!isSignedIn && <ModalWindow isWindowActive={isSignUpFormActive} setWindowActive={setSignUpFormActive}>
           <SignUpForm/>  
         </ModalWindow>}
 
-        <div className={`${styles['header__section']} ${styles['shop-section']}`}>
-          <div className={styles['header-item']}>
-            <div className={`${styles['header-item__summary']} ${styles['header-item__summary--clickable']}`}>
-              <div className={styles['burger-menu']} onClick={() => setMenuActive(!isMenuActive)}>
+        <div className={`${styles['header__section']} ${styles['header__shop-section']}`}>
+          <div className={styles['header__item']}>
+            <div className={`${styles['header__item-summary']} 
+              ${styles['header__item-summary--clickable']}`}
+            >
+              <div className={styles['burger-menu']} 
+                onClick={() => setMenuActive(!isMenuActive)}
+              >
                 <div className={styles['burger-menu__line']}/>
                 Каталог
               </div>
             </div>
           </div>
-          <Link to='/' className={styles['header-logo']}> 
-              <div className={styles['header-logo__image']}/>
+          <Link to='/' className={styles['header__logo']}> 
+              <div className={styles['header__logo-image']}/>
           </Link>
         </div>
 
-        <div className={`${styles['header__section']} ${styles['user-section']}`}>
+        <div className={`${styles['header__section']} ${styles['header__user-section']}`}>
           
-          <div className={styles['header-item']}>
-              <Link to='/favors' className={`${styles['header-item__summary']}`}>
-                <FiHeart className={styles['header-item__icon']}/>
-                {shopLocal.favorsCount > 0 &&
-                  <div className={`${styles['header-item__count']} ${styles['header-item__count--shifted']}`}>
-                    <b>{shopLocal.favorsCount}</b>
-                  </div>
+          <div className={styles['header__item']}>
+              <Link to='/favors' className={`${styles['header__item-summary']}`}>
+                <FiHeart className={styles['header__item-icon']}/>
+                {
+                  shopLocal.favorsCount > 0 &&
+                    <div className={`${styles['header__count']} 
+                      ${styles['header__count--shifted']}`}
+                    >
+                      {shopLocal.favorsCount}
+                    </div>
                 }
               </Link>
-              <div className={styles['header-item__details']}>
-                <div className={styles['header-item__description']}>
+              <div className={styles['header__item-details']}>
+                <div className={styles['header__item-description']}>
                   Избранные товары
                 </div>
               </div>
           </div>
 
-          <div className={styles['header-item']}>
-            <Link to='/cart' className={`${styles['header-item__summary']}`}>
-              <BsCart2 className={styles['header-item__icon']}/>
-              {shopLocal.cartPrice > 0 && 
-                  <div className={`${styles['header-item__count']}`}>
-                    <b>{shopLocal.cartPrice + ' ₽'}</b>
+          <div className={styles['header__item']}>
+            <Link to='/cart' className={`${styles['header__item-summary']}`}>
+              <BsCart2 className={styles['header__item-icon']}/>
+              {
+                shopLocal.cartPrice > 0 && 
+                  <div className={`${styles['header__count']}`}>
+                    {shopLocal.cartPrice + ' ₽'}
                   </div>
-                }
+              }
             </Link>
-            <div className={styles['header-item__details']}>
-              <div className={styles['header-item__description']}>
+            <div className={styles['header__item-details']}>
+              <div className={styles['header__item-description']}>
                 Корзина
               </div>
             </div>
           </div>
 
-          <div className={styles['header-item']}>
-            <div className={styles['header-item__summary']}>
-              <RiUserLine className={styles['header-item__icon']}/>
+          <div className={styles['header__item']}>
+            <div className={styles['header__item-summary']}>
+              <RiUserLine className={styles['header__item-icon']}/>
+              {isSignedIn &&
+                <div className={styles['header__user-name']}>
+                  {
+                    userData.userName
+                  }
+                </div>
+              }
             </div>
             
-            <div className={styles['header-item__details']}>
-              <UserMenu setSignInFormActive={setSignInFormActive} setSignUpFormActive={setSignUpFormActive}/>
+            <div className={styles['header__item-details']}>
+              <UserMenu setSignInFormActive={setSignInFormActive} 
+                setSignUpFormActive={setSignUpFormActive}/>
             </div>
           </div>
 

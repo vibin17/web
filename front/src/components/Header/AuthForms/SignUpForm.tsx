@@ -1,4 +1,4 @@
-import {Field, Form, Formik, FormikContext} from 'formik'
+import { Field, Form, Formik } from 'formik'
 import { FormEvent, useState } from 'react';
 import validator from 'validator';
 import { useAuthActions } from '../../../hooks/useActions';
@@ -18,41 +18,33 @@ const SignUpForm = () => {
 
     let validateName = (event: FormEvent) => {
         let name = (event.target as HTMLInputElement).value
-        let validated = name.length >= 3 && name.length <= 20 || !name
-        if (validated)
-            return setNameValidated(true)
-        setNameValidated(false)
+        let validated = (name.length >= 3 && name.length <= 20) || !name
+        setNameValidated(validated)
     }
 
     let validatePassword = (event: FormEvent) => {
         let password = (event.target as HTMLInputElement).value
-        let validated = password.length >= 4 && password.length <= 16 || !password
-        if (passwordConfirm && password != passwordConfirm) {
+        let validated = (password.length >= 4 && password.length <= 16) || !password
+        if (passwordConfirm && (password !== passwordConfirm)) {
             setPasswordConfirmValidated(false)
         } else {
             setPasswordConfirmValidated(true)
         }
         setPassword(password)
-        if (validated) 
-            return setPasswordValidated(true)
-        setPasswordValidated(false)
+        setPasswordValidated(validated)
     }
 
     let validatePasswordConfirm = (event: FormEvent) => {
         let passwordConfirm = (event.target as HTMLInputElement).value
         let validated = passwordConfirm === password
         setPasswordConfirm(passwordConfirm)
-        if (validated)
-            return setPasswordConfirmValidated(true)
-        setPasswordConfirmValidated(false)
+        setPasswordConfirmValidated(validated)
     }
 
     let validatePhoneNumber = (event: FormEvent) => {
         let phoneNumber = (event.target as HTMLInputElement).value
         let validated = validator.isMobilePhone(phoneNumber, 'ru-RU') || !phoneNumber
-        if (validated)
-            return setPhoneNumberValidated(true)
-        setPhoneNumberValidated(false)
+        setPhoneNumberValidated(validated)
     }
 
     return (

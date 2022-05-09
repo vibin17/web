@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { ProductIdResponse } from '../../../services/models/shop-models'
 import ShopService from '../../../services/ShopService/shop-service'
 import styles from './HomePage.module.scss'
-import ProductSummaryCard from './ProductSummaryCard/ProductSummaryCard'
+import ProductSummaryCard from '../../ProductSummaryCard/ProductSummaryCard'
 
 const HomePage = () => {
     const cardsOnPage = 20

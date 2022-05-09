@@ -8,8 +8,10 @@ export type Rating = {
 
 export type Prop = {
     name: string
-    filter?: boolean
     bool?: boolean
+    filter?: boolean
+    bestValue?: string
+    compareType?: 'u' | 'd' | 't' | 'b'
 }
 
 export interface Category {
@@ -24,20 +26,25 @@ const Smartphones: Category = {
     props: [
         {
             name: 'Баллы Antutu',
+            compareType: 'u'
         },
         {
             name: 'Диагональ экрана',
+            compareType: 'u'
         },
         {
             name: 'Тип матрицы',
-            filter: true
+            filter: true,
+            compareType: 't'
         },
         {
             name: 'Разрешение экрана',
+            compareType: 'u'
         },
         {
             name: 'Операционная система',
-            filter: true
+            filter: true,
+            compareType: 't'
         },
         {
             name: 'Процессор',
@@ -53,11 +60,14 @@ const Smartphones: Category = {
         },
         {
             name: 'NFC',
+            bestValue: 'Есть',
+            compareType: 'b',
             filter: true,
             bool: true
         },
         {
-            name: 'Емкость аккумулятора',
+            name: 'Емкость аккумулятора, мАч',
+            compareType: 'u'
         },
         {
             name: 'Основная камера',

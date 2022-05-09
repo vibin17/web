@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { useParams } from "react-router"
-import { CategoryResponse, CateogryProp, ProductIdResponse, ProductResponse } from "../../../services/models/shop-models"
+import { CategoryResponse, CategoryProp, ProductIdResponse, ProductResponse } from "../../../services/models/shop-models"
 import ShopService from "../../../services/ShopService/shop-service"
 import ProductObjectListCard from "../../ProductListCard/ProductObjectListCard"
 import styles from './CataloguePage.module.scss'

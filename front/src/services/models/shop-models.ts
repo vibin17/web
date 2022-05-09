@@ -19,16 +19,17 @@ export type UpdateProductData = {
     readonly props: string[]
 }
 
-export type CateogryProp = {
+export type CategoryProp = {
     name: string
     filter?: boolean
     bool?: boolean
+    compareType?: 'u' | 'd' | 't' | 'b'
 }
 
 export type CategoryResponse = {
     name: string
     route: string
-    props: CateogryProp[]
+    props: CategoryProp[]
 }
 
 export type ProductIdResponse = {

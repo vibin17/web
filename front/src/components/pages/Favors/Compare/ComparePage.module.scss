@@ -11,6 +11,78 @@
         gap: 10px;
         display: flex;
         flex-direction: column;
+        align-items: flex-start;
+    }
+    &__form {
+        display: flex;
+        flex-direction: column;
         gap: 10px;
+    }
+    &__summary {
+        display: flex;
+        gap: 10px;
+    }
+    &__submit-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        outline: 0;
+        border: 0;
+        font: bold 18px "Ubuntu";
+        padding: 10px;
+        transition: all 0.3s;
+        pointer-events: none;
+        background: transparent;
+        &--active {
+            background: rgba(214, 214, 214, 0.514);
+            pointer-events: all;
+            &:hover {
+                filter: invert(10%);
+            }
+        } 
+    }
+}
+
+.choose-section {
+
+    &__header {
+        padding: 5px;
+        font: bold 20px "Ubuntu";
+    }
+
+    &__main {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        background: rgba(214, 214, 214, 0.514);
+        padding: 20px;
+        gap: 5px;
+    }
+
+    &__input {
+        display: flex;
+        gap: 5px;
+        justify-content: flex-start;
+        align-items: center;
+        &-label {
+            font: normal 16px 'Rubik';
+        }
+    }
+
+    &__field {
+        padding: 4px;
+        font: normal 16px 'Roboto';
+        &-checkbox {
+            padding: 0px;
+        }
+
+        &-select {
+
+        }
+
+        &-options {
+
+        }
     }
 }

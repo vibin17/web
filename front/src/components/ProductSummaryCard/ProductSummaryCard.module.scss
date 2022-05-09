@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+.prod-sum-card {
+    width: 230px;
+    transition: all .2s;
+    border-radius: 10px;
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    &--smaller {
+        width: 120px;
+    }
+
+    &:hover &__name {
+        text-decoration: underline;
+    }
+    &__img-section {
+        flex: 0 0 70%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &__img {
+        display: block;
+        width: 100%;
+    }
+    &__info {
+        padding: 10px 5px;
+    }
+    &__name {
+        font: normal 16px 'Rubik';
+        &--smaller {
+            font: normal 14px 'Rubik';
+        }
+    
+    }
+    &__additional {
+        padding-top: 5px;
+        display: flex;
+        justify-content: space-between;
+    }
+    &__price {
+        text-align: right;
+        font: bold 20px 'Rubik';
+    }
+}

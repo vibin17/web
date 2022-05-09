@@ -1,6 +1,6 @@
-import { Axios, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { FileWithPath } from "react-dropzone";
-import { shopAPI, SHOP_URL } from "../../http";
+import { shopAPI } from "../../http";
 import { AllReviewIdsResponse, CategoryResponse, CreateOrderData, CreateProductData, CreateReviewData, DeletedProductResponse, DeletedReviewResponse, DeleteReviewData, OrderResponse, ProductIdResponse, ProductResponse, ProductSummaryResponse, ReviewIdResponse, ReviewResponse, ShopResponse, UpdateProductData } from "../models/shop-models";
 
 export default class ShopService {
