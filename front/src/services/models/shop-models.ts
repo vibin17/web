@@ -19,11 +19,20 @@ export type UpdateProductData = {
     readonly props: string[]
 }
 
+export enum PropCompareTypes {
+    NUMBER_UP = 'u',
+    NUMBER_DOWN = 'd',
+    PREFERENCE = 'p',
+    BINARY = 'b'
+}
+
 export type CategoryProp = {
     name: string
-    filter?: boolean
     bool?: boolean
-    compareType?: 'u' | 'd' | 't' | 'b'
+    filter?: boolean
+    bestValue?: string[]
+    compareType?: PropCompareTypes
+    tiers?: [number, number][]
 }
 
 export type CategoryResponse = {
@@ -131,4 +140,22 @@ export type AllReviewIdsResponse = {
 export type DeletedReviewResponse = {
     readonly deletedCount: number
     readonly acknowledged: boolean
+}
+
+export const defaultCriterias = [
+    'Цена', 'Производитель', 'Пользовательский рейтинг', 'Год выпуска'
+]
+
+export type Criteria =  {
+    name: string
+    importance: string
+    index: number
+    preferences?: boolean
+    prefValues?: string[][]
+}
+
+export type CompareProductsData = {
+    products: string[]
+    crits: Criteria[]
+    category: string
 }

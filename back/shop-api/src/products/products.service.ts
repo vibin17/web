@@ -2,10 +2,11 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Product, ProductDocument } from './schemas/product.schema';
 import { Model } from "mongoose";
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateProductDto, UpdateProductDto } from './dto/request-product.dto';
+import { CompareProductsDto, CreateProductDto, UpdateProductDto } from './dto/request-product.dto';
 import { categories, Category } from './types/types';
 import { FilesService } from 'src/files/files.service';
 import { DeletedProductDto, ResponseProductDto, ResponseProductIdDto, ResponseProductSummaryDto } from './dto/response-product.dto';
+import { AHP } from './ahp/ahp';
 
 @Injectable()
 export class ProductsService {
@@ -127,6 +128,16 @@ export class ProductsService {
         productToUpdate.rating[reviewRating] -= 1
         await productToUpdate.save()
         return productToUpdate
+    }
+
+    async compareProducts(compareProductsDto: CompareProductsDto) {
+        let category = categories.find((cat) => cat.name === compareProductsDto.category)
+        let products: ResponseProductDto[] = []
+        for (let id of compareProductsDto.products) {
+            let product = await this.productModel.findById(id, '-__v')
+            products.push(product)
+        }
+        return AHP.compare(category, compareProductsDto.crits, products)
     }
 
 }

@@ -59,9 +59,7 @@ export class OrdersService {
             paymentType,
             price
         }
-
-        console.log(order)
-
+        
         return order
     }
 

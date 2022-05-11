@@ -1,5 +1,6 @@
 import { Field, Form, Formik } from 'formik'
 import { useMemo, useState } from 'react'
+import { useTypedSelector } from '../../../../../../hooks/useTypedSelector'
 import ShopService from '../../../../../../services/ShopService/shop-service'
 import styles from './ReviewForm.module.scss'
 
@@ -9,6 +10,7 @@ type props = {
 
 const ReviewForm = ({ product }: props) => {
     let [message, setMessage] = useState('')
+    let { isSignedIn } = useTypedSelector(state => state.auth)
     let rates = useMemo(() => {
         return [5, 4, 3, 2, 1].map((value, index) => {
             return (
@@ -25,7 +27,7 @@ const ReviewForm = ({ product }: props) => {
             )
         })
     }, [])
-    return (
+    return isSignedIn? (
         <div className={styles['review-form']}>
             <Formik
                 initialValues={{
@@ -106,6 +108,12 @@ const ReviewForm = ({ product }: props) => {
                     message
                 }
             </div>
+        </div>
+    )
+    :
+    (
+        <div className={styles['review-form__field-label']}>
+            Войдите, чтобы оценить товар
         </div>
     )
 }

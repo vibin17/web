@@ -30,3 +30,17 @@ export class UpdateProductDto {
     readonly description: string
     readonly props: string[]
 }
+
+export type Criteria =  {
+    name: string
+    importance: string
+    index: number
+    preferences?: boolean
+    prefValues?: string[][]
+}
+
+export class CompareProductsDto {
+    products: string[]
+    crits: Criteria[]
+    category: string
+}

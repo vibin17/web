@@ -1,24 +1,16 @@
 import { useEffect, useMemo, useState } from "react"
 import { useParams } from "react-router"
-import { CategoryResponse, CategoryProp, ProductResponse } from "../../../../services/models/shop-models"
+import { CategoryResponse, CategoryProp, ProductResponse, Criteria, PropCompareTypes, defaultCriterias } from "../../../../services/models/shop-models"
 import ShopService from "../../../../services/ShopService/shop-service"
 import ProductSummaryCard from "../../../ProductSummaryCard/ProductSummaryCard"
 import styles from './ComparePage.module.scss'
-
-type criteria =  {
-    name: string
-    importance: string
-    index: number
-    tiers?: boolean
-    values?: string[][]
-}
 
 const ComparePage = () => {
     const categoryName = useParams().category
     let [category, setCategory] = useState<CategoryResponse>()
     let [favorProducts, setFavorProducts] = useState<ProductResponse[]>([])
     let [allCriteriasNames, setAllCriteriasNames] = useState<string[]>([])
-    let [criterias, setCriterias] = useState<criteria[]>([])
+    let [criterias, setCriterias] = useState<Criteria[]>([])
     let summaryCards = useMemo(() => {
         return favorProducts.slice(0, 10).map((fav, index) => {
             return (
@@ -62,7 +54,7 @@ const ComparePage = () => {
         })
     }, [criterias])
     let critsValueInputs = useMemo(() => {
-        return criterias.filter((crit) => crit.tiers).map((crit, index) => {
+        return criterias.filter((crit) => crit.preferences).map((crit, index) => {
             let critValues: string[] = []
             if (crit.name === 'Производитель') {
                 critValues = Array.from(new Set(favorProducts.map((fav) => {
@@ -94,15 +86,15 @@ const ComparePage = () => {
                                             defaultValue={`1`}
                                             onChange={(event) => {
                                                 const value = parseInt(event.target.value)
-                                                if (crit.values) {
+                                                if (crit.prefValues) {
                                                     for (let i = 0; i < 5; i++) {
-                                                        let critValueIndex = crit.values[i].findIndex((crit) => crit === critValue)
+                                                        let critValueIndex = crit.prefValues[i].findIndex((crit) => crit === critValue)
                                                         if (critValueIndex >= 0) {
-                                                            crit.values[i] = [...crit.values[i].slice(0, critValueIndex),
-                                                                ...crit.values[i].slice(critValueIndex + 1)]
+                                                            crit.prefValues[i] = [...crit.prefValues[i].slice(0, critValueIndex),
+                                                                ...crit.prefValues[i].slice(critValueIndex + 1)]
                                                         }
                                                     }
-                                                    crit.values[value - 1].push(critValue)
+                                                    crit.prefValues[value - 1].push(critValue)
                                                 }
                                             }}
                                         >
@@ -138,7 +130,7 @@ const ComparePage = () => {
                 .find((cat) => cat.route === categoryName)
             setCategory(category)
             const allCompareProps = category?.props.filter((prop) => prop.compareType) || []
-            setAllCriteriasNames(['Цена', 'Производитель', 
+            setAllCriteriasNames([...defaultCriterias,
                 ...allCompareProps.map((prop) => prop.name)])
             const favorProducts = allProducts.filter((prod) => prod.category === category?.name)
             setFavorProducts(favorProducts)
@@ -179,24 +171,24 @@ const ComparePage = () => {
                                                         ...criterias.slice(propIndex + 1)])
                                                 } else {
                                                     let propIndex = category?.props.findIndex((prop) => prop.name === critName)?? -1
-                                                    let newCrit: criteria = {
+                                                    let newCrit: Criteria = {
                                                         name: critName,
                                                         index: propIndex,
                                                         importance: '1'
                                                     } 
-                                                    if (propIndex >= 0 && category?.props[propIndex].compareType === 't') {
+                                                    if (propIndex >= 0 && category?.props[propIndex].compareType === PropCompareTypes.PREFERENCE) {
                                                         let propValues = Array.from(new Set(favorProducts.map((fav) => {
                                                             return fav.props[propIndex]
                                                         })))
-                                                        newCrit.tiers = true
-                                                        newCrit.values = [propValues, [], [], [], []]
+                                                        newCrit.preferences = true
+                                                        newCrit.prefValues = [propValues, [], [], [], []]
                                                     }
                                                     if (critName === 'Производитель') {
-                                                        newCrit.tiers = true
+                                                        newCrit.preferences = true
                                                         let manufacturerValues = Array.from(new Set(favorProducts.map((fav) => {
                                                             return fav.manufacturer
                                                         })))
-                                                        newCrit.values = [manufacturerValues, [], [], [], []]
+                                                        newCrit.prefValues = [manufacturerValues, [], [], [], []]
                                                     }
                                                     setCriterias([...criterias, newCrit])                              
                                                 }
@@ -228,9 +220,15 @@ const ComparePage = () => {
                         critsValueInputs
                     }
                     <button className={`${styles['compare-page__submit-btn']} ${criterias.length > 0 && 
-                        styles['compare-page__submit-btn--active']}`} onClick={() => {
-                        console.log(criterias)
-                    }}>
+                        styles['compare-page__submit-btn--active']}`} 
+                        onClick={async () => {
+                            console.log(criterias)
+                            await ShopService.compareProducts({
+                                products: favorProducts.map((fav) => fav._id),
+                                crits: criterias,
+                                category: category?.name?? 'error'
+                            })
+                        }}>
                         Сравнить товары
                     </button>
                 </div>
