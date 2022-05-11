@@ -26,11 +26,11 @@
     }
 
     &__section {
-        flex: 0 0 50%;
         display: flex;
         align-items: center;
         height: 100%;
         gap: 5px;
+        flex: 0 0 33.33%;
     }
 
     &__shop-section, &__user-section {
@@ -43,6 +43,10 @@
     
     &__user-section {
         justify-content: flex-end;
+    }
+
+    &__search-section {
+        justify-content: center;
     }
 
     &__logo {
@@ -61,6 +65,26 @@
             background-position:center center;
             background-size: contain;
             background-repeat: no-repeat;
+        }
+    }
+
+    &__search-bar {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+
+        &-input {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 10px;
+            width: 420px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            font: normal 14px "Roboto";
+            color: rgba(0, 0, 0, 0.3);
         }
     }
 

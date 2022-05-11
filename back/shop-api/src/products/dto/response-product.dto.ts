@@ -32,3 +32,9 @@ export class DeletedProductDto {
     readonly acknowledged: boolean
     
 }
+
+export class ResponseCompareDto {
+    readonly results: number[]
+    readonly bestAlt: number
+    readonly rates: number[][]
+}

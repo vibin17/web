@@ -3,6 +3,8 @@ import { ProductIdResponse } from '../../../services/models/shop-models'
 import ShopService from '../../../services/ShopService/shop-service'
 import styles from './HomePage.module.scss'
 import ProductSummaryCard from '../../ProductSummaryCard/ProductSummaryCard'
+import ImageGallery from 'react-image-gallery'
+import './image-gallery-home.scss';
 
 const HomePage = () => {
     const cardsOnPage = 20
@@ -21,15 +23,42 @@ const HomePage = () => {
     return (
         <div className={styles['homepage']}>
             <section className={styles['section']}>
-                <div className={styles['section-header']}>
+                <div className={styles['section__header']}>
+                    Хиты продаж
+                </div>
+                <div className={styles['section__content']}>
+                    <div className={styles['gallery']}>
+                        <ImageGallery
+                            items={
+                                [
+                                    {
+                                        original: ``,
+                                        originalClass: styles['slider__image-og']
+                                    },
+                                    {
+                                        original:`https://www.dexerto.com/wp-content/uploads/2020/11/PlayStation-5-consoles-are-reportedly-dying-already-featured-image-e1605190044680.jpg`,
+                                        originalClass: styles['slider__image-og']
+                                    }
+                                ]
+                            }
+                            showFullscreenButton={false}
+                            showPlayButton={false}
+                            showBullets
+                            showThumbnails={false}
+                            additionalClass={styles['slider']}
+                        />
+                    </div>
+                </div>
+            </section>
+            <section className={styles['section']}>
+                <div className={styles['section__header']}>
                     Новые товары
                 </div>
-                <div className={styles['section-content']}>
+                <div className={styles['section__content']}>
                     {
                         summaryCards
                     }
                 </div>
-
             </section>
         </div>
     )

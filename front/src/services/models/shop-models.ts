@@ -159,3 +159,9 @@ export type CompareProductsData = {
     crits: Criteria[]
     category: string
 }
+
+export type CompareResponse = {
+    readonly results: number[]
+    readonly bestAlt: number
+    readonly rates: number[][]
+}

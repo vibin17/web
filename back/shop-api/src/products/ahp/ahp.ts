@@ -1,5 +1,5 @@
 import {  Criteria } from "../dto/request-product.dto";
-import { ResponseProductDto } from "../dto/response-product.dto";
+import { ResponseCompareDto, ResponseProductDto } from "../dto/response-product.dto";
 import { Category, defaultCriterias, PropCompareTypes } from "../types/types";
 
 export class AHP {
@@ -7,7 +7,7 @@ export class AHP {
         0, 0, 0.58, 0.9, 1.12, 1.24, 1.32, 1.41, 1.45, 1.49
     ];
 
-    static async compare(category: Category, crits: Criteria[], products: ResponseProductDto[]) {
+    static async compare(category: Category, crits: Criteria[], products: ResponseProductDto[]): Promise<ResponseCompareDto> {
         let alternativesAmount = products.length
         let altRatingVectors: number[][] = await this.getRates(category, crits, products)
         let critPriorVector: number[] = crits.map((crit) => parseInt(crit.importance))
@@ -20,7 +20,10 @@ export class AHP {
             return altsFreeTerms.map((altFreeTerm) => altFreeTerm[index])
         })
         let results = await Promise.all(altsFreeTermsForMultiplying.map((freeTerm) => this.vectorMultiply(freeTerm, critFreeTerms)))
-        return results
+        let bestAlt = results.findIndex((res) => res === Math.max(...results))
+        console.log(results)
+        console.log(bestAlt)
+        return { bestAlt, results, rates: altsFreeTerms }
     }
 
     static async buildCompareMatrix(vector: number[]) {
@@ -68,9 +71,9 @@ export class AHP {
         
         let CR = ((multitplyRes.reduce((prev, cur) => prev + cur, 0) - len) / (len - 1)) / this.RI[len - 1]
 
-        if (CR > 0.1) {
-            throw new Error(`CR GREATER THAN 0.1 =${CR}`)
-        }
+        // if (CR > 0.1) {
+        //     throw new Error(`CR GREATER THAN 0.1 =${CR}`)
+        // }
 
         return freeTerms
     }

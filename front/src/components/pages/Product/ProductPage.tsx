@@ -11,12 +11,14 @@ import { BsCart2 } from "react-icons/bs"
 import { FiHeart } from "react-icons/fi"
 import ProductInfo from "./ProductInfo/ProductInfo"
 import { useShopLocalActions } from "../../../hooks/useActions"
+import ProductSummaryCard from "../../ProductSummaryCard/ProductSummaryCard"
 
 const ProductPage = () => {
-    const params = useParams()
+    const id = useParams().id
     let [product, setProduct] = useState<ProductResponse>()
     let [isFavored, setIsFavored] =  useState(false)
     let { addToCart, addToFavors, removeFromFavors } = useShopLocalActions()
+    let [lastSeen, setLastSeen] = useState<string[]>([])
     let gallery = useMemo(() => {
         return (
             <ImageGallery
@@ -40,14 +42,22 @@ const ProductPage = () => {
     }, [product])
     useEffect(() => {
         (async () => {
-            const product = (await ShopService.getProductById(params.id || 'undef')).data
+            const product = (await ShopService.getProductById(id || 'undef')).data
             setProduct(product)
             let favors: string[] = JSON.parse(localStorage.getItem('favors')?? '[]')
             if (favors.includes(product._id)) {
                 setIsFavored(true)
-            } 
+            }
+            let lastSeen: string[] = await JSON.parse(localStorage.getItem('last-seen')?? '[]')
+            setLastSeen(lastSeen)
+
+            if (!lastSeen.includes(product._id)) {
+                let newLastSeen = lastSeen.slice(-4)
+                newLastSeen.push(product._id)
+                localStorage.setItem('last-seen', JSON.stringify(newLastSeen))
+            }
         })()
-    }, [])
+    }, [id])
     return (
         <div className={styles['product']}>
             {product &&
@@ -117,6 +127,23 @@ const ProductPage = () => {
                         </div>
                     </div>
                     <ProductInfo product={product}/>
+                    <div className={styles['product__footer']}>
+                        <div className={styles['product__last-seen']}>
+                            <div className={styles['product__last-seen-label']}>
+                                Вы недавно смотрели
+                            </div>
+                            <div className={styles['product__last-seen-cards']}>
+                                {
+                                    lastSeen.filter((prod) => prod !== product?._id).map((id, index) => {
+                                        return (
+                                            <ProductSummaryCard productId={id} 
+                                                key={index}/>
+                                        )
+                                    })
+                                }
+                            </div>
+                        </div>
+                    </div>
                 </>           
             }
         </div>

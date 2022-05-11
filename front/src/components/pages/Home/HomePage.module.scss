@@ -6,14 +6,37 @@
 }
 
 .section {
-    &-header {
+    &__header {
         font: bold 28px 'Ubuntu';
     }
 
-    &-content {
+    &__content {
         display: flex;
         flex-wrap: wrap;
         padding: 30px 30px;
         gap: 70px;
+    }
+}
+
+.gallery {
+    width: 100%;
+    padding: 0 10px;
+}
+
+.slider {
+    width: 100%;
+    &__image {
+        &-og {
+            height: 625px;
+            & img { 
+                height: 100%;
+            }
+        }
+        &-thumbnail {
+            height: 100px;
+            & img { 
+                height: 90px;
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 $ig-small-screen: 768px !default;
 $ig-xsmall-screen: 480px !default;
-$ig-white: rgb(235, 233, 233) !default;
+$ig-white: rgb(224, 224, 224) !default;
 $ig-black: #000 !default;
 $ig-blue: rgba(124, 124, 124, 0.404) !default;
 $ig-background-black: rgba(0, 0, 0, .4) !default;
@@ -87,15 +87,13 @@ $ig-shadow: 0 0px 1px lighten($ig-black, 10%);
 
 .image-gallery-left-nav,
 .image-gallery-right-nav {
-  height: 100%;
-  background: rgba(0, 0, 0, 0);
   padding: 50px 0;
   top: 50%;
   transform: translateY(-50%);
 
   .image-gallery-svg {
     height: 120px;
-    width: 80px;
+    width: 60px;
   }
 
   // @media (max-width: $ig-small-screen) {
@@ -164,7 +162,6 @@ $ig-shadow: 0 0px 1px lighten($ig-black, 10%);
   }
 
   .image-gallery-slide .image-gallery-image {
-    border-radius: 20px;
     max-height: calc(100vh - 80px); // 80 px for the thumbnail space
   }
 

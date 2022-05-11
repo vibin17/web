@@ -1,9 +1,13 @@
 import { useEffect, useMemo, useState } from "react"
 import { useParams } from "react-router"
-import { CategoryResponse, CategoryProp, ProductResponse, Criteria, PropCompareTypes, defaultCriterias } from "../../../../services/models/shop-models"
+import { CategoryResponse, CategoryProp, ProductResponse, Criteria, PropCompareTypes, defaultCriterias, CompareResponse } from "../../../../services/models/shop-models"
 import ShopService from "../../../../services/ShopService/shop-service"
 import ProductSummaryCard from "../../../ProductSummaryCard/ProductSummaryCard"
 import styles from './ComparePage.module.scss'
+import { Bar } from "react-chartjs-2"
+import { Chart as ChartJS, Legend, registerables } from 'chart.js'
+import { Link } from "react-router-dom"
+ChartJS.register(...registerables)
 
 const ComparePage = () => {
     const categoryName = useParams().category
@@ -11,6 +15,7 @@ const ComparePage = () => {
     let [favorProducts, setFavorProducts] = useState<ProductResponse[]>([])
     let [allCriteriasNames, setAllCriteriasNames] = useState<string[]>([])
     let [criterias, setCriterias] = useState<Criteria[]>([])
+    let [results, setResults] = useState<CompareResponse>()
     let summaryCards = useMemo(() => {
         return favorProducts.slice(0, 10).map((fav, index) => {
             return (
@@ -120,6 +125,59 @@ const ComparePage = () => {
             )
         })
     }, [criterias])
+    let resultsAdditional = useMemo(() => {
+        return [(
+            <div className={styles['compare-page__crit-info']} key={0}>
+                <div className={styles['compare-page__crit-name']}>
+                    Итоговая оценка
+                </div>
+                <Bar
+                    data={{
+                        labels: favorProducts.map((fav) => fav.productName),
+                        datasets: [{
+                            data: results?.results || []
+                        }]
+                    }}
+                    options={{
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }}
+                    height={300}
+                    width={560}
+                />
+            </div>
+        ), ...criterias.map((crit, critIndex) => {
+            return (
+                <div className={styles['compare-page__crit-info']} key={critIndex + 1}>
+                    <div className={styles['compare-page__crit-name']}>
+                        {
+                            crit.name
+                        }
+                    </div>
+                    <Bar key={critIndex} 
+                        data={{
+                            labels: favorProducts.map((fav) => fav.productName),
+                            datasets: [{
+                                data: results?.rates[critIndex] || []
+                            }]
+                        }}
+                        options={{
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        }}
+                        height={300}
+                        width={500}
+                    />
+                </div>
+            )
+        })]
+    }, [results])
     useEffect(() => {
         (async () => {
             const favors: string[] = JSON.parse(localStorage.getItem('favors')?? '[]')
@@ -219,19 +277,41 @@ const ComparePage = () => {
                     {
                         critsValueInputs
                     }
-                    <button className={`${styles['compare-page__submit-btn']} ${criterias.length > 0 && 
-                        styles['compare-page__submit-btn--active']}`} 
-                        onClick={async () => {
-                            console.log(criterias)
-                            await ShopService.compareProducts({
-                                products: favorProducts.map((fav) => fav._id),
-                                crits: criterias,
-                                category: category?.name?? 'error'
-                            })
-                        }}>
-                        Сравнить товары
-                    </button>
                 </div>
+                <button className={`${styles['compare-page__submit-btn']} ${criterias.length > 0 && 
+                    styles['compare-page__submit-btn--active']}`} 
+                    onClick={async () => {
+                        console.log(criterias)
+                        const result = (await ShopService.compareProducts({
+                            products: favorProducts.map((fav) => fav._id),
+                            crits: criterias,
+                            category: category?.name?? 'error'
+                        })).data
+                        setResults(result)
+                    }}>
+                    Сравнить товары
+                </button>
+                {
+                    results && 
+                        <div className={styles['compare-page__results']}>
+                            Результаты
+                            <div className={styles['compare-page__best']}>
+                                <Link className={styles['compare-page__best-link']}
+                                    to={`/products/${favorProducts[results.bestAlt]._id}`}>
+                                    {
+                                        favorProducts[results.bestAlt].productName
+                                    }
+                                </Link>
+                                {`Этот товар имеет лучшую оценку по выбранным вам критериям`}
+                            </div>
+                            <div className={styles['compare-page__additional']}>
+                                {
+                                    resultsAdditional
+                                }
+                            </div>
+                        </div>
+                }
+
             </div>
         </div>
     )

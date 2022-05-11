@@ -48,6 +48,14 @@ const Header = () => {
           <Link to='/' className={styles['header__logo']}> 
               <div className={styles['header__logo-image']}/>
           </Link>
+          
+        </div>
+        <div className={`${styles['header__section']} ${styles['header__search-section']}`}>
+          <div className={styles['header__search-bar']}>
+            <div className={styles['header__search-bar-input']}>
+              Поиск...
+            </div>
+          </div>
         </div>
 
         <div className={`${styles['header__section']} ${styles['header__user-section']}`}>

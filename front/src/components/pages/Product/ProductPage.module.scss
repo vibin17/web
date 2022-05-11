@@ -53,6 +53,20 @@
             filter: invert(10%);
         }
     }
+    &__last-seen {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        &-label {
+            font: bold 20px 'Ubuntu';
+        }
+
+        &-cards {
+            display: flex;
+            gap: 20px;
+        }
+    }
 }
 
 .slider {

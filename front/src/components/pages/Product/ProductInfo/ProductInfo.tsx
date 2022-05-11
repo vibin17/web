@@ -11,7 +11,6 @@ type props = {
 
 const ProductInfo = ({ product }: props) => {
     let [reviewsTabActive, setReviewsTabActive] = useState(false)
-    console.log(product._id)
 
     return (
         <div className={styles['product-info']}>

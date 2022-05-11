@@ -35,7 +35,6 @@
         padding: 10px;
         transition: all 0.3s;
         pointer-events: none;
-        background: transparent;
         background: rgba(214, 214, 214, 0.514);
         filter: invert(30%);
         &--active {
@@ -45,6 +44,64 @@
                 filter: invert(10%);
             }
         } 
+    }
+    &__results {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        font: bold 20px "Ubuntu";
+        gap: 20px;
+    }
+    &__best {
+        font: normal 16px "Rubik";
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    &__best-link {
+        font: bold 20px "Rubik";
+        text-decoration: none;
+        color: rgb(39, 49, 194);
+        &:hover {
+            filter: invert(20%);
+            text-decoration: underline;
+        }
+    }
+    &__additional {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        &-btn {
+            align-self: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            outline: 0;
+            border: 0;
+            font: bold 18px "Ubuntu";
+            padding: 10px;
+            transition: all 0.3s;
+            background: rgba(214, 214, 214, 0.514);
+            
+            &:hover {
+                filter: invert(10%);
+            }
+
+            &--active {
+                filter: invert(30%);
+            }
+        }
+    }
+    &__crit-info {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding-bottom: 30px;
+    }
+    &__crit-name {
+        font: bold 16px "Rubik";
     }
 }
 
