@@ -102,6 +102,92 @@ const Smartphones: Category = {
        [60000, 200000]
     ]
 }
+
+const Headphones: Category = {
+    name: 'Наушники',
+    route: 'headphones',
+    props: [
+        {
+            name: 'Поддерживаемое разрешение'
+        }
+    ]
+}
+
+const Consoles: Category = {
+    name: 'Игровые консоли',
+    route: 'gaming-consoles',
+    props: [
+        {
+            name: 'Поддерживаемое разрешение'
+        }
+    ]
+}
+
+const TVs: Category = {
+    name: 'Телевизоры',
+    route: 'tvs',
+    props: [ //ОЧИСТИТЬ БД ЕСЛИ ДОБАВЛЯТЬ НОВЫЕ
+        {
+            name: 'Диагональ экрана',
+            compareType: PropCompareTypes.NUMBER_UP,
+        },
+        {
+            name: 'Тип матрицы',
+            filter: true,
+            compareType: PropCompareTypes.PREFERENCE
+        },
+        {
+            name: 'Разрешение экрана'
+        },
+        {
+            name: 'Частота обновления экрана, гц',
+            compareType: PropCompareTypes.NUMBER_UP,
+        },
+        {
+            name: 'HDR',
+            filter: true,
+            compareType: PropCompareTypes.BINARY,
+            bestValue: ['Есть', 'есть']
+        },
+        {
+            name: 'Процессор',
+        },
+        {
+            name: 'Тактовая частота процессора',
+        },
+        {
+            name: 'Оперативная память, гб',
+        },
+        {
+            name: 'Встроенная память, гб',
+        },
+        {
+            name: 'NFC',
+            bestValue: ['Есть', 'есть'],
+            compareType: PropCompareTypes.BINARY,
+            filter: true,
+            bool: true
+        },
+        {
+            name: 'Емкость аккумулятора, мАч',
+            compareType: PropCompareTypes.NUMBER_UP,
+        },
+        {
+            name: 'Основная камера',
+        },
+        {
+            name: 'Фронтальная камера'
+        }
+    ],
+    priceCategories: [
+            [0, 11000],
+        [11000, 17000],
+        [17000, 30000],
+        [30000, 60000],
+       [60000, 200000]
+    ]
+}
+
 const Tablets: Category = {
     name: 'Планшеты',
     route: 'tablets',
@@ -150,6 +236,7 @@ const Tablets: Category = {
 
 
 export const categories: Category[] = [
-    Smartphones, Tablets
+    Headphones,
+    Smartphones, Tablets, Consoles, TVs
 ]
 

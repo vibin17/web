@@ -206,6 +206,7 @@ $ig-shadow: 0 0px 1px lighten($ig-black, 10%);
   position: absolute;
   top: 0;
   width: 100%;
+  border-radius: 20px;
 
   &.center {
     position: relative;

@@ -4,7 +4,7 @@ import styles from './Dropzone.module.scss'
 
 type props = {
     files: FileWithPath[]
-    setFiles: (func: (files: FileWithPath[]) => FileWithPath[]) => void
+    setFiles: (files: FileWithPath[]) => void
     disabled?: boolean
 }
 
@@ -15,16 +15,12 @@ const Dropzone = ({files, setFiles, disabled = false}: props) => {
             return file.path === newFiles[0].path
         }, false)
         if (newFiles[0] && !fileRepeat) {
-            setFiles(files => {
-                let withNewFiles = [...files, newFiles[0]]
-                if (withNewFiles.length <= 5) {
-                    setError('')
-                    return withNewFiles
-                } else {
-                    setError('Максимум 5 файлов')
-                    return files
-                }
-            })
+            let withNewFiles = [...files, newFiles[0]]
+            if (withNewFiles.length <= 5) {
+                setFiles(withNewFiles)
+            } else {
+                setError('Максимум 5 файлов')
+            }
         } else {
             setError('Без повторений файлов')
         }
@@ -43,7 +39,10 @@ const Dropzone = ({files, setFiles, disabled = false}: props) => {
         multiple: false
     });
 
-    const handleRemove = (index: string) => setFiles(files => files.filter(file => file.path !== index))
+    const handleRemove = (fileName: string) => {
+        let newFiles = files.filter((file) => file.name !== fileName)
+        setFiles(newFiles)
+    }
 
     return (
         <div className={styles['dropzone']}>
@@ -71,7 +70,9 @@ const Dropzone = ({files, setFiles, disabled = false}: props) => {
                             <img className={styles['file-item__preview']} src={URL.createObjectURL(file)}/>
                             <span className={styles['file-item__name-label']}> {file.name} </span>
                             {!disabled && 
-                                <button className={styles['file-item__delete-button']} onClick={() => handleRemove(file.name)}/>
+                                <button type='button' className={styles['file-item__delete-button']} 
+                                    onClick={() => handleRemove(file.name)}
+                                />
                             }
                         </li>
                     ))

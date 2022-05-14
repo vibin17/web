@@ -172,7 +172,7 @@ const ComparePage = () => {
                             }
                         }}
                         height={300}
-                        width={500}
+                        width={560}
                     />
                 </div>
             )

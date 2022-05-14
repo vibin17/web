@@ -7,7 +7,7 @@ import ImageGallery from 'react-image-gallery'
 import './image-gallery-home.scss';
 
 const HomePage = () => {
-    const cardsOnPage = 20
+    const cardsOnPage = 8
     let [productIds, setProductIds] = useState<ProductIdResponse[]>([])
     let summaryCards = useMemo(() => {
         return productIds.slice(-cardsOnPage).map((productId, index) => {
@@ -17,7 +17,7 @@ const HomePage = () => {
     useEffect(() => {
         (async () => {
             let productIds = (await ShopService.getAllProducts()).data
-            setProductIds(productIds)
+            setProductIds(productIds.slice(-cardsOnPage))
         })()
     }, [])
     return (

@@ -12,6 +12,7 @@
 
     &__content {
         display: flex;
+        justify-content: space-between;
         flex-wrap: wrap;
         padding: 30px 30px;
         gap: 70px;
