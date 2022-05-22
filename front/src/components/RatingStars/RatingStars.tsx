@@ -89,7 +89,7 @@ const RatingStars = ({ rating, rightAligned = false, summaryCardMode = false }: 
             {!summaryCardMode &&
                 <div className={styles['rating__label']}> 
                     Рейтинг 
-                    <span className={styles['rating__label-value']}> {averageRating.toFixed(2)} </span>
+                    <span className={styles['rating__label-value']}> {Math.floor(averageRating * 10) / 10} </span>
                     на основе
                     <span className={styles['rating__label-value']}> {totalReviews} </span>
                     оценок

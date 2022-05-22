@@ -108,7 +108,8 @@ const Header = () => {
               }
             </div>
             
-            <div className={styles['header__item-details']}>
+            <div className={`${styles['header__item-details']}
+              ${styles['header__item-details--bigger']}`}>
               <UserMenu setSignInFormActive={setSignInFormActive} 
                 setSignUpFormActive={setSignUpFormActive}/>
             </div>

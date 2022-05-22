@@ -49,12 +49,19 @@ const ProductObjectListCard = ({ product, cardKey, smaller = false, favored = fa
                             <RatingStars 
                                 rating={
                                     // product.rating
+                                    // {
+                                    //     '5': 3,
+                                    //     '4': 3,
+                                    //     '3': 2,
+                                    //     '2': 0,
+                                    //     '1': 1
+                                    // }
                                     {
-                                        '5': 3,
-                                        '4': 3,
-                                        '3': 2,
-                                        '2': 0,
-                                        '1': 1
+                                        '5': Math.floor(Math.random() * 100),
+                                        '4': Math.floor(Math.random() * 80),
+                                        '3': Math.floor(Math.random() * 15),
+                                        '2': Math.floor(Math.random() * 10),
+                                        '1': Math.floor(Math.random() * 10)
                                     }
                                 } 
                             />

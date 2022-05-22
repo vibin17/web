@@ -49,13 +49,14 @@ const ProductPage = () => {
                 setIsFavored(true)
             }
             let lastSeen: string[] = await JSON.parse(localStorage.getItem('last-seen')?? '[]')
-            setLastSeen(lastSeen)
-
-            if (!lastSeen.includes(product._id)) {
-                let newLastSeen = lastSeen.slice(-4)
-                newLastSeen.push(product._id)
-                localStorage.setItem('last-seen', JSON.stringify(newLastSeen))
+            if (lastSeen.includes(product._id)) {
+                let index = lastSeen.findIndex((id) => id === product._id)
+                lastSeen = [...lastSeen.slice(0, index), ...lastSeen.slice(index + 1)]
             }
+            setLastSeen(lastSeen)
+            let newLastSeen = lastSeen.slice(-4)
+            newLastSeen.push(product._id)
+            localStorage.setItem('last-seen', JSON.stringify(newLastSeen))          
         })()
     }, [id])
     return (
@@ -79,13 +80,7 @@ const ProductPage = () => {
                                     product.price + ' ₽'
                                 }
                             </div>
-                            <RatingStars rating={{
-                                    '5': 1,
-                                    '4': 1,
-                                    '3': 1,
-                                    '2': 1,
-                                    '1': 0
-                                }} 
+                            <RatingStars rating={product.rating} 
                                 rightAligned
                             />
                             <button className={styles['product__button']} 

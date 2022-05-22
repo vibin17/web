@@ -1,10 +1,11 @@
 import { Field, Form, Formik } from 'formik'
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useShopLocalActions } from '../../../../hooks/useActions'
 import { useTypedSelector } from '../../../../hooks/useTypedSelector'
-import { ShopResponse } from '../../../../services/models/shop-models'
+import { ProductResponse, ShopResponse } from '../../../../services/models/shop-models'
 import ShopService from '../../../../services/ShopService/shop-service'
+import ProductSummaryCard from '../../../ProductSummaryCard/ProductSummaryCard'
 import styles from './PurchasePage.module.scss'
 
 const PurchasePage = () => {
@@ -13,10 +14,23 @@ const PurchasePage = () => {
     let [isOnDeliveryPayment, setIsOnDeliveryPayment] = useState(false)
     let [shops, setShops] = useState<ShopResponse[]>([])
     let [message, setMessage] = useState('')
+    let [products, setProducts] = useState<ProductResponse[]>([])
     let { clearCart } = useShopLocalActions()
     let navigate = useNavigate()
+    let productCards = useMemo((() => {
+        return products.map((prod, index) => {
+            return (
+                <ProductSummaryCard productId={prod._id} key={index} smaller/>
+            )
+        })
+    }), [products])
     useEffect(() => {
         (async () => {
+            const cart: string[] = JSON.parse(localStorage.getItem('cart')?? '[]')
+            const productsToBuy = await Promise.all(cart.map(async (id) => {
+                return (await ShopService.getProductById(id)).data
+            }))
+            setProducts(productsToBuy)
             const shops = (await ShopService.getShops()).data
             setShops(shops)
         })()
@@ -46,7 +60,7 @@ const PurchasePage = () => {
                                         const result = await ShopService.createOrder({
                                             orderType: values.orderType,
                                             orderDate: new Date(),
-                                            deliveryAddress: (isPickup?
+                                            deliveryAddress: (!isPickup?
                                                 values.deliveryAddress
                                                 :
                                                 values.shopAddress),
@@ -64,7 +78,7 @@ const PurchasePage = () => {
                                         const result = await ShopService.createOrder({
                                             orderType: values.orderType,
                                             orderDate: new Date(),
-                                            deliveryAddress: (isPickup?
+                                            deliveryAddress: (!isPickup?
                                                 values.deliveryAddress
                                                 :
                                                 values.shopAddress),
@@ -115,7 +129,7 @@ const PurchasePage = () => {
                                             </label>
                                         </div>
                                     </div>
-                                    {!isPickup?
+                                    {isPickup?
                                         <div className={styles['form-field']}>
                                             <div className={styles['form-field__label']}> Выберите магазин </div>
                                             <Field component='select'
@@ -161,7 +175,6 @@ const PurchasePage = () => {
                                             />
                                         </div>
                                     }
-                                    
                                     <div className={styles['form-field']}>
                                         <label className={styles['form-field__label']}>
                                             Способ оплаты
@@ -203,6 +216,11 @@ const PurchasePage = () => {
                                 </button>
                             </Form>
                         </Formik>
+                        <div className={styles['checkout-form__products']}>
+                            {
+                                productCards
+                            }
+                        </div>
                     </div>
                     <div className={styles['checkout-footer']}>
                         {

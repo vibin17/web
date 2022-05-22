@@ -82,7 +82,7 @@ const ProductReviews = ({ productId, rating }: props) => {
                     <div className={styles['reviews__summary-star']}>
                         <div className={styles['reviews__summary-star-inside']}>
                             {
-                                averageRating
+                                Math.floor(averageRating * 10) / 10
                             }
                         </div>
                         <BsStarFill className={styles['reviews__summary-star-icon']}/>

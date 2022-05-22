@@ -5,7 +5,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 5px;
     &-header {
         justify-content: space-between;
         position: relative;
@@ -35,9 +35,11 @@
     }
     &-form {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
+        justify-content: space-between;
+        &__products {
+            display: flex;
+            flex-wrap: wrap;
+        }
     }
     &-footer {
         display: flex;
@@ -70,7 +72,6 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 20px;
-        width: 100%;
     }
     &__fields-section {
         display: flex;
@@ -80,10 +81,12 @@
         width: 100%;
     }
     &-field {
-        width: 40%;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
         &__label {
-            font: normal 16px 'Ubuntu';
-            padding: 5px 0;
+            font: bold 18px 'Ubuntu';
         }
         &__input {
             padding: 2px;

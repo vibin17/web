@@ -29,7 +29,7 @@ const UserMenu = ({ setSignInFormActive, setSignUpFormActive }: props) => {
                     </div>
                     {userData.roles?.includes('ADMIN') && 
                         <Link to={'/admin'} className={styles['user-menu__button']}>
-                            Панель админа
+                            Панель администратора
                         </Link>
                     }
                     <Link to={'/orders'} className={styles['user-menu__button']}>

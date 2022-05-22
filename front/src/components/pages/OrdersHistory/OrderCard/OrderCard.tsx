@@ -49,7 +49,7 @@ const OrderCard = ({ order }: props) => {
                 </div>
                 <div className={styles['card-header__item']}>
                     {
-                        order.orderType === 'DELIVERY'?
+                        order.orderType !== 'DELIVERY'?
                             `Заказ будет ждать вас в магазине по адресу`
                             :
                             `Заказ будет доставлен по адресу`

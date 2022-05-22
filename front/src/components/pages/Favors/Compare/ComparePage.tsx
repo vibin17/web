@@ -302,7 +302,7 @@ const ComparePage = () => {
                                         favorProducts[results.bestAlt].productName
                                     }
                                 </Link>
-                                {`Этот товар имеет лучшую оценку по выбранным вам критериям`}
+                                {`Этот товар имеет лучшую оценку по выбранным вами критериям`}
                             </div>
                             <div className={styles['compare-page__additional']}>
                                 {

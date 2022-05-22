@@ -13,7 +13,7 @@ type propsFilter = {
 
 const CataloguePage = () => {
     const categoryRoute = useParams().categoryRoute
-    const itemsOnPage = 6
+    const itemsOnPage = 8
     // let [productIds, setProductIds] = useState<ProductIdResponse[]>([])
     let [products, setProducts] = useState<ProductResponse[]>([])
     let [category, setCategory] = useState<CategoryResponse>()
@@ -45,11 +45,11 @@ const CataloguePage = () => {
         setTotalPages(Math.ceil(sortedProducts.length / itemsOnPage))
         setActivePage(1)
         return sortedProducts
-    }, [products, ascendingSort, propFilters])
+    }, [products, ascendingSort, propFilters, manufacturerFilters])
     let productCards = useMemo(() => {
         window.scrollTo(0, 0)
         return sortedProducts.filter((product, index) => 
-            index >= (activePage - 1) * itemsOnPage && index <= activePage * itemsOnPage
+            index >= (activePage - 1) * itemsOnPage && index < activePage * itemsOnPage
         ).map((product, index) => {
             return <ProductObjectListCard product={product}
                 cardKey={index} key={index} favored={favors.includes(product._id)}/>
@@ -142,6 +142,7 @@ const CataloguePage = () => {
                                                                     value
                                                                 ])
                                                             }
+                                                            console.log(manufacturerFilters)
                                                         }}
                                                     >
                                                     </input>

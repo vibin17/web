@@ -30,7 +30,7 @@
         align-items: center;
         height: 100%;
         gap: 5px;
-        flex: 0 0 33.33%;
+        flex: 0 1 33.333%;
     }
 
     &__shop-section, &__user-section {
@@ -146,7 +146,9 @@
             pointer-events: none;
             transition: 0.2s;
             background: white;
-
+            &--bigger {
+                width: 180px;
+            }
             &::before, &::after {
                 content: '';
                 position: absolute;

@@ -83,10 +83,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 160px;
 }
 
 .card-image {
-    height: 160px;
+    max-width: 160px;
+    max-height: 160px;
+
     &--smaller {
         height: 100px;
     }

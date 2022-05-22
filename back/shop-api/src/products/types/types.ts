@@ -68,7 +68,7 @@ const Smartphones: Category = {
             name: 'Процессор',
         },
         {
-            name: 'Тактовая частота процессора',
+            name: 'Конфигурация процессора',
         },
         {
             name: 'Оперативная память, гб',
@@ -84,7 +84,10 @@ const Smartphones: Category = {
             bool: true
         },
         {
-            name: 'Емкость аккумулятора, мАч',
+            name: 'Емкость аккумулятора, мАч'
+        },
+        {
+            name: 'Время работы, ч',
             compareType: PropCompareTypes.NUMBER_UP,
         },
         {
@@ -100,6 +103,33 @@ const Smartphones: Category = {
         [17000, 30000],
         [30000, 60000],
        [60000, 200000]
+    ]
+}
+
+const TVs: Category = {
+    name: 'Телевизоры',
+    route: 'tvs', 
+    props: [
+        {
+            name: 'Тип матрицы',
+            compareType: PropCompareTypes.PREFERENCE
+        },
+        {
+            name: 'Диагональ экрана',
+            compareType: PropCompareTypes.NUMBER_UP
+        },
+        {
+            name: 'Разрешение экрана',
+            compareType: PropCompareTypes.NUMBER_UP
+        },
+        {
+            name: 'HDR'
+        },
+        {
+            name: 'Wi-Fi',
+            filter: true,
+            bestValue: ['Встроенный']
+        }
     ]
 }
 
@@ -120,71 +150,6 @@ const Consoles: Category = {
         {
             name: 'Поддерживаемое разрешение'
         }
-    ]
-}
-
-const TVs: Category = {
-    name: 'Телевизоры',
-    route: 'tvs',
-    props: [ //ОЧИСТИТЬ БД ЕСЛИ ДОБАВЛЯТЬ НОВЫЕ
-        {
-            name: 'Диагональ экрана',
-            compareType: PropCompareTypes.NUMBER_UP,
-        },
-        {
-            name: 'Тип матрицы',
-            filter: true,
-            compareType: PropCompareTypes.PREFERENCE
-        },
-        {
-            name: 'Разрешение экрана'
-        },
-        {
-            name: 'Частота обновления экрана, гц',
-            compareType: PropCompareTypes.NUMBER_UP,
-        },
-        {
-            name: 'HDR',
-            filter: true,
-            compareType: PropCompareTypes.BINARY,
-            bestValue: ['Есть', 'есть']
-        },
-        {
-            name: 'Процессор',
-        },
-        {
-            name: 'Тактовая частота процессора',
-        },
-        {
-            name: 'Оперативная память, гб',
-        },
-        {
-            name: 'Встроенная память, гб',
-        },
-        {
-            name: 'NFC',
-            bestValue: ['Есть', 'есть'],
-            compareType: PropCompareTypes.BINARY,
-            filter: true,
-            bool: true
-        },
-        {
-            name: 'Емкость аккумулятора, мАч',
-            compareType: PropCompareTypes.NUMBER_UP,
-        },
-        {
-            name: 'Основная камера',
-        },
-        {
-            name: 'Фронтальная камера'
-        }
-    ],
-    priceCategories: [
-            [0, 11000],
-        [11000, 17000],
-        [17000, 30000],
-        [30000, 60000],
-       [60000, 200000]
     ]
 }
 

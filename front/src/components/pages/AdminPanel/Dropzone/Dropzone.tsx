@@ -12,7 +12,7 @@ const Dropzone = ({files, setFiles, disabled = false}: props) => {
     let [error, setError] = useState('')
     const handleOnDrop = (newFiles: FileWithPath[], rejectedFiles: FileRejection[]) => {
         let fileRepeat = files.reduce((acc, file) => { 
-            return file.path === newFiles[0].path
+            return file.name === newFiles[0].name
         }, false)
         if (newFiles[0] && !fileRepeat) {
             let withNewFiles = [...files, newFiles[0]]
@@ -48,32 +48,34 @@ const Dropzone = ({files, setFiles, disabled = false}: props) => {
         <div className={styles['dropzone']}>
             {!disabled && 
                 <div {...getRootProps({
-                    className: `${styles['dropzone__upload-section']}
-                                ${isFocused && styles['dropzone__upload-section--focused']}
-                                ${isDragAccept && styles['dropzone__upload-section--accept']}
-                                ${isDragReject && styles['dropzone__upload-section--reject']}`
+                    className: `${styles['dropzone__upload']}
+                                ${isFocused && styles['dropzone__upload--focused']}
+                                ${isDragAccept && styles['dropzone__upload--accept']}
+                                ${isDragReject && styles['dropzone__upload--reject']}`
                 })}>
                     <input {...getInputProps()} />
                     <p>Кликните или перенесите изображения товара (до 5 шт)</p>
                 </div>
             }
-            <div className={styles['files-uploaded']}>
+            <div className={styles['dropzone__files']}>
                 {error &&
-                    <span className={`${styles['files-label']} ${styles['files-label--error']}`}>{error}</span> 
+                    <span className={`${styles['dropzone__label']} ${styles['dropzone__label--error']}`}>{error}</span> 
                 }
                 {files.length > 0 &&
-                    <span className={styles['files-label']}>Загруженные изображения:</span> 
+                    <span className={styles['dropzone__label']}>Загруженные изображения:</span> 
                 }
-                <ul className={styles['files-list']}> {
+                <ul className={styles['dropzone__files-list']}> {
                     files.map((file) => (
-                        <li className={styles['file-item']} key={file.name}>
-                            <img className={styles['file-item__preview']} src={URL.createObjectURL(file)}/>
-                            <span className={styles['file-item__name-label']}> {file.name} </span>
-                            {!disabled && 
-                                <button type='button' className={styles['file-item__delete-button']} 
-                                    onClick={() => handleRemove(file.name)}
-                                />
-                            }
+                        <li className={styles['dropzone__file']} key={file.name}>
+                            <img className={styles['dropzone__file-preview']} src={URL.createObjectURL(file)}/>
+                            <div className={styles['dropzone__file-label']}>
+                                <span className={styles['dropzone__file-name']}> {file.name} </span>
+                                {!disabled && 
+                                    <button type='button' className={styles['dropzone__file-delete-btn']} 
+                                        onClick={() => handleRemove(file.name)}
+                                    />
+                                }
+                            </div>
                         </li>
                     ))
                 }
