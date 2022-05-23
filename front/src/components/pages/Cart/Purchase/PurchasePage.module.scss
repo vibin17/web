@@ -120,18 +120,19 @@
         }
     }
     &-button {
+        align-self: center;
         display: flex;
-        align-items: center;
         justify-content: center;
-        border: 0;
-        outline: 0;
+        align-items: center;
+        cursor: pointer;
         text-decoration: none;
         color: rgb(0, 0, 0);
-        font: normal 20px 'Rubik';
-        cursor: pointer;
-        padding: 10px 80px;
+        outline: 0;
+        border: 0;
+        font: bold 24px "Ubuntu";
+        padding: 10px 50px;
         transition: all 0.3s;
-        background: rgba(57, 159, 255, 0.733);
+        background: rgba(57, 159, 255, 0.35);
         &:hover {
             filter: invert(30%);
         }

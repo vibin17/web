@@ -17,14 +17,19 @@
 
 .fav-card {
     border: 1px solid rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.125);
+    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.4);
     border-radius: 10px;
-    background: rgb(21, 150, 255);
     &__header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font: bold 20px "Ubuntu";
+        font: bold 22px "Ubuntu";
         padding: 20px;
+        &-aside {
+            display: flex;
+            gap: 10px;
+        }
     }
     &__main {
         display: flex;
@@ -34,6 +39,14 @@
         gap: 10px;
     }
     &__link {
+        text-decoration: none;
+        font: bold 14px 'Ubuntu';
+        color: rgb(0, 0, 0);
+        &:hover {
+            filter: invert(10%);
+        }
+    }
+    &__clear {
         text-decoration: none;
         font: normal 14px 'Ubuntu';
         color: rgb(0, 0, 0);

@@ -37,13 +37,11 @@ const ProductSummaryCard = ({ productId, smaller = false }: props) => {
                         </div>
                         {!smaller &&
                             <div className={styles['prod-sum-card__additional']}>
-                                <RatingStars rating={                                    {
-                                        '5': Math.floor(Math.random() * 100),
-                                        '4': Math.floor(Math.random() * 80),
-                                        '3': Math.floor(Math.random() * 15),
-                                        '2': Math.floor(Math.random() * 10),
-                                        '1': Math.floor(Math.random() * 10)
-                                    }} summaryCardMode/>
+                                {product &&
+                                    <RatingStars rating={
+                                        product.rating
+                                    } summaryCardMode/>
+                                }
                                 <div className={styles['prod-sum-card__price']}> 
                                     {
                                         `${product.price} ₽`

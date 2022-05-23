@@ -8,12 +8,16 @@ import { AuthService } from './auth.service';
 import { TokenService } from './token.service';
 
 @Module({
-  imports: [forwardRef(() => UsersModule), ConfigModule.forRoot({envFilePath: ENV_PATH}), JwtModule.register({})],
-  controllers: [AuthController],
-  providers: [AuthService, TokenService],
-  exports: [
-    AuthService,
-    TokenService
-  ]
+    imports: [
+        forwardRef(() => UsersModule), 
+        ConfigModule.forRoot({envFilePath: ENV_PATH}), 
+        JwtModule.register({})
+    ],
+    controllers: [AuthController],
+    providers: [AuthService, TokenService],
+    exports: [
+        AuthService,
+        TokenService
+    ]
 })
 export class AuthModule {}

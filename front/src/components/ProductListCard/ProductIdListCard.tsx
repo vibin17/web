@@ -44,9 +44,11 @@ const ProductIdListCard = ({ productId, cardKey, ordersHistoryMode = false, favo
                     </div>
                     <div className={styles['product-info']}>
                         <div className={styles['product-description']}> 
-                            <div className={styles['product-name']}> {
-                                product.productName
-                            }
+                            <div className={`${styles['product-name']} 
+                                ${ordersHistoryMode && styles['product-name--smaller']}`}> 
+                                {
+                                    product.productName
+                                }
                             </div>
                             {!ordersHistoryMode &&
                                 <div className={styles['product-rating']}>

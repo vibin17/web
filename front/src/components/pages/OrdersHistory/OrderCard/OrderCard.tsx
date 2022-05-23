@@ -67,7 +67,6 @@ const OrderCard = ({ order }: props) => {
             <div className={styles['card-main']}>
                 {
                     order.products.map((id, index) => {
-                        console.log(id);
                         return <ProductIdListCard productId={id} cardKey={index} key={index} ordersHistoryMode/>
                     })
                 }

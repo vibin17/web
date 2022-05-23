@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react"
 import { useParams } from "react-router"
 import { SHOP_URL } from "../../../http"
-import { ProductResponse } from "../../../services/models/shop-models"
+import { CategoryResponse, ProductResponse } from "../../../services/models/shop-models"
 import ShopService from '../../../services/ShopService/shop-service'
 import styles from './ProductPage.module.scss'
 import './image-gallery.scss';
@@ -12,13 +12,16 @@ import { FiHeart } from "react-icons/fi"
 import ProductInfo from "./ProductInfo/ProductInfo"
 import { useShopLocalActions } from "../../../hooks/useActions"
 import ProductSummaryCard from "../../ProductSummaryCard/ProductSummaryCard"
+import { Link } from "react-router-dom"
 
 const ProductPage = () => {
     const id = useParams().id
     let [product, setProduct] = useState<ProductResponse>()
+    let [category, setCategory] = useState<CategoryResponse>()
     let [isFavored, setIsFavored] =  useState(false)
     let { addToCart, addToFavors, removeFromFavors } = useShopLocalActions()
     let [lastSeen, setLastSeen] = useState<string[]>([])
+    let stock = Math.floor(Math.random() * 10) % 3
     let gallery = useMemo(() => {
         return (
             <ImageGallery
@@ -44,6 +47,9 @@ const ProductPage = () => {
         (async () => {
             const product = (await ShopService.getProductById(id || 'undef')).data
             setProduct(product)
+            const allCategories = (await ShopService.getCategories()).data
+            const category = allCategories.find((cat) => cat.name === product.category)
+            setCategory(category)
             let favors: string[] = JSON.parse(localStorage.getItem('favors')?? '[]')
             if (favors.includes(product._id)) {
                 setIsFavored(true)
@@ -64,9 +70,16 @@ const ProductPage = () => {
             {product &&
                 <>
                     <div className={styles['product__header']}>
-                        {
-                            product.productName
-                        }
+                        <div className={styles['product__name']}>
+                            {
+                                product.productName
+                            }
+                        </div>
+                        <Link className={styles['product__category']} to={`catalogue/${category?.route}`}>
+                            {
+                                category?.name
+                            }
+                        </Link>
                     </div>
                     <div className={styles['product__main']}>
                         <div className={styles['product__gallery']}>
@@ -119,6 +132,16 @@ const ProductPage = () => {
                                     В избранном
                                 </button>
                             }
+                            <div className={styles['product__stock']}>
+                                {
+                                   stock?
+                                        <>В наличии в <b>{
+                                            stock
+                                        }</b> магазинах</>
+                                    :
+                                        `Нет в наличии`
+                                }
+                            </div>
                         </div>
                     </div>
                     <ProductInfo product={product}/>

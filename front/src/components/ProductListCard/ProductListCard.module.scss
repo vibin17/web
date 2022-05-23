@@ -21,7 +21,6 @@
 
     &--smaller {
         border-radius: 0;
-        padding: 10px 70px;
         border: 0;
     }
 }
@@ -41,6 +40,7 @@
     }
     &-name {
         font: normal 16px 'Rubik';
+
     }
     &-rating {
         align-self: flex-start;

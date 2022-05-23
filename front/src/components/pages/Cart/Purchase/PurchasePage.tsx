@@ -161,19 +161,34 @@ const PurchasePage = () => {
                                             </Field>
                                         </div>
                                         :
-                                        <div className={styles['form-field']}>
-                                            <label className={styles['form-field__label']}>
-                                                Адрес доставки
-                                            </label>
-                                            <Field 
-                                                className={styles['form-field__input']}
-                                                type='text' 
-                                                id="deliveryAddress" 
-                                                name="deliveryAddress"
-                                                placeholder="Адрес доставки" 
-                                                required
-                                            />
-                                        </div>
+                                        <>
+                                            <div className={styles['form-field']}>
+                                                <label className={styles['form-field__label']}>
+                                                    Адрес доставки
+                                                </label>
+                                                <Field 
+                                                    className={styles['form-field__input']}
+                                                    type='text' 
+                                                    id="deliveryAddress" 
+                                                    name="deliveryAddress"
+                                                    placeholder="Адрес доставки" 
+                                                    required
+                                                />
+                                            </div>
+                                            <div className={styles['form-field']}>
+                                                <label className={styles['form-field__label']}>
+                                                    Время доставки
+                                                </label>
+                                                <Field 
+                                                    className={styles['form-field__input']}
+                                                    type='datetime-local' 
+                                                    id="deliveryDate" 
+                                                    name="deliveryDate"
+                                                    placeholder="Дата доставки" 
+                                                    required
+                                                />
+                                            </div>
+                                        </>
                                     }
                                     <div className={styles['form-field']}>
                                         <label className={styles['form-field__label']}>

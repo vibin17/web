@@ -9,7 +9,22 @@
     height: 100%;
     width: 100%;
     &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &__name {
         font: bold 28px 'Ubuntu';
+    }
+    &__category {
+        font: normal 18px 'Rubik';
+        text-decoration: none;
+        color: rgb(0, 0, 0);
+
+        &:hover {
+            filter: invert(30%);
+            text-decoration: underline;
+        }
     }
     &__main {
         display: flex;
@@ -30,7 +45,9 @@
     &__price {
         font: bold 26px "Rubik"
     }
-
+    &__stock {
+        font: normal 18px 'Arimo';
+    }
     &__button {
         display: flex;
         align-items: center;

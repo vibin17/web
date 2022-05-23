@@ -17,9 +17,14 @@ const FavorsPage = () => {
                         {
                             cat.name
                         }
-                        <Link to={`compare/${cat.route}`} className={styles['fav-card__link']}>
-                            Сравнить товары категории
-                        </Link>
+                        <div className={styles['fav-card__header-aside']}>
+                            <div className={styles['fav-card__clear']}>
+                                Очистить
+                            </div>
+                            <Link to={`compare/${cat.route}`} className={styles['fav-card__link']}>
+                                Сравнить товары категории
+                            </Link>
+                        </div>
                     </div>
                     <div className={styles['fav-card__main']}>
                         {
