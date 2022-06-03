@@ -199,9 +199,29 @@ const Tablets: Category = {
     ]
 }
 
+const Laptops: Category = {
+    name: 'Ноутбуки',
+    route: 'laptops',
+    props: []
+}
+
+const Chargers: Category = {
+    name: 'Зарядки',
+    route: 'chargers',
+    props: []
+}
+
+const Dryers: Category = {
+    name: 'Фены',
+    route: 'dryers',
+    props: []
+}
 
 export const categories: Category[] = [
     Headphones,
+    Laptops,
+    Chargers,
+    Dryers,
     Smartphones, Tablets, Consoles, TVs
 ]
 

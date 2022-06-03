@@ -132,16 +132,21 @@ const ProductPage = () => {
                                     В избранном
                                 </button>
                             }
-                            <div className={styles['product__stock']}>
-                                {
-                                   stock?
-                                        <>В наличии в <b>{
-                                            stock
-                                        }</b> магазинах</>
-                                    :
-                                        `Нет в наличии`
-                                }
-                            </div>
+                            {
+                                stock? 
+                                    <div className={`${styles['product__stock']} ${styles['product__stock--in-stock']}`}>
+                                        {
+                                            `В наличии в 
+                                                ${stock}
+                                            магазинах`
+                                        }
+                                    </div>
+                                :
+                                    <div className={`${styles['product__stock']} `}>
+                                        Нет в наличии
+                                    </div>
+
+                            }
                         </div>
                     </div>
                     <ProductInfo product={product}/>

@@ -14,6 +14,7 @@ const PurchasePage = () => {
     let [isOnDeliveryPayment, setIsOnDeliveryPayment] = useState(false)
     let [shops, setShops] = useState<ShopResponse[]>([])
     let [message, setMessage] = useState('')
+    let [price, setPrice] = useState(0)
     let [products, setProducts] = useState<ProductResponse[]>([])
     let { clearCart } = useShopLocalActions()
     let navigate = useNavigate()
@@ -31,6 +32,7 @@ const PurchasePage = () => {
                 return (await ShopService.getProductById(id)).data
             }))
             setProducts(productsToBuy)
+            setPrice(productsToBuy.map((prod) => prod.price).reduce((prev, cur) => prev + parseInt(cur), 0))
             const shops = (await ShopService.getShops()).data
             setShops(shops)
         })()
@@ -231,10 +233,15 @@ const PurchasePage = () => {
                                 </button>
                             </Form>
                         </Formik>
-                        <div className={styles['checkout-form__products']}>
-                            {
-                                productCards
-                            }
+                        <div className={styles['checkout-form__aside']}>
+                            <div className={styles['checkout-form__products']}>
+                                {
+                                    productCards
+                                }
+                            </div>
+                            <div className={styles['checkout-form__price']}>
+                                Итог: {price} ₽
+                            </div>
                         </div>
                     </div>
                     <div className={styles['checkout-footer']}>

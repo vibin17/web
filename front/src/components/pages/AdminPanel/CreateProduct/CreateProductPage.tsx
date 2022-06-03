@@ -31,6 +31,9 @@ const CreateProductPage = () => {
     }, [])
     return (
         <div className={styles['admin-panel']}>
+            <div className={styles['admin-panel__header']}>
+                Добавление товара
+            </div>
             <div className={`${styles['create-form']} ${inactive && styles['create-form--inactive']}`}>
                 <div className={styles['form-field']}>
                     <div className={styles['form-field__label']}> Выберите категорию товара </div>

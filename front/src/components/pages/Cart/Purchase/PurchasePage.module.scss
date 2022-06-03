@@ -36,9 +36,18 @@
     &-form {
         display: flex;
         justify-content: space-between;
+        &__aside {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
         &__products {
             display: flex;
             flex-wrap: wrap;
+        }
+        &__price {
+            font: bold 24px 'Rubik';
+            text-align: right;
         }
     }
     &-footer {

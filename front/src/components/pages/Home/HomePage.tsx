@@ -32,7 +32,7 @@ const HomePage = () => {
                             items={
                                 [
                                     {
-                                        original: ``,
+                                        original: `https://www.marketing91.com/wp-content/uploads/2018/05/Marketing-mix-of-Nikon-3.jpg`,
                                         originalClass: styles['slider__image-og']
                                     },
                                     {
@@ -56,7 +56,28 @@ const HomePage = () => {
                 </div>
                 <div className={styles['section__content']}>
                     {
-                        summaryCards
+                        summaryCards[4]
+                    }
+                    {
+                        summaryCards[1]
+                    }
+                    {
+                        summaryCards[7]
+                    }
+                    {
+                        summaryCards[3]
+                    }
+                    {
+                        summaryCards[2]
+                    }
+                    {
+                        summaryCards[6]
+                    }
+                    {
+                        summaryCards[0]
+                    }
+                    {
+                        summaryCards[5]
                     }
                 </div>
             </section>

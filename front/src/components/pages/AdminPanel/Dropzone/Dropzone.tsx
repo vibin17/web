@@ -54,7 +54,7 @@ const Dropzone = ({files, setFiles, disabled = false}: props) => {
                                 ${isDragReject && styles['dropzone__upload--reject']}`
                 })}>
                     <input {...getInputProps()} />
-                    <p>Кликните или перенесите изображения товара (до 5 шт)</p>
+                    <p className={styles['dropzone__text']}>Кликните или перенесите изображения товара (до 5 шт)</p>
                 </div>
             }
             <div className={styles['dropzone__files']}>

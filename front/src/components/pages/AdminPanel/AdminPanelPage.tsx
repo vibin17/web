@@ -10,6 +10,9 @@ const AdminPanelPage = () => {
     if (userData.roles?.includes('ADMIN') && isSignedIn) {
         return ( 
         <div className={styles['admin-panel']}>
+            <div className={styles['admin-panel__header']}>
+                Панель администратора
+            </div>
             <ul className={styles['list']}>
                         <li className={styles['list__item']}>
                             <Link to='create' className={styles['link']}>Добавить товар в каталог</Link>

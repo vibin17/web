@@ -63,13 +63,33 @@
             padding: 10px;
             transition: all 0.3s;
             align-self: flex-start;
-            background: rgba(214, 214, 214, 0.514);
+            background: rgba(255, 169, 57, 0.514);
             &__icon {
                 font-size: 22px;
             }
             &:hover {
                 filter: invert(10%);
             }
+        }
+    }
+    &-fav__button {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: 15px;
+        border: 0;
+        outline: 0;
+        font: bold 18px 'Ubuntu';
+        cursor: pointer;
+        padding: 10px;
+        transition: all 0.3s;
+        align-self: flex-start;
+        background: rgba(255, 128, 128, 0.521);
+        &__icon {
+            font-size: 22px;
+        }
+        &:hover {
+            filter: invert(10%);
         }
     }
     &-price {

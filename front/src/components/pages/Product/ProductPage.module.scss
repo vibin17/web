@@ -46,7 +46,10 @@
         font: bold 26px "Rubik"
     }
     &__stock {
-        font: normal 18px 'Arimo';
+        font: normal 16px 'Arimo';
+        --in-stock {
+            color: rgb(41, 80, 207);
+        }
     }
     &__button {
         display: flex;

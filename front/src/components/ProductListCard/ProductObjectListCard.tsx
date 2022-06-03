@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { BsCart2 } from 'react-icons/bs'
+import { FiHeart } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import { useShopLocalActions } from '../../hooks/useActions'
 import { SHOP_URL } from '../../http'
@@ -67,7 +69,7 @@ const ProductObjectListCard = ({ product, cardKey, smaller = false, favored = fa
                             />
                     </div>
                     {!isFavored?
-                        <button className={styles['product-buy__button']}
+                        <button className={styles['product-fav__button']}
                             onClick={(event) => {
                                 event.preventDefault()
                                 if (product) {
@@ -76,10 +78,11 @@ const ProductObjectListCard = ({ product, cardKey, smaller = false, favored = fa
                                 }
                             }}
                         >
+                            <FiHeart className={styles['product-buy__button__icon']}/>
                             Добавить в избранное
                         </button>
                         :
-                        <button className={styles['product-buy__button']}
+                        <button className={styles['product-fav__button']}
                             onClick={(event) => {
                                 event.preventDefault()
                                 if (product) {
@@ -88,6 +91,7 @@ const ProductObjectListCard = ({ product, cardKey, smaller = false, favored = fa
                                 }
                             }}
                         >
+                            <FiHeart className={styles['product-fav__button__icon']}/>
                             В избранном
                         </button>
                     }
@@ -102,13 +106,14 @@ const ProductObjectListCard = ({ product, cardKey, smaller = false, favored = fa
                     }
                     </div>
                     <button className={styles['product-buy__button']} 
-                            onClick={() => {
-                                if (product) {
-                                    addToCart(product?._id, product?.price)
-                                }
-                            }}
+                        onClick={() => {
+                            if (product) {
+                                addToCart(product?._id, product?.price)
+                            }
+                        }}
                     >
-                            Добавить в корзину
+                        <BsCart2 className={styles['product__button-icon']}/>
+                        Добавить в корзину
                     </button>
                 </div>
             </div>

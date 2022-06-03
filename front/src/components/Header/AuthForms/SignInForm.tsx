@@ -51,6 +51,11 @@ const SignInForm = () => {
         <button className={`${styles['form-button']} ${signInError && styles['form-button--message-shown']}`} type="submit">Войти</button>
       </Form>
     </Formik>
+
+    <div className={styles['form-additional']}>
+        Забыли пароль?
+    </div>
+
   </div>
   )
 }

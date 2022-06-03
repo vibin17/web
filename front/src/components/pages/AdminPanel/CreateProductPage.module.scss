@@ -1,6 +1,12 @@
 .admin-panel {
     width: 100%;
     min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    &__header {
+        font: bold 28px "Ubuntu";
+    }
 }
 
 .create-form {
@@ -19,11 +25,11 @@
 .select-category {
     padding: 2px;
     width: 100%;
-    font: normal 16px Arial;
+    font: normal 16px "Rubik";
     &__options {
         padding: 2px;
         width: 100%;
-        font: normal 16px Arial;
+        font: normal 16px "Rubik";
     }
 }   
 
@@ -56,25 +62,25 @@
     &-field {
         width: 40%;
         &__label {
-            font: normal 14px Arial;
+            font: normal 14px "Rubik";
             padding: 3px 5px;
         }
         &__input {
             padding: 2px;
             width: 100%;
-            font: normal 16px Arial;
+            font: normal 16px "Rubik";
             &--textarea {
                 resize: none;
             }
         }
     }
     &-button {
-        font: normal 16px Arial;
+        font: normal 16px "Rubik";
         padding: 10px;
         cursor: pointer;
     }
     &-message {
-        font: normal 16px Arial;
+        font: normal 16px "Rubik";
         width: 40%;
         
     }

@@ -39,7 +39,13 @@ const ProductSummaryCard = ({ productId, smaller = false }: props) => {
                             <div className={styles['prod-sum-card__additional']}>
                                 {product &&
                                     <RatingStars rating={
-                                        product.rating
+                                        {
+                                            '5': Math.floor(Math.random() * 100),
+                                            '4': Math.floor(Math.random() * 80),
+                                            '3': Math.floor(Math.random() * 15),
+                                            '2': Math.floor(Math.random() * 10),
+                                            '1': Math.floor(Math.random() * 10)
+                                        }
                                     } summaryCardMode/>
                                 }
                                 <div className={styles['prod-sum-card__price']}> 

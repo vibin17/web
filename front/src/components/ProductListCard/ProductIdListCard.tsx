@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { BsCart2 } from 'react-icons/bs'
+import { FiHeart } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import { useShopLocalActions } from '../../hooks/useActions'
 import { SHOP_URL } from '../../http'
@@ -74,7 +76,7 @@ const ProductIdListCard = ({ productId, cardKey, ordersHistoryMode = false, favo
                                 </div>
                             }
                             {!ordersHistoryMode && (!favored?
-                                <button className={styles['product-buy__button']}
+                                <button className={styles['product-fav__button']}
                                     onClick={(event) => {
                                         event.preventDefault()
                                         if (product) {
@@ -82,10 +84,11 @@ const ProductIdListCard = ({ productId, cardKey, ordersHistoryMode = false, favo
                                         }
                                     }}
                                 >
+                                    <FiHeart className={styles['product-buy__button__icon']}/>
                                     Добавить в избранное
                                 </button>
                                 :
-                                <button className={styles['product-buy__button']}
+                                <button className={styles['product-fav__button']}
                                     onClick={(event) => {
                                         event.preventDefault()
                                         if (product) {
@@ -93,6 +96,7 @@ const ProductIdListCard = ({ productId, cardKey, ordersHistoryMode = false, favo
                                         }
                                     }}
                                 >
+                                   <FiHeart className={styles['product-buy__button__icon']}/>
                                     В избранном
                                 </button>
                             )}
@@ -114,6 +118,7 @@ const ProductIdListCard = ({ productId, cardKey, ordersHistoryMode = false, favo
                                         }
                                     }}
                                 >
+                                    <BsCart2 className={styles['product__button-icon']}/>
                                     Добавить в корзину
                                 </button>
                                 :
@@ -127,6 +132,7 @@ const ProductIdListCard = ({ productId, cardKey, ordersHistoryMode = false, favo
                                     }
                                 }}
                                 >
+                                    <BsCart2 className={styles['product__button-icon']}/>
                                     Удалить из корзины
                                 </button>                       
                             )}
